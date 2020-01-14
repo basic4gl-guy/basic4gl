@@ -1,0 +1,29 @@
+# depslib dependency file v1.0
+1155351735 c:\projects\basic4gl\development\dll sdk\examples\testdll3.cpp
+	<windows.h>
+	"Basic4GLDLLInterface.h"
+	"Basic4GLStandardObjects.h"
+	<string.h>
+
+1155349743 c:\projects\basic4gl\development\dll sdk\include\basic4gldllinterface.h
+	"DLLMisc.h"
+
+1142122693 c:\projects\basic4gl\development\dll sdk\include\dllmisc.h
+
+1155348192 c:\projects\basic4gl\development\dll sdk\include\basic4glstandardobjects.h
+	"DLLMisc.h"
+
+1155356327 e:\projects\basic4gl\development\dll sdk\examples\testdll3.cpp
+	<windows.h>
+	"Basic4GLDLLInterface.h"
+	"Basic4GLStandardObjects.h"
+	<string.h>
+
+1179274560 e:\projects\basic4gl\development\dll sdk\include\basic4gldllinterface.h
+	"DLLMisc.h"
+
+1142122693 e:\projects\basic4gl\development\dll sdk\include\dllmisc.h
+
+1155348192 e:\projects\basic4gl\development\dll sdk\include\basic4glstandardobjects.h
+	"DLLMisc.h"
+

@@ -1,0 +1,6 @@
+; Test DLL def file
+LIBRARY Drawing2DDLL.dll
+
+EXPORTS
+	Basic4GL_Init	@1
+	Basic4GL_Query	@2

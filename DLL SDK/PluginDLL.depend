@@ -1,0 +1,27 @@
+# depslib dependency file v1.0
+1154510395 c:\projects\basic4gl\basic4games\dll sdk\plugindllmain.cpp
+	"Basic4GLDLLInterface.h"
+	<windows.h>
+
+1142122708 c:\projects\basic4gl\basic4games\dll sdk\include\basic4gldllinterface.h
+	"DLLMisc.h"
+
+1142122693 c:\projects\basic4gl\basic4games\dll sdk\include\dllmisc.h
+
+1155032227 c:\projects\basic4gl\development\dll sdk\plugindllmain.cpp
+	"Basic4GLDLLInterface.h"
+	<windows.h>
+
+1155349743 c:\projects\basic4gl\development\dll sdk\include\basic4gldllinterface.h
+	"DLLMisc.h"
+
+1142122693 c:\projects\basic4gl\development\dll sdk\include\dllmisc.h
+
+1206519961 e:\projects\basic4gl\development\dll sdk\plugindllmain.cpp
+	"Basic4GLDLLInterface.h"
+
+1205138810 e:\projects\basic4gl\development\dll sdk\include\basic4gldllinterface.h
+	"DLLMisc.h"
+
+1205031705 e:\projects\basic4gl\development\dll sdk\include\dllmisc.h
+

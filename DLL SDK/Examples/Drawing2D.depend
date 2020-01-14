@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1192188557 e:\projects\basic4gl\development\dll sdk\examples\drawing2ddll.cpp
+	<windows.h>
+	<gl/gl.h>
+	<math.h>
+	"Basic4GLDLLInterface.h"
+
+1188267172 e:\projects\basic4gl\development\dll sdk\include\basic4gldllinterface.h
+	"DLLMisc.h"
+
+1188267172 e:\projects\basic4gl\development\dll sdk\include\dllmisc.h
+

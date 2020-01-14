@@ -1,0 +1,122 @@
+<DOCTYPE html>
+
+<head><title>Basic4GL - Getting Started</title>
+<link rel="stylesheet" href="b4gl.css" />
+<link rel="stylesheet" href="highlight/styles/default.css" />
+<script src="highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="jquery-1.12.3.min.js"></script>
+<script src="toc.js"></script>
+</head>
+
+<body>
+
+<p class="copyright">Basic4GL, Copyright (C) 2003-2016 Tom Mulgrew</p>
+
+<p class="title">Getting started</p>
+
+<p class="stamp">24-Apr-2016<br>
+Tom Mulgrew</p>
+
+<p>For news and updates, visit <a href="http://www.basic4gl.net/">http://www.basic4gl.net/</a></p>
+
+<div class="toc"></div>
+
+<h1>What is Basic4GL?</h1>
+
+<p>Basic4GL is a compiler and virtual machine that allows you to write and run programs written in the
+Basic4GL programming language, a language based on the traditional BASIC syntax, but updated for modern computers.</p>
+<p>Basic4GL has builtin support for OpenGL 1.1. Version 1.1 is a bit less relevant now than in 2003 when Basic4GL was first released - in fact it's one of the versions they now refer to as "legacy" OpenGL - but you may find it useful for learning the fundamentals of 3D graphics programming without the setup hassle of creating your own pixel and vertex shaders etc.</p>
+<p>Or you can ignore OpenGL entirely, and use Basic4GL's text, sprite, tile-map and sound libraries to create 2D graphics without writing any OpenGL commands at all.</p>
+<p>Basic4GL is designed to be a safe, easy to learn programming environment, suitable for creating games and graphical programs, rapid prototyping, or just learning basic programming.</p>
+
+<h1>Requirements</h1>
+
+<p>Windows Vista, 7, 8.x or 10.<br>
+A 3D accellerated video card.
+</p>
+
+<h1>Getting started</h1>
+
+<p>Run Basic4GL.exe. If all goes well, the Basic4GL editor will come up, empty.</p>
+
+<p>Open an existing Basic4GL program:</p>
+
+<ol>
+    <li>Click &quot;File&quot; on the menu bar. </li>
+    <li>Click &quot;Open...&quot; in the drop down menu. </li>
+    <li>Double click a Basic4GL program, e.g.
+        &quot;CubePyramidDemo.gb&quot; </li>
+</ol>
+
+<p>To run the program, either:</p>
+
+<ol>
+    <li>Select &quot;Program|Run! / Stop!&quot; from the main
+        menu, OR </li>
+    <li>Click the green &quot;Go!&quot; icon on the toolbar, OR </li>
+    <li>Press F5</li>
+</ol>
+
+<p>The program should run. Press the Escape key to halt it and
+return to the Basic4GL editor.</p>
+
+<h1>Basic4GL video modes</h1>
+
+<p>You can set the Basic4GL video modes by clicking
+&quot;Settings|BASIC runtime settings...&quot;.<br>
+In the resulting dialog box you can specify how Basic4GL program
+output will be displayed.</p>
+
+<p>The most significant choice is the &quot;Fullscreen&quot;
+checkbox.<br>
+In fullscreen mode, Basic4GL will switch your monitor to the
+resolution and colour depth you specify. The Basic4GL program
+will have control of the entire monitor screen until the program
+terminates, or you close it by pressing the Escape key.</p>
+
+<p>When not in full screen, the Basic4GL output is displayed in
+another window.<br>
+The width and height that you specify are used as the size of the
+window, and will use the current colour depth of the desktop.</p>
+
+<h1>Running programs</h1>
+
+<p>This is fairly simple.</p>
+
+<p>First you put a program into Basic4GL, by either loading one
+or typing one in. (Select &quot;Program|Open...&quot; to load a
+program. The demonstration programs are in the
+&quot;Programs&quot; subfolder.)</p>
+
+<p>Then you run the program by selecting &quot;Program|Run! /
+Stop!&quot; from the menu or by clicking the green
+&quot;Go!&quot; icon, or pressing F5.</p>
+
+<h2>Program errors</h2>
+
+<p>If there's an error in the program, it won't run. Instead,
+Basic4GL will display the error on the status bar and place the
+cursor where the problem occurs.</p>
+
+<p>You will need to correct the problem before Basic4GL can run
+the program.<br>
+This may involve obtaining the correct version of the program (if
+someone else wrote it), or correcting it yourself, or reloading
+the program (incase you might have accidentally typed something
+into the program.)</p>
+
+<h1>Where to now?</h1>
+
+<p>There are a number of resources for learning about the Basic4GL programming language:</p>
+<p>These help files are accessible from the Basic4GL "Help" menu:
+<ul>
+	<li>See the <a href="Programmers Guide.html">Programmers' Guide</a> for common library functions and tasks like text output, input, file I/O, timing etc.</li>
+	<li>The <a href="Sprite Library Guide.html">Sprite Library Guide</a> documents the 2D sprite and tile-map commands for creating 2D programs and games.</li>
+	<li>The <a href="Language Guide.html">Language Guide</a> describes the Basic4GL language syntax.</li>
+</ul>
+</p>
+<p>And of course there's the Basic4GL <a href="http://www.basic4gl.net">website</a>, <a href="http://basic4gl.proboards.com/">discussion forum</a>, and now a <a href="https://www.facebook.com/groups/basic4gl/">Facebook group</a>.</p>
+
+</body>
+</html>

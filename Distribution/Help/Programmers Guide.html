@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<HTML><HEAD><TITLE>Basic4GL - Programmers' Guide</TITLE>
+<link rel="stylesheet" href="b4gl.css" />
+<link rel="stylesheet" href="highlight/styles/default.css" />
+<script src="highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="jquery-1.12.3.min.js"></script>
+<script src="toc.js"></script>
+</HEAD>
+<BODY>
+<P class="copyright">Basic4GL, Copyright (C) 2003-2016 Tom Mulgrew</P>
+<P class="title">Programmers' guide</P>
+<P class="stamp">25-Apr-2016<BR>Tom Mulgrew</P>
+<div class="toc"></div>
+<H1>This document</H1>
+<P>This document describes the various built-in functions, and how to use them to do 
+something useful in Basic4GL.</p>
+<p>It does not go into great detail about the 
+language syntax itself (see the <a href="Language Guide.html">Language Guide</a> if that is what you need).</p>
+<p>Also some groups of functions have been separated out into their own help files, so see the <a href="Sprite Library Guide.html">Sprite Library Guide</a> for 2D sprite and tilemap functions, or <a href="Network Guide.html">Network Engine Guide</a> for Basic4GL's real-time-game focused networking routines.</P>
+<H1>Text output</H1>
+<H2>Basic text output</H2>
+<H3>Print</H3>
+<P>Basic text output is performed using the "Print" or "Printr" function.</P>
+<P>Format:</P>
+<div class="format">
+  <P>Print <EM>text-parameters</EM> ;</P></div>
+<P>Or:</P>
+<div class="format">
+  <P>Print <EM>text-parameters</EM></P></div>
+<P>Where <EM>text-parameters</EM> is a list of parameters, separated by 
+semicolons (;).</P>
+<P>"Print" leaves the cursor positioned after the last character printed.</P>
+<P>"Printr" will automatically move the cursor to the start of the next line 
+after the text has been printed.<BR>If the cursor reaches the bottom of the 
+screen, the text will scroll up the screen to make room for the new line.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">Printr "Hello ";
+Printr "and welcome to ";
+Printr "Basic4GL"
+Print
+Print "Have a nice day"</CODE></PRE>
+<div class="extra-info">
+<h3>Traditional BASIC syntax</h3> 
+      <P>"Print" behaves slightly differently when "traditional 
+      BASIC" syntax is enabled, or "Basic4GL with traditional print" syntax is 
+      enabled.</p>
+	  <p>You can enable the "traditional BASIC" syntax by placing a 
+      </P>
+      <PRE><CODE class="basic">language traditional</CODE></PRE>
+      <P>line at the top of your program, or</P>
+      <PRE><CODE class="basic">language traditional_print</CODE></PRE>
+      <P>for just the print command syntax.</P>
+      <P>In this mode, the "print" command will move the cursor to 
+      the next line if it does not end with a trailing semicolon (;)</P>
+      <P>For example:</P>
+      <PRE><CODE class="basic">language traditional
+print "Line 1"
+print "Line 2"
+print "Line 3"</CODE></PRE>
+      <P>Will print:</P>
+      <div class="format">
+        <P>Line1<BR>Line2<BR>Line3</P></div>
+      <P>If the "print" command does end with a semicolon, then the 
+      cursor will remain on the same line. So:</P>
+      <PRE><CODE class="basic">language traditional
+print "Welcome ";
+print "to ";
+print "Basic4GL"</CODE></PRE>
+      <P>Will print:</P>
+      <div class="format">
+        <P>Welcome to Basic4GL</P></div>
+      <P>Thus the "printr" command is not required in this syntax 
+      (but it is still available for compatibility 
+  sake).</P>
+</div>
+<H3>Locate</H3>
+<P>Locate positions the text cursor on the screen.</P>
+<P>Format:</P>
+<div class="format">
+  <P>Locate <EM>X-position</EM>, <EM>Y-position</EM></P></div>
+<P>The Basic4GL text cursor is invisible. It determines to where on the screen 
+"Print" and "Printr" will write.</P>
+<P>By default the Basic4GL displays 40 characters across by 25 characters down 
+(this can be changed using the "ResizeText()" function).</P>
+<P>The topmost row is row 0.<BR>The leftmost column is column 0.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">dim d#
+while True
+    cls
+    locate sin(d#) * 15 + 18, 10
+    print "Hello"
+    sleep(100)
+    d# = d# + 0.1
+wend</CODE></PRE>
+<H3>CursorCol, CursorRow</H3>
+<P>CursorCol() returns the column the cursor is on.<BR>CursorRow() returns the 
+row the cursor is on.</P>
+<P>The topmost row is row 0.<BR>The leftmost column is column 0.</P>
+<H3>Color</H3>
+<P>Sets the text colour.</P>
+<P>Format:</P>
+<div class="format">
+  <P>Color (<EM>red</EM>, <EM>green</EM>, <EM>blue</EM>)</P></div>
+<P>Where <EM>red</EM>, <EM>green</EM> and <EM>blue</EM> are integers between 0 
+and 255 inclusive indicating the intensity of their respective colour 
+component.</P>
+<P>Once the text colour is set, any text printed will be in that colour until 
+the text colour is changed.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">dim t
+TextMode(TEXT_BUFFERED)
+while true
+    for t = 1 to 10: color(rnd()%255, rnd()%255, rnd()%255): print chr$(rnd()%255): next
+    DrawText()
+wend</CODE></PRE>
+<H3>Cls</H3>
+<P>Cls clears all text from the screen and repositions the cursor to the top 
+left.</P>
+<H3>ClearLine</H3>
+<P>ClearLine () clears the current line (the one which the cursor is on).</P>
+<P>Example:</P>
+<PRE><CODE class="basic">dim i
+SetTextScroll(false)
+for i = 0 to 24: printr i: next
+locate 0, 10
+ClearLine()		' Line 10 is cleared</CODE></PRE>
+<H3>ClearRegion</H3>
+<P>Cears a rectangular region of the screen.</P>
+<P>Format:</P>
+<div class="format">
+  <P>ClearRegion (<EM>x1</EM>, <EM>y1</EM>, <EM>x2</EM>, 
+<EM>y2</EM>)</P></div>
+<P>Where <EM>x1</EM>, <EM>y1</EM>, <EM>x2</EM>, <EM>y2</EM> are integers that 
+define the top left column and row (<EM>x1</EM>, <EM>y1</EM>) and the bottom 
+right column and row (<EM>x2</EM>, <EM>y2</EM>) of the rectangular region to be 
+cleared.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">dim x, y
+SetTextScroll(false)
+TextMode(TEXT_BUFFERED)
+for y = 1 to TextRows()
+    for x = 1 to TextCols()
+        print "#"
+    next
+next
+ClearRegion(5, 5, 35, 9)
+locate 13, 7: print "Cleared region"
+DrawText()</CODE></PRE>
+<H3>TextRows, TextCols and ResizeText</H3>
+<P>TextRows () returns the number of text columns.<BR>TextCols () returns the 
+number of text rows.</P>
+<P>ResizeText (<EM>x</EM>, <EM>y</EM>) resizes the text display to <EM>y</EM> 
+rows by <EM>x</EM> columns and clears the text.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">dim i, a$
+a$ = "Basic4GL"
+i = 100
+while i >= 4
+    ResizeText(i * 2 + 1, i + 1)
+    Locate (TextCols() - Len(a$)) / 2, TextRows() / 2
+    Print a$
+    Sleep(50)
+    i = i - 2
+wend</CODE></PRE>
+<H3>Text scrolling</H3>
+<P>Advancing the cursor past the end of the line causes it to wrap around onto 
+the next line.</P>
+<P>Advancing the cursor past the end of the bottom-most line, or performing a 
+Printr on the bottom-most line causes the text to scroll up by one line.</P>
+<P>Example 1:</P>
+<PRE><CODE class="basic">Print glGetString(GL_EXTENSIONS)</CODE></PRE>
+<P>Example 2:</P>
+<PRE><CODE class="basic">dim d#
+while true
+    locate sin(d#)*15+17, TextRows()-1
+    Printr "Hello"
+    Sleep(50)
+    d# = d# + 0.3
+wend</CODE></PRE>
+<P>Alternatively you can disable text scrolling with the TextScroll command.</P>
+<H3>SetTextScroll</H3>
+<P>SetTextScroll() enables or disables text scrolling when the cursor reaches 
+the bottom of the text screen.</P>
+<P>Format:</P>
+<div class="format">
+  <P>SetTextScroll(<EM>scroll</EM>)</P></div>
+<P>Where <EM>scroll</EM> can equal <STRONG>true</STRONG> to enable text 
+scrolling or <STRONG>false</STRONG> to disable it. Text scrolling is 
+<EM>enabled</EM> by default.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">SetTextScroll(false)
+dim row
+print "########################################"
+for row = 2 to 24
+    print "#                                      #"
+next
+print "########################################"</CODE></PRE>
+<H3>TextScroll</H3>
+<P>TextScroll() returns <STRONG>true</STRONG> if text scrolling is enabled, or 
+false if it isn't.</P>
+<H2>Fonts</H2>
+<P>Basic4GL fonts are special transparent images, consisting of a 16 x 16 grid 
+of characters. You can set a new font by calling:</P>
+<div class="format">
+  <P>Font(<EM>texture</EM>)</P></div>
+<P>Where <EM>texture</EM> is an OpenGL texture handle (usually returned from 
+LoadTex()).</P>
+<P>Example:</P>
+<PRE><CODE class="basic">printr "Normal font"
+dim texture
+texture = LoadTex("data\charset2.png")
+Font(texture)
+printr "charset2.png font"</CODE></PRE>
+<P>To get the texture handle for the default font, call:</P>
+<div class="format">
+  <P>DefaultFont ()</P></div>
+<P>Example:</P>
+<PRE><CODE class="basic">dim texture
+texture = LoadTex("data\charset2.png")
+Font(texture)
+printr "charset2.png font"
+Font (DefaultFont ())
+printr "Normal font"</CODE></PRE>
+<H2>Text modes</H2>
+<P>Basic4GL has 3 different modes for rendering text on the screen. You choose 
+one by executing the appropriate TextMode() call:</P>
+<UL>
+  <LI>TextMode(TEXT_SIMPLE) 
+  <LI>TextMode(TEXT_BUFFERED) 
+  <LI>TextMode(TEXT_OVERLAID) </LI></UL>
+<P>The default mode is TEXT_SIMPLE.<BR>In this mode, Basic4GL redraws the screen 
+after each "Print", "Printr", "Cls" or "ResizeText()".</P>
+<P>This mode is easy to use, and the results are instant. However there are a 
+number of situations where you may find it favourable to use TEXT_BUFFERED.</P>
+<P>In TEXT_BUFFERED mode, Basic4GL does not update the screen until you call 
+DrawText().<BR>This has advantages if you are animating a large amount of 
+text:</P>
+<OL>
+  <LI>Reduces flicker.<BR>The screen is only updated once all text has been 
+  drawn.<BR>
+  <LI>Reduces screen resync delay.<BR>Depending on your video card and OpenGL 
+  settings, your OpenGL system may wait for vertical syncronisation before every 
+  screen update.<BR>This can lead to unnecessarily slow animations in 
+  TEXT_SIMPLE mode, as Basic4GL must stop and wait for vertical resync after 
+  every "Print" statement. </LI></OL>
+<P>However, you must remember to call DrawText() or the user won't see any 
+changes.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">TextMode(TEXT_BUFFERED)
+dim d#, t
+while true
+    for t = 1 to 10
+        Locate sin(d#*t/19.0+t)*14+14,t*2+1
+        print " Thing "
+    next
+    DrawText()
+    Sleep(10)
+    d# = d# + .1
+wend</CODE></PRE>
+<P>TEXT_OVERLAID mode is used to combine OpenGL graphics with text.<BR>This mode 
+is necessary if you wish to use OpenGL graphics commands and text <EM>at the 
+same time</EM>.</P>
+<P>This would cause problems in TEXT_SIMPLE or TEXT_BUFFERED mode, as both modes 
+automatically clear the screen before rendering the text.</P>
+<P>In TEXT_OVERLAID mode the DrawText() function will not clear the screen, or 
+copy the result to the front buffer. It will simply render the current text 
+transparently over the top of the current scene.<BR>You must therefore manually 
+clear the screen and swap it to the font buffer at the appropriate times.</P>
+<P>The advantage of this mode is that it gives you a finer degree of control, 
+and allows you to combine text and other graphics, such as OpenGL rendered 
+objects.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">TextMode(TEXT_OVERLAID)
+locate 12, 12: print "This is a square"
+
+dim a#
+while true
+    glClear(GL_DEPTH_BUFFER_BIT or GL_COLOR_BUFFER_BIT)
+    glLoadIdentity()
+    glTranslatef(0, 0, -2)
+    glRotatef(a#, 0, 0, 1)
+    glBegin(GL_QUADS)
+        glColor3f(1, 0, 0): glVertex2f( 1, 1)
+        glColor3f(0, 1, 0): glVertex2f(-1, 1)
+        glColor3f(0, 0, 1): glVertex2f(-1,-1)
+        glColor3f(1, 1, 1): glVertex2f( 1,-1)
+    glEnd()
+    DrawText()
+    SwapBuffers() 
+    a# = a# + 0.3
+wend</CODE></PRE>
+<H3>DrawText</H3>
+<P>Format:</P>
+<div class="format">
+  <P>DrawText()<BR>DrawText(<EM>flags</EM>)</P></div>
+<P>The DrawText command is used to draw text and/or sprites. The default (no 
+parameter) version draws all text and sprites that are on the screen. 
+Alternatively you can control what it draws by passing it a bitmask composed of 
+one or more of the following flags:</P>
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD>DRAW_TEXT</TD>
+    <TD>Draw text&nbsp;</TD></TR>
+  <TR>
+    <TD>DRAW_SPRITES_BEHIND</TD>
+    <TD>Draw all sprites behind the text&nbsp;</TD></TR>
+  <TR>
+    <TD>DRAW_SPRITES_INFRONT</TD>
+    <TD>Draw all sprites infront&nbsp;of the text&nbsp;</TD></TR>
+  <TR>
+    <TD>DRAW_SPRITES</TD>
+    <TD>Draw all sprites behind or infront of the 
+text&nbsp;</TD></TR></TBODY></TABLE>
+<P>Example:</P>
+<PRE><CODE class="basic">TextMode(TEXT_OVERLAID)
+glDisable(GL_DEPTH_TEST)
+
+' Create some bouncing balls
+const ballcount = 100
+dim tex = LoadTex("data/ball.png")
+dim sprites(ballcount), i
+for i = 1 to ballcount
+    sprites(i) = NewSprite(tex)
+    if rnd()%2 then SprSetZOrder(-1) endif
+    SprSetPos(rnd() % 640, rnd() % 480)
+    if rnd()%2 then SprSetXVel(1) else SprSetXVel(-1) endif
+    if rnd()%2 then SprSetYVel(1) else SprSetYVel(-1) endif
+next
+
+do
+    ' Clear the screen background            
+    glBegin(GL_QUADS)
+        glColor3f(.5, 0, 0)
+        glVertex3f(-10,  10, -5)
+        glVertex3f( 10,  10, -5)
+        glColor3f(0, 0, .5)
+        glVertex3f( 10, -10, -5)
+        glVertex3f(-10, -10, -5)
+    glEnd()
+	
+    ' Draw behind sprites and small text
+    ResizeText(80, 50)
+    locate 35, 20: print "Small text"
+    DrawText(DRAW_SPRITES_BEHIND or DRAW_TEXT)
+    
+    ' Draw large text and infront sprites
+    ResizeText(20, 12)
+    locate 6, 7: print "Big text"
+    DrawText(DRAW_TEXT or DRAW_SPRITES_INFRONT)	
+	
+    ' Show completed frame
+    SwapBuffers()
+             
+    ' Animate bouncing balls
+    while SyncTimer(10)
+        AnimateSprites()
+        for i = 1 to ballcount
+            BindSprite(sprites(i))
+            if SprX() < 0 or SprX() > 640 then
+                SprSetXVel(-SprXVel())
+            endif
+            if SprY() < 0 or SprY() > 480 then
+                SprSetYVel(-SprYVel())
+            endif
+        next
+    wend
+loop</CODE></PRE>
+<H2>Reading from the screen</H2>
+<H3>CharAt$</H3>
+<P>CharAt$(<EM>x</EM>, <EM>y</EM>) returns the character at column x and row 
+y.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">TextMode(TEXT_BUFFERED)
+dim d#, t, x, y, crash: crash = false: x = TextCols()/2
+while not crash
+    for t = 1 to 5: locate sin(d#+t)*15+15,t*2+2: print" Thing! ": next
+    y=y-1
+    if y<0 then 
+        y = TextRows()-1: cls
+    else
+        if ScanKeyDown(VK_LEFT) and x > 2 then x = x - 1 endif
+        if ScanKeyDown(VK_RIGHT) and x < 36 then x = x + 1 endif
+        crash = CharAt$(x,y)<>" "
+        locate x, y: print"X"
+    endif 
+    DrawText()
+    WaitTimer(80)
+    d# = d#+0.06
+wend</CODE></PRE>
+<H1>Timing</H1>
+<H2>Sleep</H2>
+<P>Pauses execution for a number of milliseconds.</P>
+<P>Format:</P>
+<div class="format">
+  <P>Sleep(<EM>milliseconds</EM>)</P></div>
+<P>Note: The application is completely unresponsive while sleeping. Therefore 
+Basic4GL will not sleep for more than 5000 msec (5 seconds) at a time.<BR>To 
+sleep for more than 5 seconds, use a loop.<BR>For example:</P>
+<PRE><CODE class="basic">dim i
+for i = 1 to 60: Sleep(1000): next</CODE></PRE>
+<P>Will pause for 60 seconds, but still give the user the opportunity to break 
+out of the program if he/she wishes.</P>
+<H2>WaitTimer, SyncTimer and ResetTimer</H2>
+<H3>WaitTimer</H3>
+<P>This function is similar to Sleep, and indeed has the same format:</P>
+<div class="format">
+  <P>WaitTimer(<EM>milliseconds</EM>)</P></div>
+<P>The difference is that WaitTimer waits until <EM>milliseconds</EM> 
+milliseconds has elapsed <EM>from the previous WaitTimer call</EM>.</P>
+<P>This difference is significant if WaitTimer is used inside an animation loop, 
+with other code that may take some time to execute (such as rendering a 
+frame).<BR>For example:</P>
+<div class="format">
+  <P>while true<BR><EM>Draw a frame<BR></EM>WaitTimer(100)<BR>wend</P></div>
+<P>If <EM>Draw a frame</EM> were to take 40 milliseconds, then WaitTimer will 
+pause for only 60 milliseconds, ensuring that the loop is correctly iterated 10 
+times a second.</P>
+<P>Even simple animations can potentially take up to the resync period of the 
+monitor (anything from 1/100th to 1/50th of a second), if the user's graphics 
+card is configured to wait for retrace before drawing.</P>
+<H3>SyncTimer</H3>
+<P>SyncTimer returns true if you need to update the internal state of the 
+application to catch up to the clock.</P>
+<P>This can be used to force an animation to update internally so many times per 
+second, regardless of a PC's rendering speed, and is intended to be used as 
+follows:</P>
+<div class="format">
+  <P>while <EM>main-loop-condition</EM><BR><EM>Render scene</EM><BR>while 
+  SyncTimer (<EM>delay</EM>)<BR><EM>Update state</EM><BR>wend</P></div>
+<P>For example, if <EM>delay</EM> was 10 milliseconds, then <EM>Update 
+state</EM> will execute 100 times per second, regardless of whether the computer 
+is capable of rendering 20 or 100 frames per second.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">dim x, y, a#, b#
+while true
+    glClear(GL_DEPTH_BUFFER_BIT or GL_COLOR_BUFFER_BIT)
+    glLoadIdentity()
+    glTranslatef(0, 0, -16)
+    glRotatef(a#, 0, 0, 1)
+    for y = -5 to 5: for x = -5 to 5
+        glPushMatrix()
+        glTranslatef(x * 3, y * 3, 0)
+        glRotatef((x + y) * 60 + b#, 1, 0, 0)
+        glBegin(GL_QUADS)
+            glColor3f(1, 0, 0): glVertex2f( 1, 1)
+            glColor3f(0, 1, 0): glVertex2f(-1, 1)
+            glColor3f(0, 0, 1): glVertex2f(-1,-1)
+            glColor3f(1, 1, 1): glVertex2f( 1,-1)
+        glEnd()
+        glPopMatrix()
+    Next: Next
+    SwapBuffers()
+    while SyncTimer(10)
+        a# = a# + 0.9: b# = b# + 3.6
+    wend
+wend</CODE></PRE>
+<H1>Keyboard input</H1>
+<H2>Text input</H2>
+<H3>Input</H3>
+<P>Reads a text string from the keyboard.</P>
+<P>Format:</P>
+<div class="format">
+  <P>Input <EM>variable</EM></P>
+  <P>Input "<EM>prompt</EM>"; <EM>variable</EM></P>
+  <P>Input "<EM>prompt</EM>", <EM>variable</EM></P></div>
+<P>Input will pause the program and wait until the user types in some text and 
+hits enter. The text will be displayed on the screen as the user types.<BR>If a 
+<EM>prompt</EM> is given, it will be displayed on the screen. The first format 
+(with the semicolon) automatically displays a question mark after the 
+<EM>prompt</EM>. The second format (with the comma) simply displays the 
+<EM>prompt</EM> and nothing else.</P>
+<P>Once the user has hit enter, the program will continue, and <EM>variable</EM> 
+will contain the resulting text or number that the user entered.</P>
+<P>Examples:</P>
+<PRE><CODE class="basic">dim name$
+input "What is your name"; name$
+print "Hello " + name$</CODE></PRE>
+<PRE><CODE class="basic">dim number
+input "Please enter a number: ", number
+print "The square root of " + number + " is " + sqrt(number)</CODE></PRE>
+<div class="extra-info">
+	<h3>Compatibility</h3>
+	<P>Be aware that Basic4GL's implementation of "input" is not as 
+	complete as other BASICs.</p>
+	<p>Basic4GL does not support inputting multiple 
+	variables with the same input command.</p>
+	<p>Also, Basic4GL will not prompt the 
+	user to "Redo from start" if the text he/she entered cannot be converted into 
+	the destination variable type. Instead it will simply set the destination 
+	variable to 0.</P>
+</div>
+<div class="extra-info">
+	<h3>Old version</h3>
+	<P>Note 2: There is an older Input$() function that has the syntax:</P>
+	<div class="format">
+	  <P><EM>variable</EM> = Input$()</P></div>
+	<P>This is an old syntax, and kept only for backwards compatibility with 
+	older Basic4GL programs.</P>
+</div>
+<H2>Key state</H2>
+<H3>KeyDown and ScanKeyDown</H3>
+<P>Determines whether a key is currently pressed or released.</P>
+<P>Format:</P>
+<div class="format">
+  <P>KeyDown(<EM>character</EM>)</P>
+  <P>ScanKeyDown(<EM>scan-code</EM>)</P></div>
+<P>KeyDown takes the first character of the string argument passed to it. 
+<BR>ScanKeyDown takes a numeric virtual key code, often a VK_x constant (such as 
+VK_UP e.t.c. Click "Help|Functions and Constants list..." then the "Constants" 
+tab for a list).</P>
+<P>Both functions return true (-1) if the key is being pressed or false (0) if 
+otherwise.</P>
+<P>Note: KeyDown("") will always return false.</P>
+<P>Example 1:</P>
+<PRE><CODE class="basic">ResizeText(5, 1)
+while true
+    locate 0, 0
+    if KeyDown("A") then print "Down"
+    else print " Up "
+    endif
+wend</CODE></PRE>
+<P>Example 2:</P>
+<PRE><CODE class="basic">dim a#
+while true
+    glClear(GL_DEPTH_BUFFER_BIT or GL_COLOR_BUFFER_BIT)
+    glLoadIdentity()
+    glTranslatef(0, 0, -5)
+    glRotatef(a#, 0, 0, 1)
+    glBegin(GL_TRIANGLES)
+        glVertex2f( 0, 1.5)
+        glVertex2f(-1,-1)
+        glVertex2f( 1,-1)
+    glEnd()
+    SwapBuffers() 
+    while SyncTimer(10)
+        if ScanKeyDown(VK_LEFT) then a# = a# + 3: endif
+        if ScanKeyDown(VK_RIGHT) then a# = a# - 3: endif
+    wend
+wend</CODE></PRE>
+<H2>Buffered input</H2>
+<H3>Inkey$ and InScanKey</H3>
+<P>Format:</P>
+<div class="format">
+  <P>Inkey$()</P>
+  <P>InScanKey()</P></div>
+<P>Basic4GL buffers characters and raw scan codes typed into the output 
+window.</P>
+<P>Inkey$() returns characters typed as single character strings. If no 
+characters are buffered, Inkey$() will return an empty string.</P>
+<P>InScanKey() returns scan codes as integers. If no scan codes are buffered, 
+InScanKey() returns 0.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">while true: print Inkey$(): wend</CODE></PRE>
+<H3>ClearKeys</H3>
+<P>Format:</P>
+<div class="format">
+  <P>ClearKeys()</P></div>
+<P>ClearKeys() clears the keyboard buffer, throwing away any keypresses that 
+have yet to be handled by Inkey$() or InScanKey().</P>
+<P>ClearKeys() is equivalent to the following code:</P>
+<PRE><CODE class="basic">While Inkey$() &lt;&gt; "": wend
+While InScanKey() &lt;&gt; 0: wend</CODE></PRE>
+<H1>Mouse input</H1>
+<H2>Mouse functions</H2>
+<P>The following functions can be used to read the mouse.</P>
+<H3>Mouse_X, Mouse_Y</H3>
+<P>These functions return the position of the mouse in relation to the OpenGL 
+window (if in windowed mode), or the screen (fullscreen mode).</P>
+<P>Mouse_X() returns the X (horizontal) position.<BR>Mouse_Y() returns the Y 
+(vertical) position.</P>
+<P>Both functions return a real value between 0 (far left, or top) and 1 (far 
+right, or bottom).</P>
+<P>Example 1:</P>
+<div class="format">
+  <P>print Mouse_X() + ", " + Mouse_Y(): run</P></div>
+<P>Example 2:</P>
+<PRE><CODE class="basic">ResizeText(80, 50)
+dim x, y, char$
+while true
+    if not Mouse_Button(MOUSE_LBUTTON) then
+        locate x, y: print char$
+    endif
+    x = Mouse_X() * TextCols()
+    y = Mouse_Y() * TextRows()
+    char$ = CharAt$(x, y)
+    locate x, y: print "X"
+wend</CODE></PRE>
+<H3>Mouse_Button</H3>
+<P>Mouse_Button(<EM>index</EM>) returns true if button <EM>index</EM> is being 
+pressed, or false if it isn't.</P>
+<P>The left mouse button is index 0, the right is index 1 and the middle is 
+index 2.<BR>Alternatively you can use the following constants:</P>
+<P>Left button: MOUSE_LBUTTON<BR>Right button: MOUSE_RBUTTON<BR>Middle button: 
+MOUSE_MBUTTON</P>
+<P>Example:</P>
+<PRE><CODE class="basic">dim i               
+print "Press the mouse buttons!"
+while true
+    locate 0, 2
+    for i = 0 to 2: printr Mouse_Button(i) + " ": next
+wend</CODE></PRE>
+<H3>Mouse_Wheel</H3>
+<P>Mouse_Wheel() returns how many notches the mouse wheel has turned since the 
+last time Mouse_Wheel() was called (or the program started).</P>
+<P>For example:</P>
+<PRE><CODE class="basic">dim i
+print "Turn the mouse wheel!"
+while true
+    i = i + Mouse_Wheel()
+    locate 0, 2: print i + "    "
+wend</CODE></PRE>
+<H3>Mouse_XD(), Mouse_YD()</H3>
+<P>These functions return how far the mouse has moved since the last time 
+Mouse_XD() or Mouse_YD() was called (respectively).</P>
+<P>Mouse_XD() returns the X (horizontal) distance.<BR>Mouse_YD() returns the Y 
+(vertical) distance.</P>
+<P>These functions are useful for first person shooter type movement, where the 
+mouse is used to turn the player, instead of controlling a pointer on the 
+screen.</P>
+<div class="extra-info">
+	<h3>Avoid mixing Mouse_XD/-YD and Mouse_X/-Y</h3>
+<P>Mouse_XD() and Mouse_YD() work internally by positioning the mouse 
+pointer in the middle of the window and measuring how far the mouse moves from 
+that position. This means that using Mouse_X() or Mouse_Y() will produce 
+unexpected results, and it is recommended you stick to one method or the 
+other.</P>
+</div>
+<P>Example:</P>
+<PRE><CODE class="basic">dim x#, z#
+while true
+    glClear(GL_DEPTH_BUFFER_BIT or GL_COLOR_BUFFER_BIT)
+    glLoadIdentity()
+    glTranslatef(0, 0, -4)
+    glRotatef(z#, 0, 0, 1)
+    glRotatef(x#, 1, 0, 0)
+    glBegin(GL_TRIANGLES)
+        glVertex2f(0, 1)
+        glVertex2f(-.5, -1)
+        glVertex2f( .5, -1)
+    glEnd()
+    SwapBuffers()
+    z# = z# - Mouse_XD() * 100
+    x# = x# + Mouse_YD() * 100
+wend</CODE></PRE>
+<H1>Joystick input</H1>
+<P><EM>Note: A big thanks to Tyler Bingham for implementing the joystick 
+support!</EM></P>
+<P>Basic4GL supports input from a single joystick. If more than one joystick is 
+attached to a PC, Basic4GL will use whatever one the operating system says is 
+first.</P>
+<H2>Joystick functions</H2>
+<P>The following functions can be used to read the joystick.</P>
+<H3>Joy_Keys</H3>
+<P>Joy_Keys() takes a snapshot of the joystick and generates appropriate 
+keypresses. Arrow keys are generated for stick movement, and space bar and 
+control (Ctrl) keypresses are generated for joystick buttons 0 and 1 
+respectively.</P>
+<P>The keypresses can then be detected with the keyboard input functions:</P>
+<UL>
+  <LI>InScanKey() 
+  <LI>KeyDown(...) 
+  <LI>ScanKeyDown()</LI>
+  <LI>Inkey$()</LI></UL>
+<P>This effectively provides a simple and easy way of incorperating joystick and 
+keyboard support into a program.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">dim x, y
+x = TextCols() / 2
+y = TextRows() / 2
+while true
+    Joy_Keys()
+    if not ScanKeyDown(VK_SPACE) then
+        locate x, y: print " "
+    endif
+    if ScanKeyDown(VK_LEFT)    and x &gt; 0 then                  x = x - 1 endif
+    if ScanKeyDown(VK_RIGHT)   and x &lt; TextCols() - 1 then     x = x + 1 endif
+    if ScanKeyDown(VK_UP)      and y &gt; 0 then                  y = y - 1 endif
+    if ScanKeyDown(VK_DOWN)    and y &lt; TextRows() - 1 then     y = y + 1 endif
+    locate x, y: print "X"
+    Sleep(30)
+wend</CODE></PRE>
+<H3>Joy_X, Joy_Y</H3>
+<P>Joy_X() returns the X (horizontal) position.<BR>Joy_Y() returns the Y 
+(vertical) position.</P>
+<P>Both functions return a value from -32768 (far left, or top) to 32767 (far 
+right or bottom).<BR>0 is the centre of each axis. (If you have a stable, 
+properly calibrated digital joystick.)</P>
+<P>Example:</P>
+<div class="format">
+  <P>print Joy_X() + ", " + Joy_Y(): run</P></div>
+<H3>Joy_Button</H3>
+<P>Joy_Button(<EM>index</EM>) returns true if button <EM>index</EM> is currently 
+being pressed, or false if isn't.</P>
+<P>The first joystick button is <EM>index</EM> 0. The second is <EM>index</EM> 1 
+e.t.c</P>
+<P>Example:</P>
+<PRE><CODE class="basic">dim i<BR>for i = 0 to 9<BR>    if joy_button(i) then print i: else print " ": endif<BR>next<BR>run</CODE></PRE>
+<H3>Joy_Left, Joy_Right, Joy_Up, Joy_Down</H3>
+<P>Joy_Left() returns true if the joystick is more than 100 units to the left. 
+(This is equivalent to: Joy_X() &lt; -100)<BR>Joy_Right() returns true if the 
+joystick is more than 100 units to the right. (This is equivalent to: Joy_X() 
+&gt; 100)<BR>Joy_Up() returns true if the joystick is more than 100 units 
+upwards. (This is equivalent to: Joy_Y() &lt; -100)<BR>Joy_Down() returns true 
+if the joystick is more than 100 units downwards. (This is equivalent to: Joy_Y 
+() &gt; 100)</P>
+<H3>Joy_0, ..., Joy_9</H3>
+<P>There are also explicit functions for each joystick button from 0 through to 
+9.</P>
+<P>Joy_0() returns true if the first joystick button is being pressed. (This is 
+equivalent to: Joy_Button(0)).<BR>...<BR>Joy_9() returns true if the 10th 
+joystick button is being pressed. (This is equivalent to: Joy_Button(9)).</P>
+<H2>Joystick polling</H2>
+<P>To "poll" the joystick means to take a snapshot of it's current state, 
+including the readings of the X and Y axis and whether each button is up or down 
+at the time of the poll.</P>
+<P>Basic4GL automatically polls the joystick whenever one of the joystick 
+functions is called, so you don't have to tell it to explicitly.<BR>For 
+example:</P>
+<PRE><CODE class="basic">while true: printr Joy_X() + " " + Joy_Y() + " " + Joy_0() + " " + Joy_1(): wend</CODE></PRE>
+<P>You may want to explicitly tell Basic4GL when to poll the joystick, in order 
+to make the program run faster.<BR>Polling takes time (at least on older 
+analogue joysticks). It is more efficient to poll the joystick once, and then 
+act on the X axis, Y axis and button data captured in that poll than to poll the 
+joystick for each axis and button that you read.</P>
+<H3>UpdateJoystick</H3>
+<P>UpdateJoystick() polls the joystick and takes a snapshot of the X and Y axis 
+and the state of all the buttons.<BR>Any Joy_? calls will now return the data 
+captured at the time of the UpdateJoystick() call.<BR>For example:</P>
+<PRE><CODE class="basic">while true: UpdateJoystick(): printr Joy_X() + " " + Joy_Y() + " " + Joy_0() + " " + Joy_1(): wend</CODE></PRE>
+<P>Now instead of reading the joystick 4 times each time around the loop, we are 
+only reading it once.<BR>This runs significantly faster than the previous 
+example on my PC (although my PC has an older analogue joystick attached to it.. 
+I can't comment on digital joysticks.)</P>
+<P>As soon as you call UpdateJoystick(), Basic4GL switches to <STRONG>explicit 
+</STRONG>joystick updates, and stays that way until your program finishes 
+executing. Therefore you must keep calling UpdateJoystick() at the appropriate 
+times to ensure the joystick data is up to date. <BR>If you don't, the joystick 
+will appear frozen, for example:</P>
+<PRE><CODE class="basic">UpdateJoystick()<BR>while true: printr Joy_X() + " " + Joy_Y() + " " + Joy_0() + " " + Joy_1(): wend</CODE></PRE>
+<P>Here we have moved the UpdateJoystick() call out of the main loop, so it is 
+only called once at the start of the program.<BR>Because we don't ever call it 
+again, each joystick functions will simply return the same value each time, i.e 
+the state of the joystick at the start of the program when UpdateJoystick() was 
+called.</P>
+<P>So manual polling can be faster, but you must do it right!</P>
+<H1>Command line</H1>
+<P>Basic4GL standalone programs can accept commands from the command 
+line.<BR>Command line arguments are entered after the program name when a 
+program is run from the command line. For example, if we built a standalone exe 
+called "CmdTest", and ran it in a command prompt window with the command:</P>
+<PRE><CODE class="basic">cmdtest 1 banana 2 cucumber 3 "Tomato sandwich"</CODE></PRE>
+<P>Then we have passed it 6 parameters:</P>
+<OL>
+  <LI>1 
+  <LI>banana 
+  <LI>2 
+  <LI>cucumber 
+  <LI>3 
+  <LI>Tomato sandwich </LI></OL>
+<P>We can access these parameters with the <EM>ArgCount</EM> and <EM>Arg</EM> 
+functions.</P>
+<H3>ArgCount</H3>
+<P>ArgCount()<EM> </EM>returns the number of command line arguments.</P>
+<H3>Arg</H3>
+<P>Arg(<EM>index</EM>) returns parameter number <EM>index</EM> as a text string, 
+where <EM>index</EM> is 0 to return the first parameter.<BR><EM>index 
+</EM>should be between 0 and ArgCount() - 1, otherwise Arg(<EM>index</EM>) 
+returns a blank string.</P>
+<H2>Setting command line arguments within Basic4GL</H2>
+<P>To set the command line arguments that a program will see when it is running 
+inside the Basic4GL IDE, click "Program|Arguments..."</P>
+<H2>Some examples</H2>
+<P>Display all arguments</P>
+<PRE><CODE class="basic">dim i
+printr ArgCount(); " argument(s) found"
+for i = 0 to ArgCount() - 1
+    printr Arg(i)
+next</CODE></PRE>
+<P>Compile and run another program:</P>
+<PRE><CODE class="basic">dim prog
+if ArgCount() = 0 then
+    printr "No program name!"
+    end
+endif
+prog = CompileFile(Arg(0), "__")
+if CompilerError() &lt;&gt; "" then
+    printr CompilerError()
+    end
+endif
+Execute(prog)
+if CompilerError() &lt;&gt; "" then
+    print CompilerError()
+    end
+endif</CODE></PRE>
+<H1 id="file-io">File I/O</H1>
+<H2>A note on security</H2>
+<P>Basic4GL programs can only read and write files from the directory where the 
+Basic4GL program was saved (or any subdirectory thereof).</P>
+<P>This is for security, and is intended to protect people new to programming 
+when trying out example programs from the internet and other sources. For all we 
+know, the person who wrote the program might think that overwriting files in the 
+Windows system directory is a hilarious practical joke. This way the potential 
+damage is restricted to a small subfolder, and the people can download and run 
+Basic4GL programs with confidence.</P>
+<P>Obviously this means that if you distribute Basic4GL programs that use File 
+I/O, you will have to ensure that the files read/written to end up in the 
+appropriate directory so that they can be reached.</P>
+<div class="extra-info">
+	<h3>General purpose File I/O only</h3>
+<P>This security restriction applies to the general purpose File I/O 
+routines described below. Other functions that load data from disk are not 
+subject to these restrictions, in particular the image and texture loading 
+functions can load any file they want.</P>
+</div>
+<div class="extra-info">
+<h3>Disabling safe mode</h3>
+<P>As of version 2.4.12, you can switch off these safety features by unchecking 
+"Safe mode" in the options screen.<BR><b>If you do this, then you will need to make 
+sure any program you run in Basic4GL will not damage your computer.</b></P>
+<P>Also, standalone executables created with Basic4GL ALWAYS run with "safe 
+mode" switched OFF.</P>
+</div>
+<H2>Opening files</H2>
+<H3>OpenFileRead and OpenFileWrite</H3>
+<P>Files are opened like so:</P>
+<P>(For writing):</P>
+<div class="format">
+  <P>dim <EM>file<BR>...</EM><BR><EM>file</EM> = OpenFileWrite("Files/<EM>filename.ext</EM>")</P></div>
+<P>(For reading):</P>
+<div class="format">
+  <P>dim <EM>file<BR>...</EM><BR><EM>file</EM> = OpenFileRead("Files/<EM>filename.ext</EM>")</P></div>
+<P>Where <EM>filename.ext</EM> is the filename and extension that is to be 
+opened.</P>
+<P><EM>file</EM> is an integer variable that will store the file handle. This is 
+a number that Basic4GL generates to identify the file that was just opened, and 
+will be passed to other file routines to read data from or write data to the 
+file.</P>
+<P>If a file is opened for writing, it replaces any file that was their 
+previously. If no file exists, one is created.</P>
+<H2>Error handling</H2>
+<H3>FileError</H3>
+<P>If a file I/O routine fails, the Basic4GL program simply keeps running, 
+without performing the particular file operation that it attempted.</P>
+<P>You can test whether the operation succeeded by calling the FileError() 
+function. This is updated after every file operation. If the operation 
+succeeded, it will be set to an error message, describing what went wrong.</P>
+<P>For example:</P>
+<div class="format">
+  <P>dim file<BR>file = OpenFileRead("c:\autoexec.bat")<BR>if FileError() 
+  &lt;&gt; "" then print FileError(): end endif<BR>' Carry on...</P></div>
+<H2>Closing the file</H2>
+<H3>CloseFile</H3>
+<P>It is good practice to close the file once you've finished with it as 
+follows:</P>
+<div class="format">
+  <P>CloseFile(<EM>file</EM>)</P></div>
+<P>If you forget, or your program stops for any reason before it can close the 
+file, Basic4GL will close it automatically, the next time you run a Basic4GL 
+program or when you close down Basic4GL.</P>
+<H2>File reading routines</H2>
+<P>The file must have been opened with OpenFileRead for these routines to work 
+correctly.</P>
+<H3>ReadLine</H3>
+<P>ReadLine(<EM>file</EM>) reads a line from a text file and returns it as a 
+string. The lines are separated by carriage return and/or newline 
+characters.</P>
+<H3>ReadText</H3>
+<P>ReadText(<EM>file</EM>, <EM>skipEOL</EM>) skips over whitespace (spaces, tabs 
+e.t.c) until it finds some text. It then returns all the consecutive text at 
+that point until a whitespace character has been reached, as a 
+string.<BR><EM>SkipEOL</EM> is a boolean (true/false) parameter. If it is true, 
+then ReadText will skip over any end-of-line characters it finds in the file. If 
+false, it will stop at the end-of-line and return a blank string.</P>
+<P>This can be used to break up a text files into words.</P>
+<H3>ReadChar</H3>
+<P>ReadChar(<EM>file</EM>) reads a single character from the file and returns it 
+as a string.</P>
+<H3>ReadByte</H3>
+<P>ReadByte(<EM>file</EM>) reads a single binary byte from the file and returns 
+it as an integer.</P>
+<H3>ReadWord</H3>
+<P>ReadWord(<EM>file</EM>) reads a two byte "word" from the file and returns it 
+as an integer.</P>
+<H3>ReadInt</H3>
+<P>ReadInt(<EM>file</EM>) reads a four byte integer from the file and returns it 
+as an integer.</P>
+<H3>ReadFloat</H3>
+<P>ReadFloat(<EM>file</EM>) reads four bytes as a four byte floating point 
+number and returns it as a real.</P>
+<H3>ReadDouble</H3>
+<P>ReadDouble(<EM>file</EM>) reads eight bytes as an eight byte floating point 
+number and returns it as a real.</P>
+<H3>ReadReal</H3>
+<P>ReadReal(<EM>file</EM>) is a synonym for ReadFloat(<EM>file</EM>) in the 
+current version of Basic4GL on the Windows platform. (Basic4GL's "real" type is 
+equivalent to a "float" in C).</P>
+<H2>File writing routines</H2>
+<P>The file must have been opened with OpenFileWrite for these routines to work 
+correctly.</P>
+<H3>WriteLine</H3>
+<P>WriteLine(<EM>file</EM>, <EM>text</EM>) writes <EM>text</EM> to the file and 
+automatically appends a carriage return/newline pair.<BR><EM>text </EM>is a 
+string value.</P>
+<H3>WriteString</H3>
+<P>WriteString(<EM>file</EM>, <EM>text</EM>) writes <EM>text</EM> to the file. 
+No carriage return or linefeed is appended. A zero byte string terminator is 
+<STRONG>NOT</STRONG> appended..<BR><EM>text </EM>is a string value.</P>
+<H3>WriteChar</H3>
+<P>WriteChar(<EM>file</EM>, <EM>text</EM>) writes the first character of 
+<EM>text</EM> to the file as a single character.<BR><EM>text </EM>is a string 
+value.</P>
+<H3>WriteByte</H3>
+<P>WriteByte(<EM>file</EM>, <EM>intval</EM>) writes <EM>intval</EM> to the file 
+as a single byte value.<EM><BR>intval</EM> is an integer value.</P>
+<H3>WriteWord</H3>
+<P>WriteWord(<EM>file</EM>, <EM>intval</EM>) writes <EM>intval</EM> to the file 
+as a two byte "word" value.<EM><BR>intval</EM> is an integer value.</P>
+<H3>WriteInt</H3>
+<P>WriteInt(<EM>file</EM>, <EM>intval</EM>) writes <EM>intval</EM> to the file 
+as a four byte integer value.<EM><BR>intval</EM> is an integer value.</P>
+<H3>WriteFloat </H3>
+<P>WriteFloat(<EM>file</EM>, <EM>realval</EM>) writes <EM>realval</EM> to the 
+file as a four byte floating point value.<EM><BR>realval</EM> is an real 
+value.</P>
+<H3>WriteDouble</H3>
+<P>WriteDouble(<EM>file</EM>, <EM>realval</EM>) writes <EM>realval</EM> to the 
+file as an eight byte floating point value.<EM><BR>realval</EM> is an real 
+value.</P>
+<H3>WriteReal</H3>
+<P>WriteReal(<EM>file</EM>, <EM>realval</EM>) is a synonym for WriteFloat 
+(<EM>file</EM>, <EM>realval</EM>)</P>
+<H2>Other file I/O routines</H2>
+<H3>EndOfFile</H3>
+<P>EndOfFile(<EM>file</EM>) applies to files opened for reading, and returns 
+true if we have reached the end of the file.</P>
+<H3>Seek</H3>
+<P>Seek(<EM>file, offset</EM>) applies to files opened for reading, and 
+attempts to reposition the reading position to <EM>offset</EM> bytes from the 
+beginining of the file.</P>
+<H2>Deleting a file</H2>
+<H3>DeleteFile</H3>
+<P>DeleteFile(<EM>filename</EM>) will delete a file. <STRONG><EM>This routine is 
+only available when "Safe mode" is switched OFF.</EM></STRONG><BR>If the delete 
+succeeds, DeleteFile() returns true. Otherwise DeleteFile() returns false, and 
+FileError() can be used to retrieve the text of the error.</P>
+<H2>Directory listing routines</H2>
+<H3>FindFirstFile</H3>
+<P>FindFirstFile(<EM>mask</EM>) returns the filename of the first file that 
+matches the text string<EM> mask</EM>.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">dim filename$
+filename$ = FindFirstFile("*.gb")
+print filename$</CODE></PRE>
+<P>Example 2:</P>
+<PRE><CODE class="basic">print FindFirstFile("files\*.*")</CODE></PRE>
+<P>Directory listing is subject to the same restrictions as general file access. 
+That is, the directory must be the same directory as where the Basic4GL program 
+is saved, or a subdirectory.</P>
+<P>If no matching file is found, "FindFirstFile" returns an empty string 
+("").</P>
+<H3>FindNextFile</H3>
+<P>FindNextFile() returns the filename of the next matching file in the 
+directory.<BR>This function uses the same mask as was passed to "FindFirstFile", 
+and therefore will only work after a successful "FindFirstFile" call.</P>
+<P>"FindNextFile" will keep returning the next filename until there are no more 
+matching files, at which point it returns an empty string ("").</P>
+<P>Example:</P>
+<PRE><CODE class="basic">dim filename$
+filename$ = FindFirstFile("*.gb")
+while filename$ &lt;&gt; ""
+    printr filename$
+    filename$ = FindNextFile()
+wend
+FindClose()</CODE></PRE>
+<H3>FindClose</H3>
+<P>FindClose() will free resources after a FindFirstFile..FindNextFile directory 
+search.</P>
+<P>It is not strictly required as Basic4GL will do this for you automatically 
+when the program finishes. However it is good practice.</P>
+<h2>Application data</h2>
+<p>In Windows it is good practice to write application data to the "application data" Windows system folder. This can avoid Windows User Access Control (UAC) permission related issues, as well as provide separate storage for different Windows users (if required).</p>
+<h3>OpenAppDataRead and OpenAppDataWrite</h3>
+<p>To open an application data file for writing, use:</p>
+<div class="format">    dim <em>file</em> = OpenAppDataWrite(<em>subfolder</em>, <em>filename</em>, <em>allusers</em>)</div>
+<p>Where <em>subfolder</em> is the sub-folder within the Windows application data folder, and <em>filename</em> is the file to create. <em>allusers</em> determines whether to use the shared application data folder for all Windows users (true) or the current user's personal application data folder (false).</p>
+<p>OpenAppDataWrite() behaves much like OpenFileWrite(). It returns a number that can be passed to the file I/O routines to write the file. Once you have finished, you should call CloseFile(<em>file</em>) to close the file. As with OpenFileWrite(), if the file already exists it will be overwritten. Otherwise a new file will be created.</p>
+<p>To open an application data file for reading, use:</p>
+<div class="format">    dim <em>file</em> = OpenAppDataRead(<em>subfolder</em>, <em>filename</em>, <em>allusers</em>)</div>
+<p>This takes the same parameters as OpenAppDataWrite().</p>
+<p>It in turn behaves much like OpenFileRead() in that it returns a number that can be passed to the file I/O routines to read the file, and you should call CloseFile(</em>file</em>) to close the file when done.</p>
+
+<div class="extra-info">
+	<h3>Application data folder</h3>
+	<p>Basic4GL actually reads/writes files from:
+	<div class="format">    <em>app data</em><b>\Basic4GL\</b><em>subfolder</em></div>
+	</p>
+	<p>Programs are permitted to access this folder even when safe mode is switched on.</p>
+	<p>If you really don't want your files in the Basic4GL folder you can specify a relative 
+	<em>subfolder</em> like "..\MyApp". Be aware however that <b>the file will fail to read/write unless safe mode is turned <em>off</em></b>.</p>
+</div>
+
+<H1>Sound</H1>
+<P>Basic4GL uses the Audiere sound library, which supports a number of different 
+sound formats such as .wav, streamed music formats such as Ogg Vorbis, and "mod" 
+formats like .mod, .s3m, .xm and .it. See the <A>Audiere home page</A> for more 
+information.</P>
+<div class="extra-info">
+<h3>Standalone exe distribution</h3>
+<P>If you use sound or music functions in your program, and you wish to 
+distribute it as a standalone executable (see <A>Creating Standalone Exes</A>) be aware 
+that you must also distribute:</P>
+<UL>
+  <LI>b4glsound.dll</LI></UL>
+<P>which must be placed in the same folder as your standalone .exe file. 
+Otherwise your program will run silently.</P>
+</div>
+<H2>Sound functions</H2>
+<H3>LoadSound</H3>
+<P>Sounds are loaded as follows:</P>
+<div class="format">
+  <P>dim <EM>sound</EM><BR>...<BR><EM>sound</EM> = LoadSound(<EM>filename</EM>)</P></div>
+<P><EM>Filename</EM> must refer to a file of a supported sound format.</P>
+<H3>PlaySound</H3>
+<P>Once the sound has been loaded, it can be played as follows:</P>
+<div class="format">
+  <P>PlaySound(<EM>sound</EM>)</P></div>
+<P>or</P>
+<div class="format">
+  <P>PlaySound(<EM>sound, volume, looped</EM>)</P></div>
+<P>Here <EM>sound</EM> is the sound handle that was returned from 
+LoadSound(...).<BR><EM>Volume</EM> is the sound volume, where 1 = full volume, 
+0.5 = half volume etc. (You can also use values greater than 1, but be warned 
+that the sound may "clip" and become distorted.)<BR>Setting <EM>looped</EM> to 
+true will cause the sound to play continuously in a loop.</P>
+<P>Note: If <EM>volume</EM> and <EM>looped</EM> are not specified they default 
+to <EM>volume</EM> = 1 and <EM>looped</EM> = false.</P>
+<P>PlaySound(...) returns the number of the "voice" that was chosen to play the 
+sound. Basic4GL supports 10 voices, which defines the maximum number of sounds 
+that can be played simultaneously.<BR>This number is useful if you want to stop 
+the sound later (especially for looped sounds like footsteps), as you can pass 
+it to the StopSoundVoice(...) function.</P>
+<H3>DeleteSound</H3>
+<P>DeleteSound(<EM>sound</EM>) deletes the sound from memory.<BR>If you don't 
+explicitly delete them, Basic4GL will automatically do so when your program 
+finishes.</P>
+<H3>StopSoundVoice</H3>
+<P>To stop a sound playing, use:</P>
+<div class="format">
+  <P>StopSoundVoice(<EM>voice</EM>)</P></div>
+<P><EM>Voice</EM> is the number of the voice you wish to stop playing.<BR>This 
+number is returned from PlaySound(...) when the sound was started.</P>
+<H3>StopSounds</H3>
+<P>You can also stop all sounds with:</P>
+<div class="format">
+  <P>StopSounds()</P></div>
+<H2>Music functions</H2>
+<P>These functions are used to stream in and play music files, such as Ogg 
+Vorbis, or "mod" files (.mod, .s3m, .xm, .it etc).</P>
+<H3>PlayMusic</H3>
+<P>Start playing a music file with:</P>
+<div class="format">
+  <P>PlayMusic(<EM>filename</EM>)</P></div>
+<P>or</P>
+<div class="format">
+  <P>PlayMusic(<EM>filename</EM>, <EM>volume</EM>, 
+<EM>looped</EM>)</P></div>
+<P><EM>Filename</EM> must be a file of a supported music format. <EM>Volume</EM> 
+and <EM>looped</EM> behave the same as with PlaySound(...).</P>
+<P>This will open the file and start playing it immediately.<BR>Unlike regular 
+sound files music files are "streamed". This means that the file is not loaded 
+into memory all at once. Instead the file is loaded in continuously while the 
+music is playing.<BR>Basic4GL supports playing one music file at a time only. If 
+a music file is already playing, it will stop and the new file will play 
+instead.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">dim filename$
+printr"Filename:": input filename$
+PlayMusic(filename$)
+if SoundError() &lt;&gt; "" then printr SoundError(): end endif
+while MusicPlaying(): Sleep(100): wend</CODE></PRE>
+<H3>StopMusic</H3>
+<P>StopMusic() will stop music file from playing.</P>
+<H3>MusicPlaying</H3>
+<P>MusicPlaying() returns true while the music file is playing.</P>
+<H3>SetMusicVolume</H3>
+<P>To set the music volume while music is playing, use:</P>
+<div class="format">
+  <P>SetMusicVolume(<EM>volume</EM>)</P></div>
+<P>Where <EM>volume</EM> behaves the same as with PlaySound() or 
+PlayMusic().</P>
+<H2>Sound and music errors</H2>
+<P>If a sound or music function fails, Basic4GL will store a description of the 
+error, which can be retrieved with the SoundError() function.</P>
+<H3>SoundError</H3>
+<P>SoundError() returns a text string describing the result of the last sound or 
+music function call.</P>
+<P>If the call was successful, SoundError() returns the empty string (""). 
+Otherwise it returns the text of the error message.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">dim sound, i
+sound = LoadSound("c:\windows\media\chimes.wav")
+if SoundError() &lt;&gt; "" then 
+    printr SoundError()
+else
+    PlaySound(sound)
+    Sleep(2000)
+endif</CODE></PRE>
+<H1>General purpose functions</H1>
+<P>These functions are used for general purpose operations, such as mathematics 
+equations and string manipulation.</P>
+<H3>abs</H3>
+<P>Abs(<EM>x</EM>) returns the absolute value of <EM>x</EM>.</P>
+<H3>arraymax</H3>
+<P>ArrayMax(<EM>array</EM>) returns the index of the highest element of 
+<EM>array</EM>. Iterating elements 0..ArrayMax(<EM>array</EM>) will therefore 
+visit every element inside the array.<BR>ArrayMax is a special function in that 
+<EM>array</EM> can be any type, so long as it is an array.</P>
+<H3>asc</H3>
+<P>Asc(<EM>x</EM>) takes a single string parameter <EM>x</EM>, and returns the 
+ASCII value of the first character.<BR>This is the opposite of the chr$ 
+function</P>
+<H3>atn</H3>
+<P>Atn(<EM>x</EM>) returns the Arc Tangent value of <EM>x</EM>, in radians.</P>
+<H3>
+<H3>atnd</H3></H3>
+<P>Atnd(<EM>x</EM>) returns the Arc Tangent value of <EM>x</EM>, in degrees.</P>
+<H3>atn2</H3>
+<P>Atn2(x, y) returns the Arc Tangent value of <EM>x</EM>, <EM>y,</EM> in 
+radians.</P>
+<H3>
+<H3>atn2d</H3></H3>
+<P>Atn2(x, y) returns the Arc Tangent value of <EM>x</EM>, <EM>y,</EM> in 
+degrees.</P>
+<H3>beep</H3>
+<P>Beep() causes the computer to beep.</P>
+<H3>chr$</H3>
+<P>Chr$(<EM>x</EM>) takes a single integer parameter <EM>x</EM>, and returns a 
+string character whose ASCII value is <EM>x</EM>.</P>
+<P>Example:</P>
+<div class="format">
+  <P>Printr Chr$(72)+Chr$(101)+Chr$(108)+Chr$(108)+Chr$(111)</P></div>
+<H3>cos</H3>
+<P>Cos(<EM>x</EM>) returns the Cosine of <EM>x</EM>, where <EM>x</EM> is 
+measured in radians.</P>
+<H3>cosd</H3>
+<P>Cosd(<EM>x</EM>) returns the Cosine of <EM>x</EM>, where <EM>x</EM> is 
+measured in degrees.</P>
+<H3>exp</H3>
+<P>Exp(<EM>x</EM>) returns e raised to the power of <EM>x</EM>.</P>
+<P>Exp is the inverse of Log.</P>
+<H3>int</H3>
+<P>Int(<EM>x</EM>) casts a real valued <EM>x</EM> to an integer.<BR>The rounding 
+is slightly different to the implicit type cast when a real value is assigned to 
+an integer.<BR>Int(<EM>x</EM>) rounds <EM>x</EM> towards negative infinity, 
+whereas implicit type casting always rounds towards 0.</P>
+<P>Example:</P>
+<div class="format">
+  <P>dim a#, i1, i2: a# = -5.1<BR>i1 = a#<BR>i2 = Int(a#)<BR>printr "i1 = " + 
+  i1<BR>printr "i2 = " + i2</P></div>
+<H3>left$</H3>
+<P>Left$(<EM>s</EM>,<EM>c</EM>) returns a string containing the first <EM>c</EM> 
+characters of <EM>s</EM>.<EM><BR>s</EM> is a string value, <EM>c</EM> is an 
+integer value.</P>
+<P>For example, Left$("ABCDEFG", 3) returns "ABC"</P>
+<H3>lcase$</H3>
+<P>LCase$(<EM>x</EM>) returns <EM>x</EM> converted to lowercase.</P>
+<H3>len</H3>
+<P>Len(<EM>x</EM>) returns the length of the string <EM>x</EM> in 
+characters.</P>
+<H3>log</H3>
+<P>Log(<EM>x</EM>) returns the natural logarithm of <EM>x</EM>.</P>
+<P>Log is the inverse of Exp.</P>
+<H3>mid$</H3>
+<P>Mid$(<EM>s</EM>,<EM>i</EM>,<EM>c</EM>) returns a string containing <EM>c</EM> 
+consecutive characters of string <EM>s</EM>, starting from the <EM>i</EM>th 
+character.</P>
+<P>For example, Mid$("ABCDEFG", 4, 3) returns "DEF".</P>
+<H3>performancecounter</H3>
+<P>PerformanceCounter() returns the number of milliseconds that have elapsed 
+since the computer was turned on.<BR>This function is very similar to 
+TickCount(), except PerformanceCounter() is accurate to1 millisecond whereas 
+TickCount() is only accurate to 10ms.</P>
+<P>Therefore I strongly recommend using PerformanceCounter() for any timing 
+operations.</P>
+<P>The old TickCount() function is retained only for backwards compatibility 
+with existing Basic4GL programs.</P>
+<H3>pow</H3>
+<P>Pow(<EM>x</EM>,<EM>y</EM>) returns <EM>x</EM> raised to the power of 
+<EM>y</EM>.</P>
+<H3>right$</H3>
+<P>Right$(<EM>s</EM>,<EM>c</EM>) returns a string containing the last <EM>c</EM> 
+characters of <EM>s</EM>.</P>
+<P>For example, Right$("ABCDEFG", 3) returns "EFG"</P>
+<H3>rnd</H3>
+<P>Rnd() returns a random integer value, between 0 and RND_MAX.<BR>(RND_MAX = 
+32767, but could be different in future ports of Basic4GL to different platforms 
+or operating systems.)</P>
+<P>To return a random number between 0 and <EM>x-1 </EM>(inclusive), use:</P>
+<div class="format">
+  <P>Rnd() % <EM>x</EM></P></div>
+<P>To return a random number between 1 and <EM>x</EM> (inclusive), use:</P>
+<div class="format">
+  <P>Rnd() % <EM>x</EM> + 1</P></div>
+<H3>sgn</H3>
+<P>Sgn(<EM>x</EM>) returns:</P>
+<P>1, if <EM>x</EM> is greater than 0<BR>0, if <EM>x</EM> equals 0<BR>-1, if 
+<EM>x</EM> is less than 0</P>
+<H3>sin</H3>
+<P>Sin(<EM>x</EM>) returns the Sine of <EM>x</EM>, where <EM>x</EM> is measured 
+in radians.</P>
+<H3>sind</H3>
+<P>Sind(<EM>x</EM>) returns the Sine of <EM>x</EM>, where <EM>x</EM> is measured 
+in degrees.</P>
+<H3>sqr</H3>
+<P>Sqr(<EM>x</EM>) returns the square root of <EM>x</EM>.</P>
+<P>(Actually the square root of the absolute value of <EM>x</EM>.)</P>
+<H3>sqrt</H3>
+<P>Sqrt(<EM>x</EM>) is exactly the same as Sqr(<EM>x</EM>)</P>
+<H3>str$</H3>
+<P>Str$(<EM>x</EM>) converts an integer value <EM>x</EM> into a string 
+representation of <EM>x</EM>.</P>
+<P>For example, Str$(-13.4) returns "-13.4".</P>
+<H3>tan</H3>
+<P>Tan(<EM>x</EM>) returns the Tangent of <EM>x</EM>, where <EM>x</EM> is 
+measured in radians.</P>
+<H3>tand</H3>
+<P>Tand(<EM>x</EM>) returns the Tangent of <EM>x</EM>, where <EM>x</EM> is 
+measured in degrees.</P>
+<H3>tanh</H3>
+<P>Tanh(<EM>x</EM>) returns the Hyperbolic Tangent of <EM>x</EM>, where 
+<EM>x</EM> is measured in radians.</P>
+<H3>tickcount</H3>
+<P>TickCount() returns the number of milliseconds that have elapsed since the 
+computer was turned on.<BR>Note: This function is only accurate to about 10ms. I 
+strongly advise using PerformanceCounter() instead.</P>
+<H3>ucase$</H3>
+<P>UCase$(<EM>x</EM>) returns <EM>x</EM> converted to uppercase.</P>
+<H3>val</H3>
+<P>Val(<EM>x</EM>) converts a string <EM>x</EM> into a numeric value.<BR>If 
+<EM>x</EM> cannot be converted into a number, then Val(<EM>x</EM>) returns 
+0.</P>
+<P>For example, Val("27.2") returns 27.2.</P>
+<P>Val is the opposite of Str$.</P>
+<H1>Vector and Matrix routines</H1>
+<P>Basic4GL contains built in support for matrix and vector arithmetic, through 
+a library of trigonometry functions, and also through extensions to standard 
+mathematical operators (+, -, * e.t.c) to work with vector and matrix types.</P>
+<H2>Vector storage format</H2>
+<P>Vectors are stored as an array of reals. For example:</P>
+<div class="format">
+  <P>dim vec#(3)<BR>vec# = vec4(1, 2, 3, 1) ' Create a vector and assign it to 
+  vec#</P></div>
+<P>To be elegible for use with the built in trigonometry functions, the array 
+must have 2, 3 or 4 elements. (Remember that declaring an array as size 3 
+actually results in <EM>4</EM> elements, 0 through 3 inclusive).</P>
+<P>Element 0 stores the <EM>x</EM> component, element 1 stores <EM>y</EM> 
+component, 2 stores <EM>z</EM> and 3 stores <EM>w</EM>.</P>
+<P>Certain trigonometry functions that operate on 4 component vectors will 
+automatically substitue <EM>z</EM> = 0 and/or <EM>w</EM> = 1 when short version 
+vectors are passed in.</P>
+<H2>Matrix storage format</H2>
+<P>A matrix is a 4 x 4 array of reals, and must always be "DIM"med as:</P>
+<div class="format">
+  <P><EM>matrixname</EM>#(3)(3)</P></div>
+<P>Example:</P>
+<PRE><CODE class="basic">dim matrix#(3)(3)<BR>matrix# = IdentityMatrix() ' Assign a matrix to matrix#</CODE></PRE>
+<P>The first array dimension corresponds to the <EM>x</EM> coordinate of the 
+matrix, and the second to the <EM>y</EM>.</P>
+<P>Basic4GL vector and matrix storage format and operations are designed to 
+mirror those of OpenGL.<BR>As such vectors are multiplied as column vectors on 
+the right hand side of matrices. Matrices are stored as an array of column 
+vectors.</P>
+<H2>Creating vectors</H2>
+<P>Vectors are just arrays, so you can read from and write to them like any 
+other array.</P>
+<PRE><CODE class="basic">dim v#(3), i<BR>for i = 0 to 3: v#(i) = i: next ' Create a (0 1 2 3) vector</CODE></PRE>
+<PRE><CODE class="basic">dim v1#(3), v2#(3), dotProd#<BR>dotProd# = v1#(0)*v2#(0) + v1#(1)*v2#(1) + v1#(2)*v2#(2)<BR>' Calculate the vector dot product<BR>' (Note: we could also have said dotProd# = v1# * v2#)</CODE></PRE>
+<P>However there are a set of routines for creating vectors quickly and 
+simply:</P>
+<H3>vec4, vec3 and vec2</H3>
+<P>vec4(<EM>x</EM>, <EM>y</EM>, <EM>z</EM>, <EM>w</EM>) returns a 4 component 
+vector with <EM>x, y, z </EM>and <EM>w</EM> components initialised 
+accordingly.</P>
+<P>vec3(<EM>x</EM>, <EM>y</EM>, <EM>z</EM>) returns a 3 component vector with 
+<EM>x, y </EM>and <EM>z</EM> components initialised accordingly.</P>
+<P>vec2(<EM>x</EM>, <EM>y</EM>) returns a 2 component vector with <EM>x</EM> and 
+<EM>y</EM> components initialised accordingly.</P>
+<P>Examples:</P>
+<PRE><CODE class="basic">dim lightsource#(3)<BR>lightsource# = vec4(0, 100, 0, 1) ' Lightsource at (0 100 0)</CODE></PRE>
+<P>This is exactly equivalent to:</P>
+<PRE><CODE class="basic">dim lightsource#(3)<BR>lightsource#(0) = 0<BR>lightsource#(1) = 100<BR>lightsource#(2) = 0<BR>lightsource#(3) = 1</CODE></PRE>
+<P>The first version is simply a more compact alternative.</P>
+<H2>Extended mathematics operators</H2>
+<P>Certain mathematics operators have been extended to accept vectors and or 
+matrices as input, and (where appropriate) return a vector or a matrix as a 
+result.</P>
+<P><EM>vec</EM> = A vector<BR><EM>matrix</EM> = A matrix<BR><EM>real</EM> = A 
+real value</P>
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD><STRONG><U>Expression</U></STRONG></TD>
+    <TD><STRONG><U>Result</U></STRONG></TD></TR>
+  <TR>
+    <TD>-<EM>vec</EM></TD>
+    <TD>Returns <EM>vec</EM> negated. That is <EM>vec</EM> scaled by -1</TD></TR>
+  <TR>
+    <TD>-<EM>matrix</EM></TD>
+    <TD>Returns <EM>matrix </EM>negated. I.e <EM>matrix</EM> scaled by 
+-1</TD></TR>
+  <TR>
+    <TD><EM>vec</EM> * <EM>real<BR></EM>or<BR><EM>real</EM> * <EM>vec</EM></TD>
+    <TD>Returns <EM>vector</EM> scaled by <EM>real</EM></TD></TR>
+  <TR>
+    <TD><EM>matrix</EM> * <EM>real</EM><BR>or<BR><EM>real</EM> *<EM> 
+      matrix</EM></TD>
+    <TD>Returns <EM>matrix</EM> scaled by <EM>real</EM></TD></TR>
+  <TR>
+    <TD><EM>matrix</EM> * <EM>vec</EM></TD>
+    <TD>Returns <EM>vec</EM> multiplied as a column vector on the right hand 
+      side of <EM>matrix</EM>. The result is another vector.</TD></TR>
+  <TR>
+    <TD><EM>matrix1</EM> * <EM>matrix2</EM></TD>
+    <TD>Returns <EM>matrix2</EM> multiplied on the right hand side of 
+      <EM>matrix1.</EM> The result is another matrix.</TD></TR>
+  <TR>
+    <TD><EM>vec1</EM> * <EM>vec2</EM></TD>
+    <TD>Returns the dot product of <EM>vec1 </EM>and <EM>vec2</EM>, as a real 
+      value.</TD></TR>
+  <TR>
+    <TD><EM>vec </EM>/ <EM>real</EM></TD>
+    <TD>Returns <EM>vec</EM> scaled by 1 / <EM>real</EM></TD></TR>
+  <TR>
+    <TD><EM>matrix</EM> / <EM>real</EM></TD>
+    <TD>Returns <EM>matrix </EM>scaled by 1 / <EM>real</EM></TD></TR>
+  <TR>
+    <TD><EM>vec1</EM> + <EM>vec2</EM></TD>
+    <TD>Returns <EM>vec2</EM> added to <EM>vec1</EM> as a vector</TD></TR>
+  <TR>
+    <TD><EM>matrix1 </EM>+ <EM>matrix2</EM></TD>
+    <TD>Returns <EM>matrix2 </EM>added to <EM>matrix1</EM> as matrix</TD></TR>
+  <TR>
+    <TD><EM>vec1</EM> - <EM>vec2</EM></TD>
+    <TD>Returns <EM>vec2</EM> subtracted from <EM>vec1</EM> as a vector</TD></TR>
+  <TR>
+    <TD><EM>matrix1 </EM>- <EM>matrix2</EM></TD>
+    <TD>Returns <EM>matrix2 </EM>subtracted from <EM>matrix1</EM> as a 
+    matrix</TD></TR></TBODY></TABLE>
+<H2>Matrix creation functions</H2>
+<P>These are based on the OpenGL matrix functions (glTranslate-, glRotate-, 
+e.t.c).</P>
+<H3>MatrixZero</H3>
+<P>MatrixZero() returns a matrix where every element is zero.</P>
+<PRE><CODE class="basic">dim m#(3)(3)<BR>m# = MatrixZero()</CODE></PRE>
+<H3>MatrixIdentity</H3>
+<P>MatrixIdentity() returns the identity matrix.</P>
+<H3>MatrixScale</H3>
+<P>MatrixScale(<EM>scale</EM>) returns a scale matrix</P>
+<H3>MatrixTranslate</H3>
+<P>MatrixTranslate(<EM>x</EM>, <EM>y</EM>, <EM>z</EM>) returns a translation 
+matrix.</P>
+<H3>MatrixRotateX, MatrixRotateY and MatrixRotateZ, MatrixRotate</H3>
+<P>MatrixRotateX(<EM>angle</EM>) returns a matrix that rotates anticlockwise 
+around the positive X axis by <EM>angle</EM> degrees.</P>
+<P>Likewise MatrixRotateY(<EM>angle</EM>) and MatrixRotateZ(<EM>angle</EM>) 
+return matrices that rotate around their respective axes.</P>
+<P>MatrixRotate(<em>angle</em>, <em>vec</em>) returns a matrix that rotates anticlockwise around the specified <em>vec</em> by <em>angle</em> degrees. <em>Vec</em> in this case is a 3D vector.</P>
+<H3>MatrixBasis</H3>
+<P>MatrixBasis(<EM>vecx</EM>, <EM>vecy</EM>, <EM>vecz</EM>) creates a matrix 
+from 3 basis vectors.</P>
+<H3>MatrixCrossProduct</H3>
+<P>MatrixCrossProduct(<EM>vec</EM>) creates a cross product 
+matrix for <EM>vec</EM>. This matrix has the property that when multiplied with 
+a vector <EM>v</EM>, the result is <EM>vec</EM> x <EM>v</EM>. That is the 
+cross product of <EM>vec</EM> and <EM>v</EM>.</P>
+<H2>Using Matrices with OpenGL</H2>
+<H3>glLoadMatrixf, glMultMatrixf</H3>
+<P>You can copy a standard matrix into OpenGL, replacing the perspective, 
+model-view or texture matrix (whatever was last selected by glMatrixMode 
+()).<BR>You can also multiply the current OpenGL matrix with a standard 
+matrix.<BR>The new matrix will transform vertices passed to OpenGL (or texture 
+coordinates for the texture matrix), just as if you had built the matrix with 
+glRotate-, glTranslate-, glScale-,... commands.</P>
+<P><STRONG>glLoadMatrixf </STRONG>(<EM>matrix</EM>) will replace the current 
+OpenGL matrix with <EM>matrix</EM>.</P>
+<P><STRONG>glMultMatrixf</STRONG>(<EM>matrix</EM>) will multiply the current 
+OpenGL matrix by <EM>matrix</EM>. The resulting matrix replaces the previous 
+OpenGL matrix.</P>
+<P><EM>(Note: glLoadMatrixd and glMultMatrixd also work. However as Basic4GL 
+works with floats internally rather than doubles, there is no particular 
+advantage in using these functions.)</EM></P>
+<P>Examples:<BR>The following examples all draw a square 10 units "into the 
+screen", rotated anticlockwise by 20 degrees.</P>
+<P>1.</P>
+<PRE><CODE class="basic">' Standard OpenGL matrix routines
+glLoadIdentity()
+glTranslatef(0, 0, -10)
+glRotatef(20, 0, 0, 1)
+glBegin(GL_QUADS)
+    glVertex2f(-1, 1): glVertex2f(-1, -1): glVertex2f(1, -1): glVertex2f(1, 1)
+glEnd()
+SwapBuffers()
+</CODE></PRE>
+<P>2.</P>
+<PRE><CODE class="basic">' Using glMultMatrixf to multiply in basic matrices
+glLoadMatrixf(MatrixIdentity())
+glMultMatrixf(MatrixTranslate(0, 0, -10))
+glMultMatrixf(MatrixRotateZ(20))
+glBegin(GL_QUADS)
+    glVertex2f(-1, 1): glVertex2f(-1, -1): glVertex2f(1, -1): glVertex2f(1, 1)
+glEnd()
+SwapBuffers()
+</CODE></PRE>
+<P>3.</P>
+<PRE><CODE class="basic">' Build a complete matrix and load into OpenGL in one go
+glLoadMatrixf(MatrixTranslate(0, 0, -10) * MatrixRotateZ(20))
+glBegin(GL_QUADS)
+    glVertex2f(-1, 1): glVertex2f(-1, -1): glVertex2f(1, -1): glVertex2f(1, 1)
+glEnd()
+SwapBuffers()
+</CODE></PRE>
+<P>4.</P>
+<PRE><CODE class="basic">' Matrix stored in a variable
+dim m#(3)(3)
+m# = MatrixTranslate(0, 0, -10) * MatrixRotateZ(20)
+glLoadMatrixf(m#)
+glBegin(GL_QUADS)
+    glVertex2f(-1, 1): glVertex2f(-1, -1): glVertex2f(1, -1): glVertex2f(1, 1)
+glEnd()
+SwapBuffers()
+</CODE></PRE>
+<P>Alternatively we could simply transform the vertices before passing them to 
+OpenGL</P>
+<PRE><CODE class="basic">dim m#(3)(3)<BR>m# = MatrixTranslate(0, 0, -10) * MatrixRotateZ(20)<BR>glBegin(GL_QUADS)<BR>    glVertex3fv(m# * vec3(-1, 1, 0))<BR>    glVertex3fv(m# * vec3(-1, -1, 0))<BR>    glVertex3fv(m# * vec3(1, -1, 0))<BR>    glVertex3fv(m# * vec3(1, 1, 0))<BR>glEnd()</CODE></PRE>
+<P>Which works just as well.<BR>However, keep in mind that if we perform the 
+transformations ourselves we deny OpenGL the opportunity to perform the 
+transformations, and make use of any optimisations such as hardware 
+transformations supported on modern 3D graphics cards.</P>
+<H2>Other trigonometry functions</H2>
+<H3>CrossProduct</H3>
+<P>CrossProduct(<EM>vec1</EM>, <EM>vec2</EM>) returns the vector cross product 
+of <EM>vec1</EM> and <EM>vec2</EM>. The result is a vector.</P>
+<H3>Length</H3>
+<P>Length(<EM>vec</EM>) returns the length of <EM>vec</EM>.<BR>This is 
+equivalent to sqr(<EM>vec</EM>*<EM>vec</EM>)</P>
+<H3>Normalize</H3>
+<P>Normalize(<EM>vec</EM>) returns <EM>vec</EM> scaled to length 1.<BR>This is 
+equivalent to <EM>vec</EM> / Length(<EM>vec</EM>)</P>
+<H3>Determinant</H3>
+<P>Determinant(<EM>matrix</EM>) returns the matrix determinant of 
+<EM>matrix</EM>. The result is a real value.</P>
+<H3>Transpose</H3>
+<P>Transpose(<EM>matrix</EM>) returns <EM>matrix</EM> transposed. (That is 
+<EM>matrix</EM> mirrored about the diagonal.)</P>
+<H3>RTInvert</H3>
+<P>RTInvert(<EM>matrix</EM>) returns <EM>matrix</EM> inverted, for any 
+<EM>matrix</EM> containing only rotations and translations.<BR>If 
+<EM>matrix</EM> contains any other transformations apart from rotations and 
+translations then the result is undefined, and will <STRONG>not</STRONG> be the 
+inverse of <EM>matrix.</EM></P>
+<H3>Orthonormalize</H3>
+<P>Orthonormalize(<EM>matrix</EM>) returns an orthonormal matrix by performing 
+a series of normalizations and cross products on the basis vectors of 
+<EM>matrix.</EM></P>
+<P>This is useful for matrices that are nearly orthonormal. For example to 
+ensure a matrix (that should be orthonormal) hasn't accumulated rounding errors 
+after a large number of transformations.</P>
+<H2>Handling the w coordinate</H2>
+<P>Some of the above functions (such as CrossProduct) and operators (such as +) 
+take two vectors and return a single result vector. Basic4GL sets the <EM>w</EM> 
+coordinate of the resulting vector as follows:</P>
+<UL>
+  <LI>If <EM>w</EM> = 0 for both input vectors, then <EM>w</EM> = 0 for the 
+  resulting vector 
+  <LI>Otherwise <EM>w</EM> is set to 1 </LI></UL>
+<P>If this is not the behaviour that you want, you will have to set the 
+<EM>w</EM> coordinate manually.</P>
+<P>There is no special treatment of <EM>w</EM> when multiplying a vector by a 
+matrix, <EM>w</EM> is calculated like any other component. You will need to 
+divide through by <EM>w</EM> manually if this is the behaviour you require.</P>
+<PRE><CODE class="basic">dim vec#(3), matrix#(3)(3)</CODE></PRE><PRE><CODE class="basic">...</CODE></PRE><PRE><CODE class="basic">vec# = matrix# * vec#		' Multiply vector by matrix
+vec# = vec# / vec#(3)		' Divide through by w</CODE></PRE>
+<H1>Runtime compilation</H1>
+<DIV class="extra-info">
+<h3>!!Deprecated!!</h3>
+<P>As of version 2.5.1 the following functions are deprecated. If at all 
+possible you should use the "comp", "compFile" and "exec" commands that are documented in 
+the <a href="Language Guide.html#runtime-compilation">language guide</a> (as they are now built in language commands).</P>
+<P>These old functions are still available for backwards compatibility with 
+older Basic4GL programs. However they cannot be used in combination with user 
+functions and subs, and you will get a runtime error if you try to do so.</P>
+<P>The exception is the following functions: CompilerError, CompilerErrorLine 
+and CompilerErrorCol.</P>
+<P>These are still considered current, and can be used with the new "comp" 
+command.</P></DIV>
+<P>The following functions can be used to compile and execute code at 
+runtime.</P>
+<H3>Compile</H3>
+<P>Compile(<EM>text</EM>) compiles <EM>text</EM> into program code, and returns 
+an integer that identifies the compiled code.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">dim code
+code = Compile("printr " + chr$(34) + "Hello world" + chr$(34))
+Execute(code)</CODE></PRE>
+<P><EM>Text</EM> can either be a string, or an array of strings.<BR>If the text 
+compiles successfully, "Compile" returns an integer handle that can be passed to 
+the "Execute" function.<BR>If the text does not compile, "Compile" returns 0, 
+and the error description and position can be extracted using the CompilerError, 
+CompilerErrorLine and CompilerErrorCol functions.</P>
+<H3>CompileFile</H3>
+<P>CompileFile(<EM>filename</EM>) loads a file from disk, compiles it, and 
+returns an integer that identifies the compiled code.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">dim code
+code = CompileFile("md2viewer.gb")
+if code = 0 lor not Execute(code) then
+    printr CompilerError()
+endif</CODE></PRE>
+<P>Important:</P>
+<P>CompileFile can compile just about any program that can be loaded into 
+Basic4GL and compiled manually. However there are some limitations:</P>
+<UL>
+  <LI>CompileFile does not support includes. 
+  <LI>CompileFile does not support plugins.</LI></UL>
+<H3>Execute</H3>
+<P>Execute(<EM>handle</EM>) executes a block of compiled 
+code.<BR><EM>handle</EM> must be a valid handle returned from a successful 
+"Compile" or "CompileFile".</P>
+<P>If the code completes without any errors, "Execute" returns true. Otherwise 
+"execute" returns false, and the error message can be read using the 
+"CompilerError", "CompilerErrorLine" and "CompilerErrorCol" functions.</P>
+<P>The compiled code will execute until one of the following occurs:</P>
+<UL>
+  <LI>The end of the code is reached. 
+  <LI>An "end" instruction is reached. 
+  <LI>A "run" instruction is reached (this is considered a run-time error in 
+  dynamically compiled code). 
+  <LI>A runtime error occurs. </LI></UL>
+<P>The program will then continue executing from the next instruction after the 
+"Execute" call.</P>
+<H2>Compiling with a "symbol prefix"</H2>
+<P>These special versions of the above functions can be used to compile code 
+with an automatic "symbol prefix":</P>
+<UL>
+  <LI>Compile(<EM>text</EM>, <EM>symbol prefix</EM>) 
+  <LI>CompileFile(<EM>filename</EM>, <EM>symbol prefix</EM>) </LI></UL>
+<P>The <EM>symbol prefix</EM> is a text string that is automatically prefixed to 
+the front of every variable name, label name or structure name that the runtime 
+compiled program refers to.</P>
+<P>For example:</P>
+<PRE><CODE class="basic">dim text$, program, i, __value
+text$ = "value = value * value"
+program = Compile(text$, "__")  
+printr CompilerError()
+
+for i = 1 to 10
+    __value = i
+    execute(program)
+    printr i + ", " + __value
+next</CODE></PRE>
+<P>Here our code to compile at runtime is "value = value * value". But because 
+we pass a <EM>symbol prefix</EM> of "__" (double underscore) to the Compile() 
+command, what <EM>actually</EM> gets compiled is "__value = __value * 
+__value".</P>
+<P>The important thing here is that the runtime code <EM>cannot access</EM> any 
+of the main program's variables except those that we have prefixed with "__". It 
+cannot access "i" for example, as "i = 5" would effectively be compiled as "__i 
+= 5".</P>
+<P>We can use this to limit exactly which variables, labels and structure types 
+the runtime compiled program has access to.</P>
+<H3>CompilerError, CompilerErrorLine, CompilerErrorCol</H3>
+<P>CompilerError() returns the error message generated by the last "Compile", 
+"CompileFile" or "Execute" call. If there was no error (i.e. the call was 
+successful), "CompilerError" returns an empty string ("").</P>
+<P>CompilerErrorLine() and CompilerErrorCol() return the line and column of the 
+last error (if applicable). <BR>For a "Compile" or "CompileFile" call, this is 
+the position of the error in the code being compiled.<BR>For an "Execute" call, 
+this is the instruction that caused the run-time error.</P>
+<H2>Runtime compilation issues</H2>
+<P>There are a some potential issues with runtime compiled 
+code that need to be kept in mind.<BR>It is tempting to think that runtime 
+compiled code is crash-proof, because any runtime errors immediately return 
+control to the calling program which can deal with the error 
+appropriately.<BR>This is true. However the runtime compiled code has access to 
+everything in the parent program (by default, although this can be controlled by 
+"symbol prefixes" - see above), including all variables, labels etc, and can 
+often mess things up enough that the program will not run correctly when control 
+is returned.</P>
+<P>For example,the following program:</P>
+<PRE><CODE class="basic">dim text$, code
+text$ = "return"
+gosub ExecuteIt
+end
+
+ExecuteIt:
+    code = Compile(text$)
+    if code = 0 lor not Execute(code) then
+        printr CompilerError()
+    endif
+    return</CODE></PRE>
+<P>stops with a runtime error "Return without gosub", 
+because the runtime compiled code actually returns to the line after the 
+"gosub", before finally ending when it reaches the "end" instruction. This 
+returns control back to the instruction after the "Execute(code)" instruction 
+which attempts to "return" again!</P>
+<P>Another issue is that the executed code may never return 
+at all!<BR>Consider:</P>
+<PRE><CODE class="basic">print "Starting"
+Execute(Compile("while true: wend"))
+print "Ending"</CODE></PRE>
+<P>The last line is never executed, because the dynamically compiled code 
+("while true: wend") never exits, and control is never 
+returned.</P>
+
+<h1>Updating the output window</h1>
+<p>The default window configuration is setup in "Settings|Basic runtime settings...", or in the create standalone executable dialog options (for standalone executables).</p>
+<p>You can also configure the window using BASIC commands.</p>
+<p>For example:
+<pre><code class="basic">' Specify window settings
+SetWindowWidth(320)
+SetWindowHeight(240)
+SetWindowFullscreen(false)
+SetWindowBorder(true)
+SetWindowResizable(false)
+
+' Apply the settings to the window
+UpdateWindow()
+
+' Output text in updated window
+ResizeText(12,8)
+print "Hello world"</code></pre></p>
+<p>When UpdateWindow() is called, the previous OpenGL window is closed, and a new OpenGL window 
+opened using the new parameters.</p>
+
+<h2>Setting window parameters</h2>
+<p>Before calling UpdateWindow() you must specify the parameters for the new window.</p>
+<p>The following commands are used to read and write the window parameters.</p>
+<p>Note that reading the window state returns the values that will be applied when UpdateWindow() 
+is called, rather than the state of the current window. For example, if you call SetWindowWidth(320) but haven't applied it yet with UpdateWindow(), the 
+WindowWidth() function will return 320 even if the current window width is different.</p>
+
+<h3>SetWindowWidth, SetWindowHeight<br>
+WindowWidth, WindowHeight</h3>
+<p>Format:
+<div class="format">    SetWindowWidth(<em>width</em>)<br>
+    SetWindowWidth(</em>height</em>)<br>
+	<em>width</em> = WindowWidth()<br>
+	<em>height</em> = WindowHeight()</div></p>
+<p>These commands read and write the window dimensions in pixels.</p>
+<p><em>width</em> and <em>height</em> are integers.</p>
+<p>This is the size of the area used for output, and does not include the window border (if it has one). So the full size of the window may be bigger.</p>
+<p>In fullscreen mode, SetWindowWidth()/-Height() sets the resolution of the screen. You are responsible for choosing a mode that the monitor supports, otherwise UpdateWindow() may fail.</p>
+<h3>SetWindowFullscreen<br>
+WindowFullscreen</h3>
+<p>Format:
+<div class="format">    SetWindowFullscreen(<em>isFullscreen</em>)<br>
+	<em>isFullscreen</em> = WindowFullscreen()</div></p>
+<p>Specifies whether to use fullscreen mode (<em>isFullscreen</em> is true) or windowed mode (<em>isFullscreen</em> is false).</p>
+<h3>SetWindowBorder<br>
+WindowBorder</h3>
+<p>Format:
+<div class="format">    SetWindowBorder(<em>isBordered</em>)<br>
+	<em>isBordered</em> = WindowBorder()</div></p>
+<p>Whether to include a window border.</p>
+<p>The window border displays the window title, and the close and minimize buttons.</p>
+<p>This setting has no effect on fullscreen windows.</p>
+
+<h3>SetWindowBPP<br>
+WindowBPP</h3>
+<p>Format:
+<div class="format">    SetWindowBPP(<em>bpp</em>)<br>
+	<em>bpp</em> = WindowBPP()</div></p>
+<p>Read and write the window colour depth as bits-per-pixel.</p>
+<p>Typically this will be 16 or 32. Attempting to set a value that your monitor or graphics card doesn't
+support may be ignored, or cause UpdateWindow() to fail.</p>
+<p>This setting applies to fullscreen windows only. Non fullscreen windows always have the same colour
+depth as the Windows desktop.</p>
+
+<h3>SetWindowStencil<br>
+WindowStencil</h3>
+<p>Format:
+<div class="format">    SetWindowStencil(<em>isStencilEnabled</em>)<br>
+	<em>isStencilEnabled</em> = WindowStencil()</div></p>
+<p>Specifies whether the window should have a stencil buffer (<em>isStencilEnabled</em> = true) or 
+no stencil buffer (<em>isStencilEnabled</em> = false).</p>
+<p>The stencil buffer is only required if you are specifically writing stencil buffer OpenGL code.
+For most programs it is not required.</p>
+
+<h3>SetWindowTitle<br>
+WindowTitle</h3>
+<p>Format:
+<div class="format">    SetWindowTitle(<em>title</em>)<br>
+	<em>title</em> = WindowTitle()</div></p>
+<p>Read and write the window title.</p>
+<p><em>title</em> is a text string.</p>
+<p>The window title is displayed on the window border (in windowed mode), and represents the window
+in the Windows task manager, when you hover the mouse over the icon in the task bar, and when you
+Alt-Tab between applications.</p>
+
+<h3>SetWindowResizable<br>
+WindowResizable</h3>
+<p>Format:
+<div class="format">    SetWindowResizable(<em>isResizable</em>)<br>
+	<em>isResizable</em> = WindowResizable()</div></p>
+<p>Whether the window can be resized by dragging the sides and corners (<em>isResizable</em> = true),
+or cannot be resized (<em>isResizable</em> = false).</p>
+<p>This setting has no effect on fullscreen windows.</p>
+
+<h2>Recreating the window</h2>
+<h3>UpdateWindow</h3>
+<p>Format:
+<div class="format">    <em>succeeded</em> = UpdateWindow()</div></p>
+<p>Closes the current window, and creates a new one with the parameters specified. (Any parameters 
+that aren't specified remain the same as for the previous window.)</p>
+
+<div class="extra-info">
+	<h3>Important</h3>
+	<p>UpdateWindow() destroys the current window completely and replaces it with a new one.</p>
+	<p>Any OpenGL state your program has setup prior to calling UpdateWindow() will be lost, and 
+	must be redone.</p>
+	<p>Any textures your program has loaded before calling UpdateWindow() will be unloaded, and must
+	be reloaded. (The charset.png font texture is automatically reloaded though.)</p>
+</div>
+
+<p>Returns true if the window was created successfully.</p>
+<p>If UpdateWindow() returns false, it means Windows was unable to create the window with the 
+parameters specified. Because the previous window has closed, this means there is no output window.</p>
+<p>Basic4GL uses GLFW to create the OpenGL output window. GLFW typically treats the window parameters 
+as "hints", meaning if it cannot create a window exactly with the parameters specified, it may 
+instead create a window as close to the requested parameters as it can manage, rather than fail 
+completely. Because of this it is difficult to cause UpdateWindow() to actually fail.</p>
+
+</BODY></HTML>

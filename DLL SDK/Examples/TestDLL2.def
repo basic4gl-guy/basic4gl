@@ -1,0 +1,6 @@
+; Test DLL 2 def file
+LIBRARY TestDLL2.dll
+
+EXPORTS
+	Basic4GL_Init	@1
+	Basic4GL_Query	@2

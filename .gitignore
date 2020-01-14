@@ -1,15 +1,22 @@
 .svn/*
 *.exe
 *.zip
-3rdparty/*
+*.dll
+3rdparty/corona/*
+3rdparty/glfw/*
 Basic4GL/.vs/*
 Basic4GL/Debug/*
 Basic4GL/Release/*
 Basic4GL/Win32/*
 **/*.user
+**/*.suo
 **/*.bak
+**/*.xcf
 ReleaseImage/*
 Standalone/Debug/*
 Standalone/Release/*
 FreeSound Plugin.htm
 Doxyfile
+to do.txt
+write.txt
+delete.txt

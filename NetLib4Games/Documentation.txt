@@ -1,0 +1,287 @@
+// Note: This documentation is formatted for Doxygen.
+
+#include "NetLayer2.h"
+using namespace NetLib4Games;
+
+/*! \mainpage NetLib4Games Network library for games 
+ *
+ *	\section Important Important!:
+ *
+ *	Documentation is under development at the moment. I plan to flesh everything out in proper detail later.
+ *  For now it should hopefully be enough to get you off the ground and using the library in your own programs.
+ *
+ *	Read \ref Compile for details on how to compile the library.
+ *	Read \ref GettingStarted for details on getting off the ground.
+ *	Read \ref Using for more in depth details about using NetLib4Games within a game or application.
+ */
+
+/*!	\page Compile Compiling NetLib4Games
+ *
+ *	\section CompileWindows Compiling under Windows
+ *
+ *	Win32 Project files exist for building a simple NetLib4Games project with:
+ *	\li MS Visual C++ v6 (NetEngine.dsw)
+ *	\li Borland C++ v5.5 (Makefile, use: make NetEngineBCC.exe)
+ *	\li Borland C++ Builder v6 (NetEngineBCB.bpr)
+ *
+ *	We don't have DevCPP (GCC) or MS Visual C++ .NET projects yet (if you have one to submit, it would be greatly appreciated).
+ *  However building one should simply be a matter of throwing the source files together into a single project and figuring out which windows libs to link it to.
+ *	
+ *	\section CompileOther Compiling under Linux, Mac OS and Operating Systems
+ *
+ *	No other ports exist as yet.
+ *	See \ref Porting about porting to other platforms.
+ */
+
+/*!	\page GettingStarted Getting Started with NetLib4Games
+ *
+ *	\section ExampleProj Example projects
+ *
+ *	There is a simple NetEngine.exe demo that demonstrates establishing a connection
+ *	and sending data back and forth.
+ *
+ *	Pre-built project files exist for a handful of compilers. See the \ref Compile section
+ *	for more info.
+ *
+ *	\section Connecting Establishing a connection
+ *
+ *	NetLib4Games uses a server/client model, much like standard TCP/IP sockets.
+ *	The server creates a listener object which listens for incomming connections.
+ *  The client creates a connection object which attempts to contact the server
+ *  and request a connection.
+ *	When the server receives the connection request, it creates its own connection
+ *	object to represent its side of the connection.
+ *
+ *	So once the connection is established, we have two connection objects that can be used to send and receive network data to each other.
+ *
+ *	The connection class is NetLib4Games::NetConL2.
+ *	For the UDP/IP implementation, the "listener" class is NetLib4Games::NetListenLowUDP.
+ *	There is also a NetLib4Games::NetConLowUDP object that is used internally by the NetLib4Games::NetConL2 to handle the UDP/IP specific functionality.
+ *
+ *	Here's some example server code:
+ *
+ *	\code
+#include "NetLayer2.h"
+#include "UDP/NetLowLevelUDP.h" 
+using namespace NetLib4Games;
+
+...
+
+	// Create UDP/IP listener on port 8000
+	NetListenLowUDP listener(8000);
+
+	// Wait for a connection request
+	while (!listener.ConnectionPending())
+		Sleep(50);
+
+	// Accept connection
+	NetConL2 connection(listener.AcceptConnection());
+
+...\endcode
+ *	
+ *	(Note: This is the SIMPLEST example, but not the most PRACTICAL. It only accepts one connection, and will hang indefinitely until it receives it.
+ *	A real implementation would periodically call ConnectionPending(), accepting or rejecting multiple connections as appropriate.)
+ *
+ *	Here's some example client code:
+ *
+ *	\code
+
+#include "NetLayer2.h"
+#include "UDP/NetLowLevelUDP.h" 
+using namespace NetLib4Games;
+
+...
+
+	// Create client UDP/IP connection
+	NetConL2 connection(new NetConLowUDP());
+
+	// Attempt to connect to local host on port 8000.
+	// Replace with a real network address (either DNS or numeric IP) to connect
+	// to a remote PC.
+	connection.Connect("localhost:8000")
+
+	// Wait for handshaking sequence to finish (optional)
+	while (connection.Connected() && connection.HandShaking())
+		Sleep(50);
+
+	if (connection.Connected()) {
+
+		// Connection succeeded
+		...
+
+	}
+	else {
+
+		// Connection failed
+		...
+
+	}
+
+...\endcode
+
+ *
+ *	(Note: Again SIMPLICITY is chosen over PRACTICALITY. A proper implementation would not stop executing while it waited for the handshaking sequence to complete.)
+ *
+ *	For more information on connecting and connection state, see:
+ *	\li NetLib4Games::NetListenLow::ConnectionPending
+ *	\li NetLib4Games::NetListenLow::AcceptConnection
+ *	\li NetLib4Games::NetListenLow::RejectConnection
+ *	\li NetLib4Games::NetListenLow::RequestString
+ *	\li NetLib4Games::NetConL2::Connect
+ *	\li NetLib4Games::NetConL2::Connected
+ *	\li NetLib4Games::NetConL2::HandShaking
+ *	\li NetLib4Games::NetConL2::Disconnect
+ *
+ *	\section SendRecv Sending and receiving data
+ *
+ *	Once you have a connected NetLib4Games::NetConL2, you can send and receive data
+ *	to/from the other NetLib4Games::NetConL2 on the remote PC.
+ *
+ *	To send a message see:
+ *	\li NetLib4Games::NetConL2::Send
+ *
+ *	To check for pending incoming messages:
+ *	\li NetLib4Games::NetConL2::DataPending
+ *	
+ *	And to receive them:
+ *	\li NetLib4Games::NetConL2::Receive
+ *	\li NetLib4Games::NetConL2::PendingDataSize
+ *	\li NetLib4Games::NetConL2::ReceivePart
+ *	\li NetLib4Games::NetConL2::DonePendingData 
+ */
+
+/*!	\page Porting Porting NetLib4Games to other operating systems.
+
+	\section Portability
+
+	I don't own a Mac, and I'm not very Linux literate, so I haven't attempted to
+	port NetLib4Games to either platform.
+
+	However, I did design the library with portability in mind.
+
+	The engine uses synchronous mode sockets and threads (thus purposefully avoiding
+	Windows sockets' Asynchronous mode), and the threading code has been wrapped in
+	classes and grouped into a single module to make re-implementation easier.
+
+	\section UpdateThreads Updating the thread code.
+
+	All thread specific code is wrapped up into classes in the NetThreadUtils.h header.
+	(With implementation in NetThreadUtils.cpp).
+
+	The module implements:
+	\li An event signalling object: NetLib4Games::ThreadEvent
+	\li A basic critical section/mutex: NetLib4Games::ThreadLock
+	\li A basic thread creating and handling object: NetLib4Games::Thread
+	
+	And a function for waiting for multiple events to be signalled: NetLib4Games::WaitForEvents.
+
+	All these need to be re-implemented for the new target platform.
+
+	\section GetTickCount GetTickCount()
+
+	The network timing functions rely on the Windows GetTickCount() function.
+	This returns as a 32 bit integer the number of milliseconds since the 
+	PC was booted.
+	
+	This function must be re-implemented for the new target platform.
+
+	\section Winsock WinsockAddRef()/WinsockRelease()
+
+	Are implemented in NetLowLevelUDP.cpp.
+	These are used (in Windows implementations) to initialize Winsock and close it
+	down when no longer used.
+	
+	These functions will either need to be re-implemented or disabled as appropriate
+	to the target platform. (I.e. does the target platform need special socket 
+	initialisation code?)
+
+	\section WSAGetLastError WSAGetLastError()
+
+	Is called from a couple of places in NetLowLevelUDP.cpp.
+	Need to replace with calls to the appropriate function, or simply disabled.
+*/
+/*!	\page Using Using NetLib4Games
+
+	This describes the general use of NetLib4Games within a game or application program.
+	If you're really in a hurry, you may want to jump straight to \ref GettingStarted.
+
+	\section ObjectStructure General object structure
+
+	The first thing to understand about the NetLib4Games model is the way it is built
+	to cope with different network protocols.
+	A network connection or listener is built from two parts.
+	\li The part that implements talking to the low level network protocol.
+	\li The part that adds the network features such as reliable packets and connection handling.
+
+	Communicating with the low level network protocol is done through the abstract classes:
+	NetLib4Games::NetConLow and NetLib4Games::NetListenLow. These define the interfaces through which NetLib4Games
+	expects to talk to the underlying network protocol.
+
+	The actual objects created however are descendants of these classes, specialised to 
+	implement a particular network protocol.
+	Currently the UDP/IP protocol is implemented, by the classes: NetLib4Games::NetConLowUDP and
+	NetLib4Games::NetListenLowUDP.
+
+	\section Connections Connection objects
+
+	The objects that add the extra functionality are NetLib4Games::NetConL2.
+	This object represents a connection object, and is the one that the game/application
+	will be working with most often.
+	The NetConL2::NetConL2 constructor is passed a NetLib4Games::NetConLow object, which it accepts 
+	ownership for and will destroy when it is destroyed.
+	The two objects work together to create a working network connection.
+
+	There are two ways to construct a NetLib4Games::NetConL2, which are basically defined by from where 
+	the	NetLib4Games::NetConLow parameter comes.
+
+	You can construct a (UDP/IP) client connection like so:
+	\code
+#include "NetLayer2.h"
+#include "UDP/NetLowLevelUDP.h" 
+using namespace NetLib4Games;
+...
+
+	NetConL2 connection(new NetConLowUDP());
+\endcode
+	This will create a connection that is initially disconnected, but can be connected to
+	a network address (with NetConL2::Connect).
+
+	You can construct a (UDP/IP) server collection like this:
+	\code
+#include "NetLayer2.h"
+#include "UDP/NetLowLevelUDP.h" 
+using namespace NetLib4Games;
+...
+
+	// Create UDP/IP listener on port 8000
+	NetListenLowUDP listener(8000);
+...
+
+	if (listener.ConnectionPending()) {
+		...
+
+		// Accept connection
+		NetConL2 connection(listener.AcceptConnection());
+\endcode
+	The NetLib4Games::NetListenLowUDP is the UDP/IP implementation of NetLib4Games::NetListenLow, which is an object
+	for listening on a network port for connection requests and constructing NetLib4Games::NetConLow
+	objects (in this case NetLib4Games::NetConLowUDP) to represent them.
+	We see here the NetListenLow::AcceptConnection method constructing a NetLib4Games::NetConLow, which
+	we can pass to the NetLib4Games::NetConL2 constructor to construct an object that represents an 
+	accepted incoming connection.
+
+	See /ref ??? for the connection object in detail.
+
+	\section Listener Listener objects
+
+	A listener object is constructed by the network server.
+	This object listens for incoming connection requests, notifies the application/game
+	of them and allows it to accept or reject the connection as desired.
+	The base class for the listener object is NetLib4Games::NetListenLow.
+	It is inherited for each low level network protocol implemented by NetLib4Games.
+	Currently - as only UDP/IP is implemented - the descendant class is the NetLib4Games::NetListenLowUDP
+	class, which implements listening on a UDP/IP port.
+
+
+
+*/

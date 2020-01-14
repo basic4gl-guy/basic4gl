@@ -1,0 +1,83 @@
+# depslib dependency file v1.0
+1142127235 c:\projects\basic4gl\basic4games\dll sdk\examples\testconsole.cpp
+	"TestConsole.h"
+
+1142127017 c:\projects\basic4gl\basic4games\dll sdk\examples\testconsole.h
+	<windows.h>
+	"TextConsole.h"
+
+1142124478 c:\projects\basic4gl\basic4games\dll sdk\examples\textconsole.h
+	<windows.h>
+	"DLLMisc.h"
+
+1142122693 c:\projects\basic4gl\basic4games\dll sdk\include\dllmisc.h
+
+1154746717 c:\projects\basic4gl\basic4games\dll sdk\examples\testdll.cpp
+	<windows.h>
+	"Basic4GLDLLInterface.h"
+	"Basic4GLLibInterfaces.h"
+	<math.h>
+	"TestConsole.h"
+
+1142122708 c:\projects\basic4gl\basic4games\dll sdk\include\basic4gldllinterface.h
+	"DLLMisc.h"
+
+1154746069 c:\projects\basic4gl\basic4games\dll sdk\include\basic4gllibinterfaces.h
+	"DLLMisc.h"
+	<string>
+
+1142127235 c:\projects\basic4gl\development\dll sdk\examples\testconsole.cpp
+	"TestConsole.h"
+
+1142127017 c:\projects\basic4gl\development\dll sdk\examples\testconsole.h
+	<windows.h>
+	"TextConsole.h"
+
+1142124478 c:\projects\basic4gl\development\dll sdk\examples\textconsole.h
+	<windows.h>
+	"DLLMisc.h"
+
+1142122693 c:\projects\basic4gl\development\dll sdk\include\dllmisc.h
+
+1155356218 c:\projects\basic4gl\development\dll sdk\examples\testdll.cpp
+	<windows.h>
+	"Basic4GLDLLInterface.h"
+	"Basic4GLStandardObjects.h"
+	<math.h>
+	"TestConsole.h"
+
+1155349743 c:\projects\basic4gl\development\dll sdk\include\basic4gldllinterface.h
+	"DLLMisc.h"
+
+1154753564 c:\projects\basic4gl\development\dll sdk\include\basic4gllibinterfaces.h
+	"DLLMisc.h"
+
+1155348192 c:\projects\basic4gl\development\dll sdk\include\basic4glstandardobjects.h
+	"DLLMisc.h"
+
+1142127235 e:\projects\basic4gl\development\dll sdk\examples\testconsole.cpp
+	"TestConsole.h"
+
+1142127017 e:\projects\basic4gl\development\dll sdk\examples\testconsole.h
+	<windows.h>
+	"TextConsole.h"
+
+1142124478 e:\projects\basic4gl\development\dll sdk\examples\textconsole.h
+	<windows.h>
+	"DLLMisc.h"
+
+1142122693 e:\projects\basic4gl\development\dll sdk\include\dllmisc.h
+
+1179285717 e:\projects\basic4gl\development\dll sdk\examples\testdll.cpp
+	<windows.h>
+	"Basic4GLDLLInterface.h"
+	"Basic4GLStandardObjects.h"
+	<math.h>
+	"TestConsole.h"
+
+1179274560 e:\projects\basic4gl\development\dll sdk\include\basic4gldllinterface.h
+	"DLLMisc.h"
+
+1155348192 e:\projects\basic4gl\development\dll sdk\include\basic4glstandardobjects.h
+	"DLLMisc.h"
+

@@ -1,0 +1,69 @@
+# Project: Basic4GLDevCPP
+# Makefile created by Dev-C++ 4.9.9.2
+
+CPP  = g++.exe -D__DEBUG__
+CC   = gcc.exe -D__DEBUG__
+WINDRES = windres.exe
+RES  = 
+OBJ  = Main.o ../VM/HasErrorState.o ../VM/Misc.o ../VM/Streaming.o ../VM/TomVM.o ../VM/vmCode.o ../VM/vmData.o ../VM/vmDebugger.o ../VM/vmFunction.o ../VM/vmTypes.o ../VM/vmVariables.o ../Compiler/compFunction.o ../Compiler/compParse.o ../Compiler/TomComp.o $(RES)
+LINKOBJ  = Main.o ../VM/HasErrorState.o ../VM/Misc.o ../VM/Streaming.o ../VM/TomVM.o ../VM/vmCode.o ../VM/vmData.o ../VM/vmDebugger.o ../VM/vmFunction.o ../VM/vmTypes.o ../VM/vmVariables.o ../Compiler/compFunction.o ../Compiler/compParse.o ../Compiler/TomComp.o $(RES)
+LIBS =  -L"C:/Prog/Dev-Cpp/lib"  -g3 
+INCS =  -I"C:/Prog/Dev-Cpp/include"  -I"../Compiler"  -I"../VM" 
+CXXINCS =  -I"C:/Prog/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Prog/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Prog/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Prog/Dev-Cpp/include/c++/3.4.2"  -I"C:/Prog/Dev-Cpp/include"  -I"../Compiler"  -I"../VM" 
+BIN  = Basic4GLDevCPP.exe
+CXXFLAGS = $(CXXINCS)   -g3
+CFLAGS = $(INCS)   -g3
+RM = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before Basic4GLDevCPP.exe all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o "Basic4GLDevCPP.exe" $(LIBS)
+
+Main.o: Main.cpp
+	$(CPP) -c Main.cpp -o Main.o $(CXXFLAGS)
+
+../VM/HasErrorState.o: ../VM/HasErrorState.cpp
+	$(CPP) -c ../VM/HasErrorState.cpp -o ../VM/HasErrorState.o $(CXXFLAGS)
+
+../VM/Misc.o: ../VM/Misc.cpp
+	$(CPP) -c ../VM/Misc.cpp -o ../VM/Misc.o $(CXXFLAGS)
+
+../VM/Streaming.o: ../VM/Streaming.cpp
+	$(CPP) -c ../VM/Streaming.cpp -o ../VM/Streaming.o $(CXXFLAGS)
+
+../VM/TomVM.o: ../VM/TomVM.cpp
+	$(CPP) -c ../VM/TomVM.cpp -o ../VM/TomVM.o $(CXXFLAGS)
+
+../VM/vmCode.o: ../VM/vmCode.cpp
+	$(CPP) -c ../VM/vmCode.cpp -o ../VM/vmCode.o $(CXXFLAGS)
+
+../VM/vmData.o: ../VM/vmData.cpp
+	$(CPP) -c ../VM/vmData.cpp -o ../VM/vmData.o $(CXXFLAGS)
+
+../VM/vmDebugger.o: ../VM/vmDebugger.cpp
+	$(CPP) -c ../VM/vmDebugger.cpp -o ../VM/vmDebugger.o $(CXXFLAGS)
+
+../VM/vmFunction.o: ../VM/vmFunction.cpp
+	$(CPP) -c ../VM/vmFunction.cpp -o ../VM/vmFunction.o $(CXXFLAGS)
+
+../VM/vmTypes.o: ../VM/vmTypes.cpp
+	$(CPP) -c ../VM/vmTypes.cpp -o ../VM/vmTypes.o $(CXXFLAGS)
+
+../VM/vmVariables.o: ../VM/vmVariables.cpp
+	$(CPP) -c ../VM/vmVariables.cpp -o ../VM/vmVariables.o $(CXXFLAGS)
+
+../Compiler/compFunction.o: ../Compiler/compFunction.cpp
+	$(CPP) -c ../Compiler/compFunction.cpp -o ../Compiler/compFunction.o $(CXXFLAGS)
+
+../Compiler/compParse.o: ../Compiler/compParse.cpp
+	$(CPP) -c ../Compiler/compParse.cpp -o ../Compiler/compParse.o $(CXXFLAGS)
+
+../Compiler/TomComp.o: ../Compiler/TomComp.cpp
+	$(CPP) -c ../Compiler/TomComp.cpp -o ../Compiler/TomComp.o $(CXXFLAGS)

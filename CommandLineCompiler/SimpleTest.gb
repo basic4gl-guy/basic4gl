@@ -1,0 +1,5 @@
+language traditional_print
+dim name$, age
+input "What is your name"; name$
+input "How old are you"; age
+print "Hi "; name$; ". In 5 years time you will be "; (age + 5)

@@ -1,0 +1,8 @@
+The Basic4GL IDE is linked using the Multithreaded DLL switch.
+This means msvcr120.dll must be distributed.
+
+The Standalone exe stub is linked using the Multithreaded switch (i.e. NOT DLL).
+This is so that msvcr120.dll is NOT required for standalone exes.
+
+Because both projects use the corona_static library, two versions of the library are built, 
+one for each switch.

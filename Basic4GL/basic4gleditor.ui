@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Basic4GLEditor</class>
+ <widget class="QMainWindow" name="Basic4GLEditor">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>920</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Basic4GL - Copyright Tom Mulgrew 2003-2017</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="ideresources.qrc">
+    <normaloff>:/icons/Images/Icon.png</normaloff>:/icons/Images/Icon.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QSplitter" name="sourceCodeSplitter">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="childrenCollapsible">
+       <bool>false</bool>
+      </property>
+      <widget class="QTabWidget" name="sourceTabs">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <property name="tabsClosable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="tab">
+        <attribute name="title">
+         <string>Tab 1</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout"/>
+       </widget>
+      </widget>
+      <widget class="QSplitter" name="debugSplitter">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="childrenCollapsible">
+        <bool>false</bool>
+       </property>
+       <widget class="QListWidget" name="watchList">
+        <property name="contextMenuPolicy">
+         <enum>Qt::ActionsContextMenu</enum>
+        </property>
+       </widget>
+       <widget class="QListWidget" name="stackList">
+        <property name="contextMenuPolicy">
+         <enum>Qt::ActionsContextMenu</enum>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>920</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionNew_Program"/>
+    <addaction name="actionOpen_Program"/>
+    <addaction name="separator"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSave_As"/>
+    <addaction name="actionSave_All"/>
+    <addaction name="separator"/>
+    <addaction name="actionCreate_Standalone_exe"/>
+   </widget>
+   <widget class="QMenu" name="menuProgram">
+    <property name="title">
+     <string>Program</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="actionPlugin_Libraries"/>
+    <addaction name="actionArguments"/>
+    <addaction name="separator"/>
+    <addaction name="actionRun"/>
+   </widget>
+   <widget class="QMenu" name="menuDebug">
+    <property name="title">
+     <string>Debug</string>
+    </property>
+    <addaction name="actionDebug_Mode"/>
+    <addaction name="separator"/>
+    <addaction name="actionPause"/>
+    <addaction name="actionStep_Into"/>
+    <addaction name="actionStep_Over"/>
+    <addaction name="actionStep_Out_Of"/>
+    <addaction name="separator"/>
+    <addaction name="actionToggle_Breakpoint"/>
+    <addaction name="actionVirtual_Machine"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <addaction name="actionBASIC_runtime_settings"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionGetting_started"/>
+    <addaction name="actionProgrammer_s_guide"/>
+    <addaction name="actionLanguage_guide"/>
+    <addaction name="actionNetwork_engine_guide"/>
+    <addaction name="actionOpenGL_guide"/>
+    <addaction name="actionSprite_library_guide"/>
+    <addaction name="actionSymbolic_debugger"/>
+    <addaction name="actionCreating_standalone_exes"/>
+    <addaction name="actionPlugin_dlls"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuProgram"/>
+   <addaction name="menuDebug"/>
+   <addaction name="menuSettings"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="windowTitle">
+    <string>Main</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionNew_Program"/>
+   <addaction name="actionOpen_Program"/>
+   <addaction name="actionSave"/>
+   <addaction name="separator"/>
+   <addaction name="actionRun"/>
+   <addaction name="separator"/>
+   <addaction name="actionDebug_Mode"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QToolBar" name="debugToolbar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="windowTitle">
+    <string>Debugging</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionPause"/>
+   <addaction name="actionStep_Over"/>
+   <addaction name="actionStep_Into"/>
+   <addaction name="actionStep_Out_Of"/>
+  </widget>
+  <action name="actionOpen_Program">
+   <property name="icon">
+    <iconset resource="ideresources.qrc">
+     <normaloff>:/icons/Images/ImgOpen.png</normaloff>:/icons/Images/ImgOpen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionNew_Program">
+   <property name="icon">
+    <iconset resource="ideresources.qrc">
+     <normaloff>:/icons/Images/ImgNew.png</normaloff>:/icons/Images/ImgNew.png</iconset>
+   </property>
+   <property name="text">
+    <string>New</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="icon">
+    <iconset resource="ideresources.qrc">
+     <normaloff>:/icons/Images/ImgSave.png</normaloff>:/icons/Images/ImgSave.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionSave_As">
+   <property name="text">
+    <string>Save As...</string>
+   </property>
+  </action>
+  <action name="actionCreate_Standalone_exe">
+   <property name="text">
+    <string>Create Standalone .exe...</string>
+   </property>
+  </action>
+  <action name="actionArguments">
+   <property name="text">
+    <string>Arguments...</string>
+   </property>
+  </action>
+  <action name="actionPlugin_Libraries">
+   <property name="text">
+    <string>Plugin Libraries...</string>
+   </property>
+  </action>
+  <action name="actionRun">
+   <property name="icon">
+    <iconset resource="ideresources.qrc">
+     <normaloff>:/icons/Images/Go.png</normaloff>:/icons/Images/Go.png</iconset>
+   </property>
+   <property name="text">
+    <string>Run!</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+  </action>
+  <action name="actionSave_All">
+   <property name="icon">
+    <iconset resource="ideresources.qrc">
+     <normaloff>:/icons/Images/ImgSaveAll.png</normaloff>:/icons/Images/ImgSaveAll.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save All</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionToggle_Breakpoint">
+   <property name="icon">
+    <iconset resource="ideresources.qrc">
+     <normaloff>:/icons/Images/BreakPt.png</normaloff>:/icons/Images/BreakPt.png</iconset>
+   </property>
+   <property name="text">
+    <string>Toggle Breakpoint</string>
+   </property>
+   <property name="shortcut">
+    <string>F9</string>
+   </property>
+  </action>
+  <action name="actionPause">
+   <property name="icon">
+    <iconset resource="ideresources.qrc">
+     <normaloff>:/icons/Images/Pause.png</normaloff>:/icons/Images/Pause.png</iconset>
+   </property>
+   <property name="text">
+    <string>Pause</string>
+   </property>
+  </action>
+  <action name="actionStep_Into">
+   <property name="icon">
+    <iconset resource="ideresources.qrc">
+     <normaloff>:/icons/Images/StepInto2.png</normaloff>:/icons/Images/StepInto2.png</iconset>
+   </property>
+   <property name="text">
+    <string>Step Into</string>
+   </property>
+   <property name="shortcut">
+    <string>F11</string>
+   </property>
+  </action>
+  <action name="actionStep_Over">
+   <property name="icon">
+    <iconset resource="ideresources.qrc">
+     <normaloff>:/icons/Images/StepOver2.png</normaloff>:/icons/Images/StepOver2.png</iconset>
+   </property>
+   <property name="text">
+    <string>Step Over</string>
+   </property>
+   <property name="shortcut">
+    <string>F10</string>
+   </property>
+  </action>
+  <action name="actionStep_Out_Of">
+   <property name="icon">
+    <iconset resource="ideresources.qrc">
+     <normaloff>:/icons/Images/StepOutOf2.png</normaloff>:/icons/Images/StepOutOf2.png</iconset>
+   </property>
+   <property name="text">
+    <string>Step Out Of</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+F11</string>
+   </property>
+  </action>
+  <action name="actionDebug_Mode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ideresources.qrc">
+     <normaloff>:/icons/Images/Bug.png</normaloff>:/icons/Images/Bug.png</iconset>
+   </property>
+   <property name="text">
+    <string>Debug Mode</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="actionCreate_Edit_watch">
+   <property name="text">
+    <string>Create/Edit watch</string>
+   </property>
+   <property name="toolTip">
+    <string>Create or edit watch</string>
+   </property>
+   <property name="shortcut">
+    <string>Return</string>
+   </property>
+  </action>
+  <action name="actionDelete_watch">
+   <property name="text">
+    <string>Delete watch</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete watch</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+  </action>
+  <action name="actionAdd_watch_at_cursor">
+   <property name="text">
+    <string>Add watch</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F5</string>
+   </property>
+  </action>
+  <action name="actionShow_Gosub_Function_call">
+   <property name="text">
+    <string>Show Gosub/Function call</string>
+   </property>
+   <property name="shortcut">
+    <string>Return</string>
+   </property>
+  </action>
+  <action name="actionBASIC_runtime_settings">
+   <property name="text">
+    <string>BASIC runtime settings...</string>
+   </property>
+   <property name="toolTip">
+    <string>BASIC runtime settings</string>
+   </property>
+  </action>
+  <action name="actionGetting_started">
+   <property name="text">
+    <string>Getting started</string>
+   </property>
+  </action>
+  <action name="actionProgrammer_s_guide">
+   <property name="text">
+    <string>Programmer's guide</string>
+   </property>
+  </action>
+  <action name="actionLanguage_guide">
+   <property name="text">
+    <string>Language guide</string>
+   </property>
+  </action>
+  <action name="actionNetwork_engine_guide">
+   <property name="text">
+    <string>Network engine guide</string>
+   </property>
+  </action>
+  <action name="actionOpenGL_guide">
+   <property name="text">
+    <string>OpenGL guide</string>
+   </property>
+  </action>
+  <action name="actionSymbolic_debugger">
+   <property name="text">
+    <string>Symbolic debugger</string>
+   </property>
+  </action>
+  <action name="actionSprite_library_guide">
+   <property name="text">
+    <string>Sprite library guide</string>
+   </property>
+  </action>
+  <action name="actionCreating_standalone_exes">
+   <property name="text">
+    <string>Creating standalone exes</string>
+   </property>
+  </action>
+  <action name="actionPlugin_dlls">
+   <property name="text">
+    <string>Plugin libraries</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About...</string>
+   </property>
+  </action>
+  <action name="actionFind">
+   <property name="text">
+    <string>Find...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="actionReplace">
+   <property name="text">
+    <string>Replace...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
+   </property>
+  </action>
+  <action name="actionFind_next">
+   <property name="text">
+    <string>Find next</string>
+   </property>
+   <property name="shortcut">
+    <string>F3</string>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="text">
+    <string>Cut</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="text">
+    <string>Copy</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="text">
+    <string>Paste</string>
+   </property>
+  </action>
+  <action name="actionVirtual_Machine">
+   <property name="text">
+    <string>Virtual Machine...</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="ideresources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

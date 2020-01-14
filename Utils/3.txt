@@ -1,0 +1,34 @@
+  RMDir "$INSTDIR\Programs\Include\BGM"
+  RMDir "$INSTDIR\Programs\Include\MD2"
+  RMDir "$INSTDIR\Programs\Include"
+  RMDir "$INSTDIR\Programs\Data"
+  RMDir "$INSTDIR\Programs\Textures"
+  RMDir "$INSTDIR\Programs\Files"
+  RMDir "$INSTDIR\Programs\Sounds"
+  RMDir "$INSTDIR\Programs"
+  RMDir "$INSTDIR"
+
+    ; Remove file type association
+    DeleteRegKey HKLM "Software\CLASSES\.gb"
+    DeleteRegKey HKLM "Software\CLASSES\Basic4GL"
+    DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Basic4GL"
+
+  ;Remove shortcut
+  ReadRegStr ${TEMP} "${MUI_STARTMENUPAGE_REGISTRY_ROOT}" "${MUI_STARTMENUPAGE_REGISTRY_KEY}" "${MUI_STARTMENUPAGE_REGISTRY_VALUENAME}"
+
+  StrCmp ${TEMP} "" noshortcuts
+    Delete "$SMPROGRAMS\${TEMP}\Basic4GL v2.lnk"
+    Delete "$SMPROGRAMS\${TEMP}\Getting Started.lnk"
+    Delete "$SMPROGRAMS\${TEMP}\Uninstall.lnk"
+    RMDir "$SMPROGRAMS\${TEMP}" ;Only if empty, so it won't delete other shortcuts
+
+  noshortcuts:
+
+  RMDir "$INSTDIR"
+
+  DeleteRegKey /ifempty HKCU "Software\${MUI_PRODUCT}"
+
+  ;Display the Finish header
+  !insertmacro MUI_UNFINISHHEADER
+
+SectionEnd

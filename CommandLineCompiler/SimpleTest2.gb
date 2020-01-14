@@ -1,0 +1,44 @@
+language traditional_print
+
+function repeat$(c$, count) 
+    dim s$, i
+    for i = 1 to count
+        s$ = s$ + c$
+    next
+    return s$
+end function
+
+sub Triangle(c$, size)
+    dim y       
+    for y = 1 to size
+        print repeat$(c$, y)
+    next
+end sub
+
+sub Rectangle(c$, width, height)
+    dim y
+    for y = 1 to height
+        print repeat$(c$, width)
+    next
+end sub
+
+sub Box(c$, width, height)
+    print repeat$(c$, width)
+    dim y
+    for y = 2 to height - 1
+        print c$; repeat$(" ", width - 2); c$
+    next                                     
+    print repeat$(c$, width)
+end sub
+
+print "Hello Basic4GL!"
+    
+Rectangle(".", 20, 5)
+
+print 
+
+Triangle("*", 10)
+
+print 
+
+Box("+", 8, 5)

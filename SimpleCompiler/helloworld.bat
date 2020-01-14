@@ -1,0 +1,1 @@
+type helloworld.gb | simplecompiler

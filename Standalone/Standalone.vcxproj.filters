@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{33bb1ddb-aaf4-4235-bd53-9404ac921588}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{de7f315d-5633-46fa-a20e-5376ed30745e}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Compiler">
+      <UniqueIdentifier>{0c28ffd6-e289-4ff2-9d83-bbcb430be0bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Routines">
+      <UniqueIdentifier>{c9986b6f-c43f-4252-8b13-eb7cc278d61d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FunctionLibs">
+      <UniqueIdentifier>{7202ba89-5630-41bd-9798-3f1c990d1c8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM">
+      <UniqueIdentifier>{f2b98b90-bc70-49e6-baa8-3f198d7567fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\NetLib4Games">
+      <UniqueIdentifier>{6a0e842d-d539-42ba-b48e-635d13e8634d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DLLInterface">
+      <UniqueIdentifier>{ccd6feb5-e4ee-4b68-8d44-963d25010ee4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\NetLib4Games\UDP">
+      <UniqueIdentifier>{e5361661-4c33-41d4-a310-d52c384149d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\3rdparty">
+      <UniqueIdentifier>{80f2c300-af26-4b80-abf7-135693bf2d27}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\compFunction.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\compParse.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\EmbeddedFiles.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\FilenameRoutines.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\GLBasicLib_gl.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\GLBasicLib_glu.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\glspriteengine.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\glTextGrid.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vm\HasErrorState.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\LoadImage.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vm\Misc.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DLLInterface\PluginLibrary.cpp">
+      <Filter>Source Files\DLLInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DLLInterface\PluginDLL.cpp">
+      <Filter>Source Files\DLLInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DLLInterface\PluginDataStructures.cpp">
+      <Filter>Source Files\DLLInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\VM\Streaming.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\TomComp.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomCompilerBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomTrigBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomTextBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomStdBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomSoundBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomOpenGLBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomNetBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomJoystickBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomFileIOBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vm\TomVM.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DLLInterface\TomVMDLLAdapter.cpp">
+      <Filter>Source Files\DLLInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomWindowsBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vm\vmVariables.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vm\vmTypes.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\VM\vmStackFrame.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vm\vmFunction.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vm\vmDebugger.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vm\vmData.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\VM\vmCodeBlock.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vm\vmCode.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\glad\src\glad.c">
+      <Filter>Source Files\3rdparty</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\GlfwKeyboard.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\GlfwMouse.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\GlfwWindowManager.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\OpenGLInput.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\OpenGLWindowManager.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\Content2DManager.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NetLib4Games\NetHasErrorState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NetLib4Games\NetLayer1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NetLib4Games\NetLayer2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NetLib4Games\NetLog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NetLib4Games\NetLowLevel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NetLib4Games\NetMiscRoutines.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NetLib4Games\NetThreadUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NetLib4Games\NetUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NetLib4Games\UDP\NetLowLevelUDP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

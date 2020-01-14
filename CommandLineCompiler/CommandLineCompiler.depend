@@ -1,0 +1,502 @@
+# depslib dependency file v1.0
+1114397730 c:\projects\basic4gl\currentfreeversion\basic4glv2\commandlinecompiler\cmcmain.cpp
+	<windows.h>
+
+962038860 e:\prog\bcc55\include\windows.h
+	<winresrc.h>
+	<mem.h>
+	<excpt.h>
+	<stdarg.h>
+	<windef.h>
+	<winbase.h>
+	<wingdi.h>
+	<winuser.h>
+	<winnls.h>
+	<wincon.h>
+	<winver.h>
+	<winreg.h>
+	<winnetwk.h>
+	<cderr.h>
+	<dde.h>
+	<ddeml.h>
+	<dlgs.h>
+	<lzexpand.h>
+	<mmsystem.h>
+	<nb30.h>
+	<rpc.h>
+	<shellapi.h>
+	<winperf.h>
+	<winsock2.h>
+	<mswsock.h>
+	<winsock.h>
+	<wincrypt.h>
+	<winefs.h>
+	<winscard.h>
+	<winspool.h>
+	<ole.h>
+	<ole2.h>
+	<commdlg.h>
+	<winwlm.h>
+	<ole2.h>
+	<winsvc.h>
+	<mcx.h>
+	<imm.h>
+
+962038860 e:\prog\bcc55\include\winresrc.h
+	<winuser.rh>
+	<commctrl.rh>
+	<dde.rh>
+	<winnt.rh>
+	<dlgs.h>
+	<winver.h>
+
+962038860 e:\prog\bcc55\include\winuser.rh
+
+962038860 e:\prog\bcc55\include\commctrl.rh
+
+962038860 e:\prog\bcc55\include\dde.rh
+
+962038860 e:\prog\bcc55\include\winnt.rh
+
+962038860 e:\prog\bcc55\include\dlgs.h
+
+962038860 e:\prog\bcc55\include\winver.h
+
+962038860 e:\prog\bcc55\include\mem.h
+	<_stddef.h>
+
+962038860 e:\prog\bcc55\include\_stddef.h
+	<_defs.h>
+	<_null.h>
+
+962038860 e:\prog\bcc55\include\_defs.h
+
+962038860 e:\prog\bcc55\include\_null.h
+
+962038860 e:\prog\bcc55\include\excpt.h
+
+962038860 e:\prog\bcc55\include\stdarg.h
+	<_stddef.h>
+
+962038860 e:\prog\bcc55\include\windef.h
+	<winnt.h>
+
+962038860 e:\prog\bcc55\include\winnt.h
+	<ctype.h>
+	<basetsd.h>
+	<guiddef.h>
+	<pshpack4.h>
+	<poppack.h>
+	"pshpack4.h"
+	"pshpack2.h"
+	"pshpack1.h"
+	"poppack.h"
+	"pshpack2.h"
+	"poppack.h"
+	"pshpack8.h"
+	"poppack.h"
+	"poppack.h"
+	<string.h>
+	<string.h>
+
+962038860 e:\prog\bcc55\include\ctype.h
+	<_stddef.h>
+	<mbctype.h>
+
+962038860 e:\prog\bcc55\include\mbctype.h
+	<_stddef.h>
+	<ctype.h>
+
+962038860 e:\prog\bcc55\include\basetsd.h
+
+962038860 e:\prog\bcc55\include\guiddef.h
+	<string.h>
+
+962038860 e:\prog\bcc55\include\string.h
+	<_str.h>
+	<_str.h>
+	<string.stl>
+
+962038860 e:\prog\bcc55\include\_str.h
+	<_stddef.h>
+	<locale.h>
+	<mem.h>
+
+962038860 e:\prog\bcc55\include\locale.h
+	<_loc.h>
+	<_loc.h>
+	<locale.stl>
+
+962038860 e:\prog\bcc55\include\_loc.h
+	<_stddef.h>
+
+962038860 e:\prog\bcc55\include\locale.stl
+	<rw/rwlocale>
+	<rw/iosbase>
+	<rw/ctype>
+	<rw/codecvt>
+	<rw/collate>
+	<rw/numeral>
+	<rw/time>
+	<rw/money>
+	<rw/messages>
+	<rw/vendor>
+	<rw/usefacet>
+	<rw/numbrw>
+	<iomanip>
+
+962038860 e:\prog\bcc55\include\string.stl
+	<stdcomp.h>
+	<rw/rwstderr.h>
+	<cstring>
+	<cctype>
+	<string.h>
+	<ctype.h>
+	<wchar.h>
+	<cwchar>
+	<cwctype>
+	<wchar.h>
+	<wctype.h>
+	<iostream.h>
+	<rw/string_ref>
+	<stdexcept>
+	<string.cc>
+
+962038860 e:\prog\bcc55\include\stdcomp.h
+	<compnent.h>
+	<cassert>
+	<assert.h>
+
+962038860 e:\prog\bcc55\include\compnent.h
+
+962038860 e:\prog\bcc55\include\assert.h
+	<_stddef.h>
+
+962038860 e:\prog\bcc55\include\rw\rwstderr.h
+	<stdcomp.h>
+	<rw/stddefs.h>
+	<stdarg.h>
+	<rw/rwstderr_macros.h>
+
+962038860 e:\prog\bcc55\include\rw\stddefs.h
+	<stdcomp.h>
+	<cstddef>
+	<stddef.h>
+	<rw/stdwind.h>
+	<cassert>
+	<assert.h>
+	<_defs.h>
+
+962038860 e:\prog\bcc55\include\stddef.h
+	<_stddef.h>
+
+962038860 e:\prog\bcc55\include\rw\stdwind.h
+
+962038860 e:\prog\bcc55\include\wchar.h
+	<tchar.h>
+
+962038860 e:\prog\bcc55\include\tchar.h
+	<_stddef.h>
+	<string.h>
+	<string.h>
+	<mbstring.h>
+
+962038860 e:\prog\bcc55\include\mbstring.h
+	<string.h>
+	<_stddef.h>
+	<mbctype.h>
+
+962038860 e:\prog\bcc55\include\wctype.h
+	<tchar.h>
+
+962038860 e:\prog\bcc55\include\iostream.h
+	<stdcomp.h>
+	<istream>
+	<ostream>
+
+962038860 e:\prog\bcc55\include\string.cc
+	<stdcomp.h>
+
+962038860 e:\prog\bcc55\include\pshpack4.h
+
+962038860 e:\prog\bcc55\include\poppack.h
+
+962038860 e:\prog\bcc55\include\pshpack2.h
+
+962038860 e:\prog\bcc55\include\pshpack1.h
+
+962038860 e:\prog\bcc55\include\pshpack8.h
+
+962038860 e:\prog\bcc55\include\winbase.h
+	<macwin32.h>
+	<winerror.h>
+
+962038860 e:\prog\bcc55\include\winerror.h
+
+962038860 e:\prog\bcc55\include\wingdi.h
+	<macwin32.h>
+	<pshpack1.h>
+	<poppack.h>
+	<pshpack2.h>
+	<poppack.h>
+	<pshpack2.h>
+	<poppack.h>
+	<pshpack4.h>
+	<poppack.h>
+	"pshpack4.h"
+	"poppack.h"
+
+962038860 e:\prog\bcc55\include\winuser.h
+	<macwin32.h>
+	<stdarg.h>
+	<pshpack2.h>
+	<poppack.h>
+	<tvout.h>
+
+962038860 e:\prog\bcc55\include\tvout.h
+	<guiddef.h>
+
+962038860 e:\prog\bcc55\include\winnls.h
+	<macwin32.h>
+
+962038860 e:\prog\bcc55\include\wincon.h
+
+962038860 e:\prog\bcc55\include\winreg.h
+	<macwin32.h>
+
+962038860 e:\prog\bcc55\include\winnetwk.h
+
+962038860 e:\prog\bcc55\include\cderr.h
+
+962038860 e:\prog\bcc55\include\dde.h
+	<windef.h>
+
+962038860 e:\prog\bcc55\include\ddeml.h
+
+962038860 e:\prog\bcc55\include\lzexpand.h
+
+962038860 e:\prog\bcc55\include\mmsystem.h
+	<pshpack1.h>
+	<poppack.h>
+
+962038860 e:\prog\bcc55\include\nb30.h
+
+962038860 e:\prog\bcc55\include\rpc.h
+	<windows.h>
+	<pshpack2.h>
+	<basetsd.h>
+	<pshpack8.h>
+	<setjmp.h>
+	<rpcdce.h>
+	<rpcnsi.h>
+	<rpcerr.h>
+	<rpcmac.h>
+	<poppack.h>
+	<rpcdce.h>
+	<rpcnsi.h>
+	<rpcnterr.h>
+	<excpt.h>
+	<winerror.h>
+	<rpcasync.h>
+	<poppack.h>
+
+962038860 e:\prog\bcc55\include\setjmp.h
+	<_defs.h>
+
+962038860 e:\prog\bcc55\include\rpcdce.h
+	<guiddef.h>
+	<rpcdcep.h>
+
+962038860 e:\prog\bcc55\include\rpcdcep.h
+
+962038860 e:\prog\bcc55\include\rpcnsi.h
+
+962038860 e:\prog\bcc55\include\rpcnterr.h
+
+962038860 e:\prog\bcc55\include\rpcasync.h
+	<pshpack8.h>
+	<poppack.h>
+
+962038860 e:\prog\bcc55\include\shellapi.h
+	<pshpack1.h>
+	<poppack.h>
+
+962038860 e:\prog\bcc55\include\winperf.h
+	<pshpack8.h>
+	<poppack.h>
+
+962038860 e:\prog\bcc55\include\winsock2.h
+	<pshpack4.h>
+	<windows.h>
+	<qos.h>
+	<guiddef.h>
+	<poppack.h>
+
+962038860 e:\prog\bcc55\include\qos.h
+
+962038860 e:\prog\bcc55\include\mswsock.h
+
+962038860 e:\prog\bcc55\include\winsock.h
+	<windows.h>
+
+962038860 e:\prog\bcc55\include\wincrypt.h
+
+962038860 e:\prog\bcc55\include\winefs.h
+
+962038860 e:\prog\bcc55\include\winscard.h
+	<wtypes.h>
+	<winioctl.h>
+	"winsmcrd.h"
+	"SCardErr.h"
+
+962038860 e:\prog\bcc55\include\wtypes.h
+	"rpc.h"
+	"rpcndr.h"
+	"basetsd.h"
+	"guiddef.h"
+
+962038860 e:\prog\bcc55\include\rpcndr.h
+	<pshpack8.h>
+	<basetsd.h>
+	<rpcnsip.h>
+	<pshpack4.h>
+	<poppack.h>
+	<poppack.h>
+
+962038860 e:\prog\bcc55\include\rpcnsip.h
+
+962038860 e:\prog\bcc55\include\winioctl.h
+	<pshpack1.h>
+	<poppack.h>
+	<pshpack1.h>
+	<poppack.h>
+	<pshpack1.h>
+	<poppack.h>
+	<pshpack1.h>
+	<poppack.h>
+	<pshpack1.h>
+	<poppack.h>
+
+962038860 e:\prog\bcc55\include\winsmcrd.h
+
+962038860 e:\prog\bcc55\include\scarderr.h
+
+962038860 e:\prog\bcc55\include\winspool.h
+	<prsht.h>
+
+962038860 e:\prog\bcc55\include\prsht.h
+	<pshpack8.h>
+	<pshpack4.h>
+	<poppack.h>
+
+962038860 e:\prog\bcc55\include\ole2.h
+	<pshpack8.h>
+	"macname1.h"
+	<winerror.h>
+	<macpub.h>
+	<objbase.h>
+	<oleauto.h>
+	<oleidl.h>
+	<poppack.h>
+	<macapi.h>
+	"macname2.h"
+
+962038860 e:\prog\bcc55\include\objbase.h
+	<rpc.h>
+	<rpcndr.h>
+	<pshpack8.h>
+	<stdlib.h>
+	<wtypes.h>
+	<unknwn.h>
+	<objidl.h>
+	<guiddef.h>
+	<cguid.h>
+	<urlmon.h>
+	<propidl.h>
+	<poppack.h>
+
+962038860 e:\prog\bcc55\include\stdlib.h
+	<_stddef.h>
+	<search.h>
+
+962038860 e:\prog\bcc55\include\search.h
+	<_stddef.h>
+
+962038860 e:\prog\bcc55\include\unknwn.h
+	"rpc.h"
+	"rpcndr.h"
+	"windows.h"
+	"ole2.h"
+	"wtypes.h"
+
+962038860 e:\prog\bcc55\include\objidl.h
+	"rpc.h"
+	"rpcndr.h"
+	"windows.h"
+	"ole2.h"
+	"unknwn.h"
+
+962038860 e:\prog\bcc55\include\cguid.h
+
+962038860 e:\prog\bcc55\include\urlmon.h
+	"rpc.h"
+	"rpcndr.h"
+	"windows.h"
+	"ole2.h"
+	"objidl.h"
+	"oleidl.h"
+	"servprov.h"
+	"msxml.h"
+
+962038860 e:\prog\bcc55\include\oleidl.h
+	"rpc.h"
+	"rpcndr.h"
+	"windows.h"
+	"ole2.h"
+	"objidl.h"
+
+962038860 e:\prog\bcc55\include\servprov.h
+	"rpc.h"
+	"rpcndr.h"
+	"windows.h"
+	"ole2.h"
+	"objidl.h"
+
+962038860 e:\prog\bcc55\include\msxml.h
+	"rpc.h"
+	"rpcndr.h"
+	"unknwn.h"
+	"objidl.h"
+	"oaidl.h"
+
+962038860 e:\prog\bcc55\include\oaidl.h
+	"rpc.h"
+	"rpcndr.h"
+	"windows.h"
+	"ole2.h"
+	"objidl.h"
+
+962038860 e:\prog\bcc55\include\propidl.h
+	"rpc.h"
+	"rpcndr.h"
+	"windows.h"
+	"ole2.h"
+	"objidl.h"
+	"oaidl.h"
+
+962038860 e:\prog\bcc55\include\oleauto.h
+	<pshpack8.h>
+	<oaidl.h>
+	<poppack.h>
+
+962038860 e:\prog\bcc55\include\commdlg.h
+	<prsht.h>
+	<pshpack1.h>
+	<poppack.h>
+
+962038860 e:\prog\bcc55\include\winsvc.h
+
+962038860 e:\prog\bcc55\include\mcx.h
+
+962038860 e:\prog\bcc55\include\imm.h
+

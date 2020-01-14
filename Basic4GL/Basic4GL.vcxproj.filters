@@ -1,0 +1,730 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{be04d517-5f7d-4e76-8d26-e490e0d1031e}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{67f590cf-6ea6-45ce-89ba-f11d95dc926f}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Header Files\DLLInterface">
+      <UniqueIdentifier>{fe361633-dda2-43e0-9a27-74e32dbbf63b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DLLInterface">
+      <UniqueIdentifier>{a76d5268-a089-4b25-8d3b-c4dff2c97f84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Compiler">
+      <UniqueIdentifier>{fb74ff4b-e160-4709-8fe9-7cf8b650a251}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compiler">
+      <UniqueIdentifier>{ab493a16-6232-45e3-befd-dfbb43b4c5ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM">
+      <UniqueIdentifier>{80c2afb4-cd8e-402a-ad20-94baf8709cc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM">
+      <UniqueIdentifier>{17bc0f72-89de-4a34-8567-bf1622e08b34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Routines">
+      <UniqueIdentifier>{4c3001cc-dac4-4be3-944b-ecea79391be0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Routines">
+      <UniqueIdentifier>{6c72344c-6bc9-42b1-8689-efd48f861001}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FunctionLibs">
+      <UniqueIdentifier>{7893d6b3-86cb-4ff1-ac2b-11315a49f5c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FunctionLibs">
+      <UniqueIdentifier>{c3dff9a6-8ae2-4ec8-8d47-674d7c14b80b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\NetLib4Games">
+      <UniqueIdentifier>{ca0e5f6c-6a4b-4273-9633-6a05063e2006}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\NetLib4Games">
+      <UniqueIdentifier>{b3189b9b-b042-4594-9392-63353ad3e462}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\NetLib4Games\UDP">
+      <UniqueIdentifier>{c429bc13-948e-4e12-9bfb-70715b0ca96c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\NetLib4Games\UDP">
+      <UniqueIdentifier>{1eb6681a-157a-41bd-80e8-f06d3d28f5b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\3rdparty">
+      <UniqueIdentifier>{f95e5d1d-ca8c-4d66-a36d-0068ccf70905}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VMView">
+      <UniqueIdentifier>{54e1664c-a3b5-42e6-96bb-578d84b48d73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VMView">
+      <UniqueIdentifier>{6c179a49-0dce-423d-b6e2-2dd85a652021}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="basic4gleditor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_basic4gleditor.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_basic4gleditor.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DLLInterface\PluginDataStructures.cpp">
+      <Filter>Source Files\DLLInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DLLInterface\PluginDLL.cpp">
+      <Filter>Source Files\DLLInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DLLInterface\TomVMDLLAdapter.cpp">
+      <Filter>Source Files\DLLInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\compFunction.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\compParse.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\compPreprocessor.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\DiskFile.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\MainFile.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\TomComp.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\VM\Streaming.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\VM\TomVM.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\VM\vmCode.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\VM\vmCodeBlock.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\VM\vmData.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\VM\vmDebugger.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\VM\vmStackFrame.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\VM\vmTypes.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\VM\vmVariables.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\EmbeddedFiles.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\FilenameRoutines.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\glspriteengine.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\glTextGrid.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\LoadImage.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\Routines.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DLLInterface\PluginLibrary.cpp">
+      <Filter>Source Files\DLLInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\GLBasicLib_gl.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\GLBasicLib_glu.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomCompilerBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomFileIOBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomJoystickBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomNetBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomOpenGLBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomSoundBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomStdBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomTextBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomTrigBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FunctionLibs\TomWindowsBasicLib.cpp">
+      <Filter>Source Files\FunctionLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="basic4glMisc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NetLib4Games\NetHasErrorState.cpp">
+      <Filter>Source Files\NetLib4Games</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NetLib4Games\NetLayer1.cpp">
+      <Filter>Source Files\NetLib4Games</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NetLib4Games\NetLayer2.cpp">
+      <Filter>Source Files\NetLib4Games</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NetLib4Games\NetLog.cpp">
+      <Filter>Source Files\NetLib4Games</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NetLib4Games\NetLowLevel.cpp">
+      <Filter>Source Files\NetLib4Games</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NetLib4Games\NetMiscRoutines.cpp">
+      <Filter>Source Files\NetLib4Games</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NetLib4Games\NetThreadUtils.cpp">
+      <Filter>Source Files\NetLib4Games</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NetLib4Games\NetUtils.cpp">
+      <Filter>Source Files\NetLib4Games</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NetLib4Games\UDP\NetLowLevelUDP.cpp">
+      <Filter>Source Files\NetLib4Games\UDP</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic4GLSyntaxHighlighter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_sourcefileform.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_sourcefileform.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcefileform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorSourceFileServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="basic4gltextedit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_basic4gltextedit.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_basic4gltextedit.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_ideresources.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_plugindialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_plugindialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="plugindialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_createstandalonedialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_createstandalonedialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="createstandalonedialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="settings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="optionsdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_optionsdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_optionsdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="aboutdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_aboutdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_aboutdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\GlfwWindowManager.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\OpenGLWindowManager.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\Content2DManager.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\GlfwKeyboard.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\OpenGLInput.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Routines\GlfwMouse.cpp">
+      <Filter>Source Files\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\glad\src\glad.c">
+      <Filter>Source Files\3rdparty</Filter>
+    </ClCompile>
+    <ClCompile Include="argumentparser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_argumentsdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_argumentsdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_finddialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_finddialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="argumentsdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="finddialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_virtualmachineviewdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_virtualmachineviewdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="virtualmachineviewdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\VMView\VMViewGridSources.cpp">
+      <Filter>Source Files\VMView</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="basic4gleditor.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="sourcefileform.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="sourcefileform.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="basic4gltextedit.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="plugindialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="plugindialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="createstandalonedialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="createstandalonedialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="optionsdialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="optionsdialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="aboutdialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="aboutdialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="argumentsdialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="finddialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="argumentsdialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="finddialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="virtualmachineviewdialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="virtualmachineviewdialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="basic4gleditor.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Go.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Images\ImgNew.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Images\ImgOpen.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Images\ImgSave.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Images\Stop.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <CustomBuild Include="ideresources.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <ClInclude Include="GeneratedFiles\ui_basic4gleditor.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DLLInterface\PluginDataStructures.h">
+      <Filter>Header Files\DLLInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DLLInterface\PluginDLL.h">
+      <Filter>Header Files\DLLInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DLLInterface\TomVMDLLAdapter.h">
+      <Filter>Header Files\DLLInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\compConstant.h">
+      <Filter>Header Files\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\compDiskFile.h">
+      <Filter>Header Files\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\compFunction.h">
+      <Filter>Header Files\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\compParse.h">
+      <Filter>Header Files\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\compPreprocessor.h">
+      <Filter>Header Files\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\DiskFile.h">
+      <Filter>Header Files\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\MainFile.h">
+      <Filter>Header Files\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\PreprocessorInterfaces.h">
+      <Filter>Header Files\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\TomComp.h">
+      <Filter>Header Files\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VM\DebuggerInterfaces.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VM\HasErrorState.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VM\Misc.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VM\streaming.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VM\TomVM.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VM\vmCode.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VM\vmCodeBlock.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VM\vmData.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VM\vmDebugger.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VM\vmFunction.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VM\vmStackFrame.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VM\vmTypes.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VM\vmVariables.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Routines\EmbeddedFiles.h">
+      <Filter>Header Files\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Routines\FilenameRoutines.h">
+      <Filter>Header Files\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Routines\glspriteengine.h">
+      <Filter>Header Files\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Routines\glTextGrid.h">
+      <Filter>Header Files\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Routines\LoadImage.h">
+      <Filter>Header Files\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Routines\Routines.h">
+      <Filter>Header Files\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DLLInterface\PluginLibrary.h">
+      <Filter>Header Files\DLLInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FunctionLibs\GLBasicLib_gl.h">
+      <Filter>Header Files\FunctionLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FunctionLibs\GLBasicLib_glu.h">
+      <Filter>Header Files\FunctionLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FunctionLibs\TomCompilerBasicLib.h">
+      <Filter>Header Files\FunctionLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FunctionLibs\TomFileIOBasicLib.h">
+      <Filter>Header Files\FunctionLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FunctionLibs\TomJoystickBasicLib.h">
+      <Filter>Header Files\FunctionLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FunctionLibs\TomLibRoutines.h">
+      <Filter>Header Files\FunctionLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FunctionLibs\TomNetBasicLib.h">
+      <Filter>Header Files\FunctionLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FunctionLibs\TomOpenGLBasicLib.h">
+      <Filter>Header Files\FunctionLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FunctionLibs\TomSoundBasicLib.h">
+      <Filter>Header Files\FunctionLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FunctionLibs\TomStdBasicLib.h">
+      <Filter>Header Files\FunctionLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FunctionLibs\TomTextBasicLib.h">
+      <Filter>Header Files\FunctionLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FunctionLibs\TomTrigBasicLib.h">
+      <Filter>Header Files\FunctionLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FunctionLibs\TomWindowsBasicLib.h">
+      <Filter>Header Files\FunctionLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Routines\AppSettings.h">
+      <Filter>Header Files\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="basic4glMisc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NetLib4Games\NetHasErrorState.h">
+      <Filter>Header Files\NetLib4Games</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NetLib4Games\NetLayer1.h">
+      <Filter>Header Files\NetLib4Games</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NetLib4Games\NetLayer2.h">
+      <Filter>Header Files\NetLib4Games</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NetLib4Games\NetLog.h">
+      <Filter>Header Files\NetLib4Games</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NetLib4Games\NetLowLevel.h">
+      <Filter>Header Files\NetLib4Games</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NetLib4Games\NetMiscRoutines.h">
+      <Filter>Header Files\NetLib4Games</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NetLib4Games\NetThreadUtils.h">
+      <Filter>Header Files\NetLib4Games</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NetLib4Games\NetUtils.h">
+      <Filter>Header Files\NetLib4Games</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NetLib4Games\UDP\NetLowLevelUDP.h">
+      <Filter>Header Files\NetLib4Games\UDP</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic4GLSyntaxHighlighter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_sourcefileform.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorSourceFileServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LineNumberArea.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\BreakPt.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Images\Hand.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GeneratedFiles\ui_plugindialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_createstandalonedialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="settings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_optionsdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_aboutdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Routines\GlfwWindowManager.h">
+      <Filter>Header Files\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Routines\OpenGLWindowManager.h">
+      <Filter>Header Files\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Routines\Content2DManager.h">
+      <Filter>Header Files\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Routines\GlfwKeyboard.h">
+      <Filter>Header Files\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Routines\OpenGLInput.h">
+      <Filter>Header Files\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Routines\GlfwMouse.h">
+      <Filter>Header Files\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Routines\glheaders.h">
+      <Filter>Header Files\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="argumentparser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_argumentsdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_finddialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFileInterfaces.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_virtualmachineviewdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VMView\VMViewCallbackInterfaces.h">
+      <Filter>Header Files\VMView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VMView\VMViewGridSources.h">
+      <Filter>Header Files\VMView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VMView\VMViewInterfaces.h">
+      <Filter>Header Files\VMView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VMView\VMViewUI.h">
+      <Filter>Header Files\VMView</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Project notes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="basic4gl.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

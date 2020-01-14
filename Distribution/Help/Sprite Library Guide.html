@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<HTML><HEAD><TITLE>Basic4GL - Sprite Library Guide</TITLE>
+<link rel="stylesheet" href="b4gl.css" />
+<link rel="stylesheet" href="highlight/styles/default.css" />
+<script src="highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="jquery-1.12.3.min.js"></script>
+<script src="toc.js"></script>
+</HEAD>
+<BODY>
+<P class="copyright">Basic4GL, Copyright (C) 2003-2016 Tom Mulgrew</P>
+<P class="title">Sprite Library Guide</P>
+<P class="stamp">28-Apr-2016<BR>Tom Mulgrew</P>
+<div class="toc"></div>
+<H1>This document</H1>
+<P>This document details Basic4GL's integrated sprite library and various 
+routines.</P>
+<H1>Sprite routines</H1>
+<P>Basic4GL contains an integrated sprite library, designed to simplify the 
+process of writing 2D sprite based games and applications.<BR>Internally sprites 
+are drawn using OpenGL similar to Basic4GL's text mechanism. However - as with 
+text - no OpenGL experience is needed to use the sprite routines.</P>
+<P>Basic4GL sprites support:</P>
+<UL>
+  <LI>Scaling &amp; rotation 
+  <LI>Colours &amp; transparency 
+  <LI>Animated sprites 
+  <LI>Z order 
+  <LI>Tile maps (a 2D grid of tiles) 
+  <LI>Parallax scrolling </LI></UL>
+<P>A simple example of a Basic4GL sprite program:</P>
+<PRE><CODE class="basic">dim texture, sprite
+texture = LoadTex("data\ball.png")
+sprite = NewSprite(texture)
+SprSetVel(vec2(2, 2)) 
+SprSetPos(100, 100)
+locate 13, 12: print "Bouncing ball"
+while true
+    AnimateSprites()
+    if SprLeft() &lt; 0 or SprRight() &gt; SpriteAreaWidth() then
+        SprSetXVel(-SprXVel())
+    endif
+    if SprTop() &lt; 0 or SprBottom() &gt; SpriteAreaHeight() then
+        SprSetYVel(-SprYVel())
+    endif
+wend</CODE></PRE>
+<P>There are also some larger examples supplied with Basic4GL.<BR>See 
+AsteroidDemo2.gb (and compare it to AsteroidDemo.gb), and CavernDemo.gb.</P>
+<H2>Integration with the text system</H2>
+<P>The Basic4GL sprite engine is built on top of the Basic4GL text engine, and 
+shares some its mechanism and functions.<BR>The sprites and text are redrawn at 
+the same time, which by default is whenever either the text on the screen 
+changes,or a change is made to a sprite.</P>
+<P>Also, if you switch the text mode to buffered mode (using TextMode 
+(TEXT_BUFFERED)), sprites are automatically switched to buffered mode also, and 
+will only be drawn when DrawText() is called.</P>
+<P>You may think it strange to have text commands controlling when sprites are 
+drawn, and you're probably right! The reason is text support was implemented 
+first, and so the functions were named TextMode() and DrawText(), instead of 
+(maybe) TextAndSpriteMode() and DrawTextAndSprites(). When sprite support was 
+added, I chose not to rename the functions, in order to maintain backward 
+compatibility with existing Basic4GL code.</P>
+<P>See the TextMode() and DrawText() definitions (in the "Text Output" secton) 
+for more information.</P>
+<H2 id="loading-textures">Loading textures</H2>
+<P><EM>The following commands are deprecated as of 
+version 2.5.6:</EM></P>
+<div class="format">
+  <P><EM>LoadTexture<BR>LoadMipmapTexture<BR>LoadImageStrip<BR>LoadMipmapImageStrip<BR>ImageStripFrames</EM></P></div>
+<P><EM>These commands are still available, so that 
+old Basic4GL programs will still compile, however you are advised to use the 
+LoadTex, LoadTexStrip and TexStripFrames commands instead.</EM></P>
+<P>Basic4GL sprites are drawn using OpenGL textures. So in order to display a 
+sprite, you must first load the texture into OpenGL and then assign it to the 
+sprite.</P>
+<H3>LoadTex()</H3>
+<P>The easiest way to load a single OpenGL texture is with the LoadTex() 
+function.<BR>For example:</P>
+<PRE><CODE class="basic">' Load texture
+dim texture
+texture = LoadTex("data\star.bmp")          ' Load texture and return handle
+
+' Create sprite
+dim sprite                                  
+sprite = NewSprite(texture)                ' Create sprite, and assign texture
+SprSetPos(320, 240)</CODE></PRE>
+<P>LoadTex() loads a texture into OpenGL, and returns the OpenGL texture "name" 
+(an integer that identifies the texture).<BR>You can then pass that "name" to a 
+sprite, in order to create a sprite that displays that texture.</P>
+<H3>TexStripFrames&nbsp;and LoadTexStrip</H3>
+<P>Basic4GL also supports animated sprites. These require multiple OpenGL 
+textures (one texture for each animation frame) which are passed to the sprite 
+as an array of OpenGL texture "name"s.<BR>You could achieve this by having 
+multiple image files and loading them all in one by one. This is a bit clumsy 
+however, so Basic4GL supports the concept of "image strips".</P>
+<P>An image strip is a single image, that contains multiple subimages. Have a 
+look at the "explode.png" image in the "Programs\Data" folder if you need an 
+example. Basic4GL provides routines to load such an image, chop it up into the 
+separate subimages and upload them into OpenGL as separate textures.</P>
+<P>LoadTexStrip() will do all of the above and return an array of OpenGL texture 
+handles that can be passed to a Basic4GL sprite.</P>
+<P>Format:</P>
+<div class="format">
+  <P>LoadTexStrip(<EM>filename [, frameWidth, frameHeight]</EM>)</P></div>
+<P>The <EM>frameWidth</EM> and <EM>frameHeight&nbsp;</EM>are optional. If not 
+specified, Basic4GL will use the width or height of the image (whatever is 
+smaller). This means that if all the frames are are on one row in the image 
+file, and they are square, you do not need to specify what size the frames 
+are.<BR>Frame widths and heights&nbsp;will usually be powers of 2 (1, 2, 4, 8, 
+16, 32, 64, 128, 256, 512, 1024, ...), so that they can be loaded into an OpenGL 
+texture. If they are not, Basic4GL will automatically scale each frame to a 
+suitable size before loading it into an OpenGL texture. The scaling routine is 
+primative and works by either dropping or duplicating rows or columns. For 
+better results, use an image editor (Gimp, Photoshop etc) to scale the image 
+beforehand so that the frames sizes are a power of 2. These programs have more 
+sophisticated image scaling algorithms and the result will generally look 
+better.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">dim sprite
+sprite = NewSprite(LoadTexStrip("data\explode.png"))
+SprSetPos(320, 240)
+SprSetAnimSpeed(1)
+while true
+    WaitTimer(100)
+    AnimateSprites()
+wend</CODE></PRE>
+<p>Example 2:</p>
+<PRE><CODE class="basic">dim sprite
+sprite = NewSprite(LoadTexStrip("data\spacetiles.png", 32, 32))
+SprSetPos(320, 240)
+SprSetAnimSpeed(1)
+while true
+    WaitTimer(100)
+    AnimateSprites()
+wend</CODE></PRE>
+<P>To calculate the number of frames in an image strip, use 
+TexStripFrames().</P>
+<P>Format:</P>
+<div class="format">
+  <P>TexStripFrames(<EM>filename [, frameWidth, 
+frameHeight]</EM>)</P></div>
+<P>This returns the number of images in the image strip (and is useful if you 
+want to assign them to an array, e.g. to be shared between multiple 
+sprites).</P>
+<PRE><CODE class="basic">' Load images
+dim &amp;explodeFrames()
+alloc explodeFrames, TexStripFrames("data\explode.png") - 1
+explodeFrames = LoadTexStrip("data\explode.png")
+
+' Create sprites
+dim sprites(10), i
+for i = 1 to 10
+    sprites(i) = NewSprite(explodeFrames)
+    SprSetPos(rnd() % int(SpriteAreaWidth()), rnd() % int(SpriteAreaHeight()))
+    SprSetScale(5)
+    SprSetAnimSpeed(rnd() % 10 * .1 + .5)
+next
+
+' Main loop
+while true
+    WaitTimer(100)
+    AnimateSprites()
+wend</CODE></PRE>
+<H2>Advanced texture loading options</H2>
+<P>There are also a number of options that affect the way Basic4GL handles 
+images when they are loaded.</P>
+<P>By default Basic4GL: </P>
+<UL>
+  <LI>Does not treat any one colour as transparent (images that contain 
+  transparency information, like PNG files, are still treated correctly however)
+  <LI>Automatically generates "mipmap" textures for each texture it loads
+  <LI>Removes blank frames from the end of texture strips
+  <LI>Sets up each texture to use linear filtering</LI></UL>
+<P>Basic4GL has a number of routines that change&nbsp;this behaviour.&nbsp;These 
+routines affect all subsequent LoadTex and LoadTexStrip calls until the 
+program&nbsp;ends.</P>
+<H3>SetTexTransparentCol</H3>
+<P>SetTexTransparentCol specifies a colour to treat as transparent. Basic4GL 
+will replace all pixels of this colour with transparent pixels when it loads the 
+texture.</P>
+<P>Format:</P>
+<div class="format">
+  <P>SetTexTransparentCol(<EM>red</EM>, <EM>green</EM>, 
+  <EM>blue</EM>)<BR>SetTexTransparentCol(<EM>colour</EM>)</P></div>
+<P>Where <EM>red</EM>, <EM>green</EM>, and <EM>blue</EM> are integers 
+representing the intensity of the corresponding colour component. 0 = minimum, 
+255 = maximum.<BR>Or <EM>colour</EM> is an integer calculated as: <EM>colour 
+</EM>= <EM>red </EM>* 65536 + <EM>green</EM> * 256 + <EM>blue</EM></P>
+<P>Example:</P>
+<PRE><CODE class="basic">' Replace black with transparent pixels
+SetTexTransparentCol(0, 0, 0)
+
+' Load textures
+dim textures(TexStripFrames("data\spacetiles.png") - 1) = LoadTexStrip("data\spacetiles.png")
+
+' Build tile map
+data 0, 0, 0, 1, 0
+data 0, 1, 5, 0, 2
+data 2, 3, 0, 0, 4
+data 0, 0, 1, 2, 0
+data 1, 4, 3, 0, 0
+dim tiles(4)(4), x, y
+for y = 0 to 4: for x = 0 to 4: read tiles(x)(y): next: next
+
+' Create tile map sprite
+dim tile = NewTileMap(textures)
+SprSetSolid(false)
+SprSetTiles(tiles)
+
+' Animate over a blue background
+glClearColor(0, .1, .3, 1)
+while true
+    SprSetPos(SprPos() + vec2(2, 1))
+wend</CODE></PRE>
+<H3>SetTexNoTransparentCol</H3>
+<P>SetTexNoTransparentCol() sets Basic4GL back to its original behaviour, where 
+no colour is treated as transparent.</P>
+<H3>SetTexIgnoreBlankFrames</H3>
+<P>By default LoadTexStrip() will automatically detect blank frames at the end 
+of the texture strip and remove them. A frame is considered blank if all its 
+pixels are fully transparent, or if all its pixels match the current transparent 
+colour (if one is set).</P>
+<P>You can switch this behaviour off with:</P>
+<div class="format">
+  <P>SetTexIgnoreBlankFrames(false)</P></div>
+<P>In this case blank frames will be loaded in and stored in the texture 
+array.</P>
+<P>To re-enable this behaviour, use:</P>
+<div class="format">
+  <P>SetTexIgnoreBlankFrames(true)</P></div>
+<H3>SetTexMipmap</H3>
+<P>By default, whenever Basic4GL loads a texture with LoadTex or 
+LoadTexStrip, it will create corresponding mipmap textures.These are smaller 
+versions of the texture that will automatically be used when the texture is 
+squeezed into a smaller number of pixels. This will usually look better than 
+trying to draw the original texture scaled down, which can introduce visual 
+artifacts such as "moire patterns". However, the mipmap textures do take up a 
+third more texture memory than a non mipmap texture on its own.</P>
+<P>You can disable creation of mipmap textures with:</P>
+<div class="format">
+  <P>SetTexMipmap(false)</P></div>
+<P>To re-enable it, use:</P>
+<div class="format">
+  <P>SetTexMipmap(true)</P></div>
+<P>Example:</P>
+<PRE><CODE class="basic">' Create a sprite with a mipmapped texture
+SetTexMipmap(true)
+dim sprite1 = NewSprite(LoadTex("data/cube.bmp"))
+SprSetPos(160, 240)
+SprSetSpin(1)
+
+' Create a sprite with the same texture, no mipmapping
+SetTexMipmap(false)
+dim sprite2 = NewSprite(LoadTex("data/cube.bmp"))
+SprSetPos(480, 240)
+SprSetSpin(1)
+       
+locate 7, 10: print "Mipmap"
+locate 25, 10: print "No mipmap"
+    
+' Spin textures to show difference
+while true
+    AnimateSprites()
+    WaitTimer(50)
+wend
+</CODE></PRE>
+<H3>SetTexLinearFilter</H3>
+<P>Linear filtering controls how a texture is drawn when it is 
+magnified. When linear filtering is enabled (the default) texture pixels are 
+interpolated making magnified textures appear smooth. When linear filtering is 
+disabled, no interpolation takes place, and magnified texture pixels appear as 
+distinct rectangles.</P>
+<P>To disable linear filtering, use:</P>
+<div class="format">
+  <P>SetTexLinearFilter(false)</P></div>
+<P>To re-enable it, use:</P>
+<div class="format">
+  <P>SetTexLinearFilter(true)</P></div>
+<P>Example:</P>
+<PRE><CODE class="basic">' Create a sprite with linear filtering
+SetTexLinearFilter(true)
+dim sprite1 = NewSprite(LoadTex("data/asteroid.png"))
+SprSetSize(300, 300)
+SprSetPos(160, 240)
+SprSetSpin(1)
+
+' Create a sprite with no linear filtering
+SetTexLinearFilter(false)
+dim sprite2 = NewSprite(LoadTex("data/asteroid.png"))
+SprSetSize(300, 300)
+SprSetPos(480, 240)
+SprSetSpin(1)
+       
+locate 4, 1: print "Linear filter"
+locate 22, 1: print "No linear filter"
+    
+' Spin textures to show difference
+while true
+    AnimateSprites()
+    WaitTimer(50)
+wend
+</CODE></PRE>
+<P>Note, loading a texture with linear filtering 
+has exactly the same effect as configuring the texture with OpenGL 
+commands:</P>
+<PRE><CODE class="basic">glBindTexture(GL_TEXTURE_2D, texture)<BR>glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)</CODE></PRE>
+<P>Loading a texture without linear filtering has 
+exactly the same effect as configuring it with:</P>
+<PRE><CODE class="basic">glBindTexture(GL_TEXTURE_2D, texture)<BR>glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)</CODE></PRE>
+<H2>Creating sprites and deleting sprites</H2>
+<P>Sprites can be created with NewSprite() or NewTileMap(). For now we will only 
+concentrate on regular sprites (and the NewSprite() function). Tile maps will be 
+explained in the tile map section further below.</P>
+<H3>NewSprite</H3>
+<P>NewSprite() creates a single sprite and returns a handle to it.</P>
+<P>Format:</P>
+<div class="format">
+  <P>NewSprite()<BR>NewSprite(<EM>texture</EM>)<BR>NewSprite(<EM>textureArray</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>texture</EM> is an OpenGL texture.<BR><EM>textureArray </EM>is an array 
+  of OpenGL textures.</P>
+<P>All 3 different formats return a sprite handle. This is a number that 
+identifies the sprite, and is used to access it and manipulate it.<BR>If 
+<EM>texture</EM> is specified, then the texture is loaded into the sprite.<BR>If 
+<EM>textures</EM> is specified, then the array of textures is loaded into the 
+sprite.<BR>If nothing is specified, then no textures are associated with the 
+sprite, and you will need to call one of the texture setting functions to add 
+some.</P>
+<H3>DeleteSprite</H3>
+<div class="applies-sprite-tilemap"></div>
+<P>DeleteSprite can be used to free a sprite once you have finished with it.</P>
+<P>Format:</P>
+<div class="format">
+  <P>DeleteSprite(<EM>spriteHandle</EM>)</P></div>
+<P>Where <EM>spriteHandle</EM> is a sprite handle returned from NewSprite() (or 
+NewTileMap()).</P>
+<H3>ClearSprites</H3>
+<P>ClearSprite will delete <EM>all</EM> sprites and tile-maps from the 
+screen.</P>
+<P>Format:</P>
+<div class="format">
+  <P>ClearSprites()</P></div>
+<H2>Binding sprites</H2>
+<P>To manipulate a sprite, you must first "bind" it. This works much in the same 
+way as OpenGL texture binding. Once bound, all sprite functions operate on that 
+sprite until the binding is changed to another sprite.</P>
+<P>NewSprite() and NewTileMap() automatically bind the sprite they have just 
+created.</P>
+<P>Otherwise you need to call BindSprite() to set the currently bound 
+sprite.</P>
+<H3>BindSprite</H3>
+<div class="applies-sprite-tilemap"></div>
+<P>Sets the currently bound sprite. All sprite changes from there on will be 
+applied to the sprite until another sprite is bound.</P>
+<P>Format:</P>
+<div class="format">
+  <P>BindSprite(<EM>spriteHandle</EM>)</P></div>
+<P>Where <EM>spriteHandle</EM> is a sprite handle returned from NewSprite() (or 
+NewTileMap()).</P>
+<H2>Setting the sprite texture</H2>
+<H3>SprSetTexture, SprSetTextures</H3>
+<div class="applies-sprite-tilemap"></div>
+<P>Loads a texture or set of textures into a sprite.</P>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetTexture(<EM>texture</EM>)<BR>SprSetTextures(<EM>textureArray</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>texture</EM> is an OpenGL texture.<BR><EM>textureArray </EM>is an array 
+  of OpenGL textures.</P>
+<P>The texture or textures will completely replace any textures already in the 
+sprite.</P>
+<H3>SprAddTexture, SprAddTextures</H3>
+<div class="applies-sprite-tilemap"></div>
+<P>Adds a texture or textures to a sprite.</P>
+<P>Format:</P>
+<div class="format">
+  <P>SprAddTexture(<EM>texture</EM>)<BR>SprAddTextures(<EM>textureArray</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>texture</EM> is an OpenGL texture.<BR><EM>textureArray </EM>is an array 
+  of OpenGL textures.</P>
+<P>The texture or textures are added to the end of any existing textures in the 
+sprite.</P>
+<H2>Sprite properties</H2>
+<P>You animate and move sprites around by setting various sprite properties, 
+such as their position, angle, colour e.t.c.<BR>For each property there is 
+usually one or more functions to set the property, and one or more to get (read) 
+the property from the sprite.</P>
+<P>The "Set" functions always operate on the bound sprite. </P>
+<P>The "Get" functions usually come in 2 forms. One that operates on the bound 
+sprite, and one that is passed a sprite handle to operate on.<BR>(The second 
+form is useful if you want to copy properties from one sprite to another, or set 
+one sprite's properties dependant on those of another sprite.)</P>
+<H3>SprSetPos, SprSetX, SprSetY (Set)<BR>SprPos, SprX, SprY (Get)</H3>
+<div class="applies-sprite-tilemap"></div>
+<P>These functions are used to move sprites around.</P>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetPos(<EM>vector</EM>)<BR>SprSetPos(<EM>x</EM>, 
+  <EM>y</EM>)<BR>SprSetX(<EM>x</EM>)<BR>SprSetY(<EM>y</EM>)</P>
+  <P>SprPos() / SprPos(<EM>spriteHandle</EM>)<BR>SprX() / SprX(<EM>spriteHandle</EM>)<BR>SprY() / SprY 
+(<EM>spriteHandle</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>vector</EM> is a real numbered 2D vector. (e.g dim vec#(1) ).<BR><EM>x 
+  </EM>is a real number representing the sprite's horizontal 
+  position.<BR><EM>y</EM> is a real number representing the sprite's vertical 
+  position.</P>
+<P>By default the top left corner of the screen is at <EM>x</EM> = 0,<EM> y</EM> 
+= 0, and the bottom right is at <EM>x</EM> = 640, <EM>y</EM> = 480. (Note that 
+increasing <EM>y</EM> corresponds to the <STRONG>down</STRONG><EM><STRONG> 
+</STRONG></EM>direction, unlike most OpenGL configurations in which increasing 
+<EM>y</EM> corresponds to <STRONG>up</STRONG>.)<BR>You can change the dimensions 
+of the sprite area by calling ResizeSpriteArea() (which works much the same as 
+ResizeText()).</P>
+<P>The position that the sprite appears in is also dependant on the "sprite 
+camera". (See the SprCamera functions for more information.)</P>
+<H3>SprSetZOrder<BR>SprZOrder</H3>
+<div class="applies-sprite-tilemap"></div>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetZOrder(<EM>zOrder)</EM></P>
+  <P>SprZOrder() / SprZOrder(<EM>spriteHandle</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>zOrder</EM> is a real number.</P>
+<P>The Z order is a real valued number, stored with each sprite which determines 
+whether it will appear in front or behind other sprites.<BR>Smaller values (or 
+more negative values) appear infront of larger values.</P>
+<P>Also, any sprite with a Z order of <EM>0 or greater </EM>will appear 
+<STRONG>behind</STRONG><EM><STRONG> </STRONG></EM>any text on the screen, and 
+any sprite with a Z order <EM>less than 0</EM> will appear 
+<STRONG>infront</STRONG> of the text.</P>
+<P>When parallax scrolling is switched on for a sprite or tile map (using 
+SprSetParallax()), the Z order affects whether it appears far away and scrolls 
+slowly (positive Z order values) or close and scrolls quickly (negative Z order 
+values).<BR>If a sprite has a Z order of 0, switching on parallax scrolling will 
+have no effect.</P>
+<H3>SprSetSize, SprSetXSize, SprSetYSize<BR>SprXSize, SprYSize</H3>
+<div class="applies-sprite-tilemap"></div>
+<P>These functions set the size of the sprite, or in the case of tilemaps, the 
+size of each tile.</P>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetSize(<EM>vector</EM>)<BR>SprSetSize(<EM>x</EM>Size, 
+  <EM>ySize</EM>)<BR>SprSetXSize(<EM>xSize</EM>)<BR>SprSetYSize(<EM>ySize</EM>)</P>
+  <P>SprXSize() / SprXSize(<EM>spriteHandle</EM>)<BR>SprYSize() / SprYSize(<EM>spriteHandle</EM>)</P></div>
+<P>Note: The default sprite (and tile) size is 32 x 32.</P>
+<H3>SprSetXCentre, SprSetYCentre<BR>SprXCentre, SprYCentre</H3>
+<div class="applies-sprite-tilemap"></div>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetXCentre(<EM>xCentre</EM>)<BR>SprSetYCentre(<EM>yCentre)</EM></P>
+  <P>SprXCentre() / SprXCentre(<EM>spriteHandle</EM>)<BR>SprYCentre() / 
+  SprYCentre(<EM>spriteHandle</EM>)</P></div>
+<P>Used to specify the centre of the sprite. This is the point that is lined up 
+to the sprite's position, and is also where the sprite rotates around.<BR>By 
+default this is (.5, .5) for regular sprites (corresponding to the centre of the 
+sprite) and (0, 0) for tile maps (corresponding to the top left corner).</P>
+<P>A value of 1 corresponds to a single sprite with or height, 
+<STRONG>or</STRONG> a single tile width or height (for tile maps).</P>
+<H3>SprSetScale<BR>SprScale</H3>
+<div class="applies-sprite-tilemap"></div>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetScale(<EM>scaleFactor</EM>)</P>
+  <P>SprScale() / SprScale(<EM>spriteHandle</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>scaleFactor</EM> is a real number.</P>
+<P>Used to scale a sprite. Alternatively you could just multiply the X and Y 
+size to achieve exactly the same effect.<BR>The default scale is 1.</P>
+<H3>SprSetXFlip, SprSetYFlip<BR>SprXFlip, SprYFlip</H3>
+<div class="applies-sprite"></div>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetXFlip(<EM>xFlip</EM>)<BR>SprSetYFlip(<EM>yFlip</EM>)</P>
+  <P>SprXFlip() / SprXFlip(<EM>spriteHandle</EM>)<BR>SprYFlip() / SprYFlip(<EM>spriteHandle</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>xFlip</EM> and <EM>yFlip </EM>are integer values. If the value is true (non zero), 
+  the sprite is flipped in that direction.</P>
+<H3>SprLeft, SprTop, SprRight, SprBottom</H3>
+<div class="applies-sprite"></div>
+<P>These are readonly functions that return the effective position of the edges 
+of the sprite, taking into account position, size, scaling and sprite's centre 
+position.</P>
+<P>Format:</P>
+<div class="format">
+  <P>SprLeft() / SprLeft(<EM>spriteHandle</EM>)<BR>SprRight() / SprRight(<EM>spriteHandle</EM>)<BR>SprTop() / SprTop(<EM>spriteHandle</EM>)<BR>SprBottom() / SprBottom(<EM>spriteHandle)</EM></P></div>
+<P>These functions all return a real value, corresponding to the horizontal 
+coordinate (SprLeft &amp; SprRight) or vertical coordinate (SprTop &amp; 
+SprBottom) of the corresponding edge of the sprite.</P>
+<P>These functions are useful for primative collision detection, or bouncing 
+sprites against the edge of the screen.</P>
+<H3>SprSetAngle, SprAngle</H3>
+<div class="applies-sprite-tilemap"></div>
+<P>Used to rotate sprites.</P>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetAngle(<EM>angle</EM>)</P>
+  <P>SprAngle() / SprAngle(<EM>spriteHandle</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>angle</EM> is a real number specifying the number degrees to rotate the 
+  sprite by in the anticlockwise direction.</P>
+<H3>SprSetVisible<BR>SprVisible</H3>
+<div class="applies-sprite-tilemap"></div>
+<P>Used to show / hide a sprite.</P>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetVisible(<EM>visible</EM>)</P>
+  <P>SprVisible() / SprVisible(<EM>spriteHandle</EM>)</P></div>
+<P>Where:</P>
+  <P><em>visible</em> is an integer value, set to true to show the sprite or false to 
+  hide it.</P>
+<P>(By default sprites are made visible when created.)</P>
+<H3>SprSetFrame<BR>SprFrame</H3>
+<div class="applies-sprite"></div>
+<P>Once multiple textures are loaded into a sprite, you can animate it by 
+setting the sprite frame.</P>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetFrame(<EM>frameNo</EM>)</P>
+  <P>SprFrame() / SprFrame(<EM>spriteHandle</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>frameNo</EM> is the frame number to display. The first loaded frame is 
+  0.</P>
+<H3>SprSetColor<BR>SprColor</H3>
+<div class="applies-sprite-tilemap"></div>
+<P>Used to set the colour of the sprite, and (optionally) it's transparency.</P>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetColor(<EM>colourVec</EM>)<BR>SprSetColor(<EM>red</EM>, 
+  <EM>green</EM>, <EM>blue</EM>)<BR>SprSetColor(<EM>red</EM>, <EM>green</EM>, 
+  <EM>blue</EM>, <EM>alpha</EM>)</P>
+  <P>SprColor() / SprColor(<EM>spriteHandle</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>colourVec</EM> is a 3D or 4D vector (array) of real 
+  values.<BR><EM>red</EM>, <EM>green</EM>, <EM>blue</EM> are real values 
+  representing the red, green and blue intensities of the colour respectively (0 
+  = no intensity, 1 = full intensity)<BR><EM>alpha</EM> is a real value 
+  representing how transparent the object is (0 = fully transparent / invisible, 
+  1 = fully solid).</P>
+<P>If the <EM>alpha</EM> component isn't specified, it defaults to 1.</P>
+<P>If the sprite is set to solid (SprSetSolid()) then it will always be drawn 
+solid, and <EM>alpha</EM> has no effect.<BR>Tile maps, by default are solid. 
+Regular sprites are transparent.</P>
+<H3>SprSetAlpha<BR>SprAlpha</H3>
+<div class="applies-sprite-tilemap"></div>
+<P>Used to set just the alpha component of the sprite's colour.</P>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetAlpha(<EM>alpha</EM>)</P>
+  <P>SprAlpha() / SprAlpha(<EM>spriteHandle</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>alpha</EM> is a real value representing how transparent the object is 
+  (0 = fully transparent / invisible, 1 = fully solid).</P>
+<P>See SprSetColor() above for more info on alpha and sprite transparency.</P>
+<H3>SprSetBlendFunc</H3>
+<div class="applies-sprite-tilemap"></div>
+<P>Allows you to change the blending mode of a sprite. This is an advanced 
+function, used to enable special types of transparency.</P>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetBlendFunc(<EM>sfactor</EM>,<EM>dfactor</EM>)</P></div>
+<P>Where&nbsp;<EM>sfactor</EM> and&nbsp;<EM>dfactor</EM> are OpenGL blending 
+function constants for the source and destination pixels respectively.</P>
+<P>The function accepts the same constants as the OpenGL glBlendFunc function. 
+The default blending function is <EM>sfactor</EM> = GL_SRC_ALPHA, 
+<EM>dfactor</EM> = GL_ONE_MINUS_SRC_ALPHA.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">dim stars(10), i, tex
+tex = LoadTex("data/star.bmp")
+for i = 1 to 10
+    stars(i) = NewSprite(tex)
+    SprSetSize(500, 500)
+    SprSetColor((rnd() % 1001) / 1000.0, (rnd() % 1001) / 1000.0, (rnd() % 1001) / 1000.0)
+    SprSetPos(rnd() % int(SpriteAreaWidth()), rnd() % int(SpriteAreaHeight()))
+    SprSetVel(((rnd() % 2001) - 1000) / 1000.0, ((rnd() % 2001) - 1000) / 1000.0)
+    SprSetBlendFunc(GL_SRC_ALPHA, GL_ONE)
+next
+
+do
+    AnimateSprites()
+    for i = 1 to 10
+        BindSprite(stars(i))
+        if SprX() < 0 or SprX() > SpriteAreaWidth() then
+            SprSetXVel(-SprXVel())
+        endif
+        if SprY() < 0 or SprY() > SpriteAreaHeight() then
+            SprSetYVel(-SprYVel())
+        endif
+    next
+loop
+</CODE></PRE>
+<H3>SprSetSolid<BR>SprSolid</H3>
+<div class="applies-sprite-tilemap"></div>
+<P>Specifies whether a sprite is solid or transparent.</P>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetSolid(<EM>solid</EM>)</P>
+  <P>SprSolid() / SprSolid(<EM>spriteHandle</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>solid</EM> is an integer value. True = solid, false = 
+transparent.</P>
+<P>Solid sprites and tiles are drawn as solid rectangular blocks. Transparent 
+ones use the transparency information stored inside the textures (if any) plus 
+the alpha value.</P>
+<P>By default tile maps are solid, and regular sprites are transparent.</P>
+<H3>SprSetParallax<BR>SprParallax</H3>
+<div class="applies-sprite-tilemap"></div>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetParallax(<EM>parallax</EM>)</P>
+  <P>SprParallax() / SprParallax(<EM>sprHandle</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>parallax</EM> is an integer value. True = parallax scrolling, false = 
+  regular scrolling.</P>
+<P>Parallax scrolling uses the Z order information to create a parallax 
+scrolling effect. Positive Z order values correspond to further away objects, 
+which are displayed as smaller, and scroll slower. Negative Z order values 
+correspond to closer objects, which are displayed as larger and scroll 
+faster.</P>
+<H2>Sprite animation</H2>
+<P>You can animate sprites by updating the above properties manually. However, 
+to simplify things, there are also a number of properties that you can set on a 
+sprite in order to have it animate automatically.<BR>These include:</P>
+<UL>
+  <LI>Velocity 
+  <LI>Spin 
+  <LI>Animation speed (animating through frames) </LI></UL>
+<P><STRONG>These properties can only be set on regular sprites! They do not 
+apply to tile maps.</STRONG></P>
+<P>Once set, these properties will automatically update the sprite every time 
+AnimateSprites() is called.</P>
+<H3>AnimateSprites</H3>
+<P>Format:</P>
+<div class="format">
+  <P>AnimateSprites()</P></div>
+<P>Updates each sprite, adding velocity to position, spin to angle and animation 
+speed to frame number.</P>
+<H3>AnimateSpriteFrames()</H3>
+<P>Format:</P>
+<div class="format">
+  <P>AnimateSpriteFrames()</P></div>
+<P>Like updates each sprite, adding animation speed to frame 
+number.<BR>Similar to AnimateSprites, but updates only the animation frames. 
+Sprites do not move or rotate.</P>
+<H3>SprSetVel, SprSetXVel, SprSetYVel,<BR>SprVel, SprXVel, SprYVel</H3>
+<div class="applies-sprite"></div>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetVel(<EM>vector</EM>)<BR>SprSetVel(<EM>x</EM>, 
+  <EM>y</EM>)<BR>SprSetXVel(<EM>x</EM>)<BR>SprSetYVel(<EM>y</EM>)</P>
+  <P>SprVel() / SprVel(<EM>spriteHandle</EM>)<BR>SprXVel() / SprXVel(<EM>spriteHandle</EM>)<BR>SprYVel() / SprYVel(<EM>spriteHandle</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>vector</EM> is a 2D real valued vector.<BR><EM>x</EM> is a real value 
+  representing the X component of the velocity.<BR><EM>y</EM> is a real value 
+  representing the Y component of the velocity.</P>
+<P>A sprite's velocity is added to its position every time AnimateSprites() is 
+called, to make the sprite move.</P>
+<P>The default velocity is (0, 0).</P>
+<H3>SprSetSpin<BR>SprSpin</H3>
+<div class="applies-sprite"></div>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetSpin(<EM>spin</EM>)</P>
+  <P>SprSpin() / SprSpin(<EM>spriteHandle</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>spin</EM> is a real number value.</P>
+<P>A sprite's spin is added to its angle every time AnimateSprites() is called, 
+to make a sprite spin.</P>
+<H3>SprSetAnimSpeed<BR>SprAnimSpeed</H3>
+<div class="applies-sprite"></div>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetAnimSpeed(<EM>speed</EM>)</P>
+  <P>SprAnimSpeed() / SprAnimSpeed(<EM>spriteHandle</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>speed</EM> is a real number value.</P>
+<P>A sprite's animation speed is added to it's frame every time AnimateSprites() 
+is called, to make a sprite animate through its frames.</P>
+<P>A sprite can be set to animate once, or animate in a loop 
+(SprSetAnimLoop()).</P>
+<H3>SprSetAnimLoop<BR>SprAnimLoop</H3>
+<div class="applies-sprite"></div>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetAnimLoop(<EM>loop</EM>)</P>
+  <P>SprAnimLoop() / SprAnimLoop(<EM>spriteHandle</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>loop</EM> is an integer value. True = sprite animates in a loop. False 
+  = sprite animates once then stops.</P>
+<P>By default, sprites animate in a loop.</P>
+<H3>SprAnimDone</H3>
+<div class="applies-sprite"></div>
+<P>Format:</P>
+<div class="format">
+  <P>SprAnimDone() / SprAnimDone(<EM>spriteHandle</EM>)</P></div>
+<P>SprAnimDone() returns true if a sprite has completed it's animation (i.e has 
+reached the last frame.)</P>
+<p>This applies to <em>non looped</em> animations only. If the sprite has a looped animation then SprAnimDone() will always return false, as the animation never ends.</p>
+<H1>Tile map routines</H1>
+<P>(See CavernDemo.gb for a simple demo of tile maps in action.)</P>
+<P>In addition to regular sprites, Basic4GL supports a special type of sprite 
+called a "Tile map".</P>
+<P>A tile map is a 2D grid. Each grid contains a number, which indicates the 
+index of the image that is to be displayed at that point in the grid.<BR>Tile 
+maps are an efficient way of representing large images, often many times higher 
+and wider than the actual screen size. They are typically used for backgrounds 
+in 2D games like platformers and side scrollers.</P>
+<P>Tile maps are implemented as a special kind of sprite, so many of the 
+functions that operate on general sprites will also work on tile maps (e.g 
+setting position, size, scale, colour, angle, transparency). Although not all of 
+them though, so be aware that there are functions that will only operate on 
+regular sprites (and not tile maps), and vice-versa.<BR>The type of sprites that 
+a function will operate on is displayed in red underneath each function 
+description.</P>
+<H2>Creating tile maps</H2>
+<H3>NewTileMap</H3>
+<P>Tile maps are created with NewTileMap(). This has the same format as 
+NewSprite().</P>
+<P>Format:</P>
+<div class="format">
+  <P>NewTileMap()<BR>NewTileMap(<EM>texture</EM>)<BR>NewTileMap(<EM>textureArray</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>texture</EM> is an OpenGL texture.<BR><EM>textureArray </EM>is an array 
+  of OpenGL textures.</P>
+<P>Each of the 3 functions returns a handle to the new tile map object, that can 
+be used to manipulate it later.</P>
+<P>Like regular sprites, tile maps need to be given textures to indicate what is 
+to be displayed. You can either pass these textures to the NewTileMap() 
+function, or add them later with the SprSetTexture(s) or SprAddTexture(s) 
+functions.</P>
+<P>When a tile map is created, it is automatically "bound" (see BindSprite() for 
+more info.)</P>
+<H2>Setting up tiles</H2>
+<P>Once a tile map has been created and has some textures, you need to specify 
+the tiles.<BR>This is the actual 2D grid of numbers, where each number indicates 
+which texture is to be displayed at that point, where 0 indicates the first 
+texture loaded.</P>
+<P>You setup the grid as a 2D array of integers, and then pass the array to the 
+tile map using SprSetTiles().</P>
+<H3>SprSetTiles</H3>
+<div class="applies-tilemap"></div>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetTiles(<EM>tilesArray</EM>) / SprSetTiles(<EM>spriteHandle</EM>, 
+  <EM>tilesArray</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>tilesArray</EM> is a 2D array of integers.</P>
+<P>This loads the tiles into the tile map. Once the tile map has textures and 
+tiles, it is ready to display.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">data 1, 1, 1, 1
+data 1, 0, 0, 1
+data 1, 0, 0, 1
+data 1, 1, 1, 1
+
+' Read in tiles
+dim tiles(3)(3), x, y, tileMap
+for y = 0 to 3
+    for x = 0 to 3
+        read tiles(x)(y)
+    next
+next
+
+' Create tilemap
+tileMap = NewTileMap(LoadTexStrip("data\cavernTiles.png", 32, 32))
+SprSetTiles(tiles)</CODE></PRE>
+<P>Note: By default tilemaps repeat infinitely in the horizontal and vertical 
+directions.</P>
+<P>You can now move the tilemap around just like any regular sprite with the 
+standard sprite routines.</P>
+<H3>SprXTiles, SprYTiles</H3>
+<div class="applies-tilemap"></div>
+<P>Occasionally it is useful to know the number of tiles a tile map has across 
+or down. To achieve this you can use the SprXTiles or SprYTiles functions.</P>
+<P>Format:</P>
+<div class="format">
+  <P>SprXTiles() / SprXTiles(<EM>spriteHandle</EM>)<BR>SprYTiles() / 
+  SprYTiles(<EM>spriteHandle</EM>)</P></div>
+<P>SprXTiles() returns the number of tiles across (horizontally).<BR>SprYTiles() 
+returns the number of tiles down (vertically).</P>
+<H3>SprSetXRepeat, SprSetYRepeat<BR>SprXRepeat, SprYRepeat</H3>
+<div class="applies-tilemap"></div>
+<P>Format:</P>
+<div class="format">
+  <P>SprSetXRepeat(<EM>xRepeat</EM>)<BR>SprSetYRepeat(<EM>yRepeat</EM>)</P>
+  <P>SprXRepeat() / SprXRepeat(<EM>spriteHandle)</EM><BR>SprYRepeat() / 
+  SprYRepeat(<EM>spriteHandle</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>xRepeat</EM> and <EM>yRepeat</EM> are integer values, set to true to 
+  repeat the tile map infinitely along the given dimension, and false to disable 
+  repeating.</P>
+<P>(By default X and Y repeat are <STRONG>on</STRONG>, when the tile map is 
+created.)</P>
+<H1>Copying sprites</H1>
+<P>You can copy on sprite to another using CopySprite(). The target sprite will 
+then become an identical copy of the original.</P>
+<H3>CopySprite</H3>
+<div class="applies-sprite-tilemap"></div>
+<P>Format:</P>
+<div class="format">
+  <P>CopySprite(<EM>spriteHandle</EM>)</P></div>
+<P>All the properties of the <EM>spriteHandle</EM> sprite are copied to the 
+currently bound sprite, making the two completely identical.</P>
+<P>Note that while you can copy a regular sprite to a regular sprite or a tile 
+map to another tile map, you cannot copy a tile map to a sprite or 
+vice-versa.</P>
+<H1>Distinguishing Sprite types</H1>
+<P>You can distinguish a regular sprite from a tile map using the SprType() 
+function.</P>
+<H3>SprType</H3>
+<div class="applies-sprite-tilemap"></div>
+<P>Format:</P>
+<div class="format">
+  <P>SprType() / SprType(<EM>spriteHandle</EM>)</P></div>
+<P>This returns an integer constant, which will be:</P>
+<UL>
+  <LI>SPR_SPRITE if the sprite is a regular sprite 
+  <LI>SPR_TILEMAP is the sprite is a tile map 
+  <LI>SPR_INVALID if the sprite handle does not correspond to a regular sprite 
+  or tile map. </LI></UL>
+<H1>Setting the sprite area size</H1>
+<P>You can resize the sprite area, just like you can resize the text area.</P>
+<P>The default sprite area size is 640 x 480, but you can pretty much set it to 
+anything you want.<BR>All sprites and tile maps will be scaled accordingly.</P>
+<H3>ResizeSpriteArea</H3>
+<P>Format:</P>
+<div class="format">
+  <P>ResizeSpriteArea(<EM>width</EM>, <EM>height</EM>)</P></div>
+<P>Where:</P>
+  <P><EM>width </EM>and <EM>height</EM> are real numbers corresponding to the 
+  width and height of the sprite area respectively.</P>
+<H3>SpriteAreaWidth, SpriteAreaHeight</H3>
+<P>Format:</P>
+<div class="format">
+  <P>SpriteAreaWidth()<BR>SpriteAreaHeight()</P></div>
+<P>These functions return the respective width and height of the sprite area (as 
+set by the most recent ResizeSpriteArea() call).</P>
+<P>Useful for finding the screen boundaries.</P>
+<H1>The Sprite Camera</H1>
+<P>Basic4GL has the concept of a sprite "camera". You can use this to create 
+scrolling games, by setting up your sprites to move around in an area 
+<STRONG>bigger</STRONG><EM><STRONG> </STRONG></EM>than the screen size, and 
+moving the camera around it.</P>
+<P>This is also an easy way to setup parallax scrolling.</P>
+<P>By enabling parallax mode (SprSetParallax()) and setting the Z order to a 
+positive number (SprSetZOrder()), you can cause background sprites and tile maps 
+to appear smaller, and move slower in response to camera movement.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">TextMode(TEXT_BUFFERED)
+
+data  1, 1, 1, 1
+data -1,-1,-1, 1
+data -1,-1,-1, 1
+data -1,-1,-1, 1
+
+' Read in tiles
+dim tiles(3)(3), x, y, tileMap, tileMap2, tileMap3
+dim textures(TexStripFrames("data\cavernTiles.png", 32, 32) - 1)
+for y = 0 to 3
+    for x = 0 to 3
+        read tiles(x)(y)
+    next
+next
+
+' Load textures
+textures = LoadTexStrip("data\cavernTiles.png", 32, 32)
+
+' Create tilemaps
+tileMap = NewTileMap(textures)
+SprSetTiles(tiles)
+
+tileMap2 = NewTileMap(textures)
+SprSetTiles(tiles)
+SprSetColor(.75, .5, .5)
+SprSetZOrder(100)
+SprSetParallax(true)
+SprSetAngle (45)
+                
+tileMap3 = NewTileMap(textures)
+SprSetTiles(tiles)
+SprSetColor(.25, .25, .5)
+SprSetZOrder(200)
+SprSetParallax(true)
+                
+while true
+    while SyncTimer(10)
+        SprCameraSetPos(SprCameraPos() + vec2(2, .5))
+    wend
+    DrawText()
+wend</CODE></PRE>
+<H3>SprCameraSetPos, SprCameraSetX, SprCameraSetY<BR>SprCameraPos, SprCameraX, 
+SprCameraY</H3>
+<P>Used to move the sprite camera around. All sprites and tilemaps are drawn in 
+relation to the sprite camera.</P>
+<P>Format:</P>
+<div class="format">
+  <P>SprCameraSetPos(<EM>positionVector</EM>)<BR>SprCameraSetX(<EM>xPosition</EM>)<BR>SprCameraSetY(<EM>yPosition</EM>)</P>
+  <P>SprCameraPos()<BR>SprCameraX()<BR>SprCameraY()</P></div>
+<P>Where:</P>
+  <P><EM>positionVector</EM> is a 2D vector of real values (e.g dim camVec#(1)).<BR><EM>xPosition</EM> and <EM>yPosition</EM> are real values 
+  representing the camera's X and Y position respectively.</P>
+<P>Note: The default camera position is (0, 0).</P>
+<H3>SprCameraSetAngle<BR>SprCameraAngle</H3>
+<P>As well as moving the camera, you can also rotate it. All sprites and tile 
+maps are then drawn rotated in relation to the rotation of the camera.</P>
+<P>Format:</P>
+<div class="format">
+  <P>SprCameraSetAngle(<EM>angle</EM>)<BR>SprCameraAngle()</P></div>
+<P>Where:</P>
+  <P><EM>angle</EM> is a real number value representing the new camera angle in 
+  degrees.</P>
+<P><STRONG>Positive </STRONG>angles rotate the camera 
+<STRONG>anticlockwise</STRONG>, and give the effect of rotating all the sprites 
+and tile maps <STRONG>clockwise</STRONG>.</P>
+<H3>SprCameraSetFov<BR>SprCameraFov</H3>
+<P>You can also set the field of view used for the parallax scrolling 
+effect.</P>
+<P>Format:</P>
+<div class="format">
+  <P>SprCameraSetFov(<EM>fov</EM>)<BR>SprCameraFov()</P></div>
+<P>Where:</P>
+  <P><EM>fov</EM> is a real number value representing the new camera 
+  field-of-view in degrees.</P>
+<P>The field-of-view must be at least 1 degree wide and no more than 175 
+degrees.</P>
+<P>Altering the camera's field of view has no effect on sprites or tile maps 
+which are <STRONG>not </STRONG>in parallax mode.</P>
+<H3>SprCameraSetZ<BR>SprCameraZ</H3>
+<P>Format:</P>
+<div class="format">
+  <P>SprCameraSetZ(<EM>zPosition</EM>)<BR>SprCameraZ()</P></div>
+<P>Where:</P>
+  <P><EM>zPosition</EM> is a real number value representing the Z position of 
+  the camera.</P>
+<P>This can be used to set the sprite camera's Z position. It affects parallax 
+sprites and tile maps only.<BR>Positive values of <EM>zPosition</EM> make the 
+camera appear to move forward. Negative values of <EM>zPosition</EM> make the 
+camera appear to move backwards.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">TextMode(TEXT_BUFFERED)
+
+data 1, -1, -1, -1
+data 1, -1, -1, -1
+data 1, -1, -1, -1
+data 1, -1, -1, -1
+dim tiles(3)(3), x, y
+for y = 0 to 3: for x = 0 to 3: read tiles(x)(y): next: next
+
+dim textures(TexStripFrames("data\cavernTiles.png", 32, 32) - 1)
+textures = LoadTexStrip("data\cavernTiles.png", 32, 32)
+
+const numLayers = 5
+dim layers(numLayers), i
+for i = 1 to numLayers
+    layers(i) = NewTileMap(textures)
+    SprSetTiles(tiles)
+    SprSetYRepeat(false)
+    SprSetZOrder(i * 100)
+    SprSetY(240 - 64)
+    SprSetSolid(false)
+    SprSetParallax(true)
+next
+
+while true
+    SprCameraSetZ(SprCameraZ() + 1)
+    DrawText()
+wend</CODE></PRE></BODY></HTML>

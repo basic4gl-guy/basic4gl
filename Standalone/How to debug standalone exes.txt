@@ -1,0 +1,11 @@
+The easiest way to debug a standalone exe is as follows:
+
+1. Use the StandaloneCB2.bpr C++ Builder project to build StandaloneCB2.exe.
+
+2. Copy the file ..\distribution\stub.bin.
+
+3. Run Basic4GL and use the create standalone executable option.
+
+4. SAVE THE STANDALONE EXECUTABLE BACK OVER THE TOP OF STANDALONECB2.EXE!
+
+5. You can now debug the executable in C++ Builder as per normal!

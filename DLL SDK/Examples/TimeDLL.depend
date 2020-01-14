@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1192134301 e:\projects\basic4gl\development\dll sdk\examples\timedll.cpp
+	<windows.h>
+	"Basic4GLDLLInterface.h"
+
+1205135210 e:\projects\basic4gl\development\dll sdk\include\basic4gldllinterface.h
+	"DLLMisc.h"
+
+1205028105 e:\projects\basic4gl\development\dll sdk\include\dllmisc.h
+

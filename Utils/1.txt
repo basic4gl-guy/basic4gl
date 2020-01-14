@@ -1,0 +1,79 @@
+; Basic4GLv2.nsi
+;
+; Basic4GL v 2 install script for NSIS
+; Hacked from the StartMenu.nsi example file
+
+
+;NSIS Modern User Interface version 1.63
+;Start Menu Folder Selection Example Script
+;Written by Joost Verburg
+
+!define MUI_PRODUCT "Basic4GL" ;Define your own software name here
+!define MUI_VERSION "2.5.11" ;Define your own software version here
+
+!include "MUI.nsh"
+
+;--------------------------------
+;Configuration
+
+  ;General
+  OutFile "Setup ${MUI_PRODUCT} v${MUI_VERSION}.exe"
+
+  ;Folder selection page
+  InstallDir "$PROGRAMFILES\${MUI_PRODUCT}"
+
+  ;Remember install folder
+  InstallDirRegKey HKCU "Software\${MUI_PRODUCT}" ""
+
+  ;$9 is being used to store the Start Menu Folder.
+  ;Do not use this variable in your script (or Push/Pop it)!
+
+  ;To change this variable, use MUI_STARTMENUPAGE_VARIABLE.
+  ;Have a look at the Readme for info about other options (default folder,
+  ;registry).
+
+  ;Remember the Start Menu Folder
+  !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKCU"
+  !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\${MUI_PRODUCT}"
+  !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
+
+  !define TEMP $R0
+
+;--------------------------------
+;Modern UI Configuration
+
+  !define MUI_LICENSEPAGE
+;  !define MUI_COMPONENTSPAGE
+  !define MUI_DIRECTORYPAGE
+  !define MUI_STARTMENUPAGE
+  !define MUI_FINISHPAGE
+    !define MUI_FINISHPAGE_RUN "$INSTDIR\Basic4gl.exe"
+
+  !define MUI_ABORTWARNING
+
+  !define MUI_UNINSTALLER
+  !define MUI_UNCONFIRMPAGE
+  !define MUI_HEADERBITMAP "Distribution\Basic4glSmall.bmp"
+
+;--------------------------------
+;Languages
+ 
+  !insertmacro MUI_LANGUAGE "English"
+  
+;--------------------------------
+;Language Strings
+
+  ;Description
+  LangString DESC_SecCopyUI ${LANG_ENGLISH} "Install Basic4GL program and example files."
+
+;--------------------------------
+;Data
+
+  LicenseData "ReleaseImage\License.txt"
+
+;--------------------------------
+;Installer Sections
+
+Section "Basic4GL" SecCopyUI
+
+  SetOutPath $INSTDIR

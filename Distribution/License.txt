@@ -1,0 +1,43 @@
+======================================
+Basic4GL
+Copyright (C) 2003-2016 Thomas Mulgrew
+======================================
+Email: tmulgrew@slingshot.co.nz
+
+
+BASIC4GL LICENSE
+
+Basic4GL is licensed under the FreeBSD license (see the "FreeBSD license.txt" file).
+This includes the NetLib4Games library component.
+
+
+Qt WIDGET LIBRARY
+
+The Basic4GL IDE uses the Qt Widget Library Open Source edition, which is distributed under the GNU Lesser General Public License (LGPL) version 3 (http://www.gnu.org/licenses/lgpl-3.0.html or see the "lgpl-3.0.txt" file).
+
+
+CORONA IMAGE INPUT/OUTPUT LIBRARY
+
+The Corona Image Input/Output library is used internally by Basic4GL, and is distributed under the Zlib license (http://opensource.org/licenses/zlib-license.html or see the "ZLib LibPNG license.txt" file).
+
+
+STANDALONE EXECUTABLES
+
+Standalone executables created by Basic4GL are not considered to be under the FreeBSD license.
+You may distribute and license them however you see fit, so long as the author of Basic4GL cannot be held liable for any damages caused. Specifically the "no warranty" clause of the FreeBSD license remains in effect:
+
+THIS SOFTWARE IS PROVIDED BY THOMAS MULGREW ``AS IS'' AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THOMAS MULGREW OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Standalone executables created by Basic4GL contain the Corona Image Input/Output library, and the zlib license still applies to that part.
+
+Standalone executables created by Basic4GL do NOT contain any Qt code.
+
+Plugin libraries used by standalone executables may have their own licensing restrictions. You are responsible for determining and adhering to them.

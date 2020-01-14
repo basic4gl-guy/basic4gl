@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE CodeBlocks_layout_file>
+<CodeBlocks_layout_file>
+	<File name="EmbeddedFileTestMain.cpp" open="0" top="0">
+		<Cursor position="715" topLine="96"/>
+	</File>
+	<File name="..\include\Basic4GLDLLInterface.h" open="1" top="0">
+		<Cursor position="6304" topLine="142"/>
+	</File>
+	<File name="..\include\Basic4GLStandardObjects.h" open="0" top="0">
+		<Cursor position="2214" topLine="9"/>
+	</File>
+</CodeBlocks_layout_file>

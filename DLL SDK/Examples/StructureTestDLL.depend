@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1179285545 e:\projects\basic4gl\development\dll sdk\examples\structuretestdll.cpp
+	<windows.h>
+	<stdlib.h>
+	"Basic4GLDLLInterface.h"
+
+1179274560 e:\projects\basic4gl\development\dll sdk\include\basic4gldllinterface.h
+	"DLLMisc.h"
+
+1142122693 e:\projects\basic4gl\development\dll sdk\include\dllmisc.h
+

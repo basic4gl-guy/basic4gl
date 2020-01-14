@@ -1,0 +1,51 @@
+    ; Create file type association
+    WriteRegStr HKLM "Software\CLASSES\Basic4GL" "" 'Basic4GL Program'
+    WriteRegStr HKLM "Software\CLASSES\Basic4GL\shell\open" "" '&Run'
+    WriteRegStr HKLM "Software\CLASSES\Basic4GL\shell\open\command" "" '"$INSTDIR\Basic4GL.exe" "%1"'
+    WriteRegStr HKLM "Software\CLASSES\Basic4GL\shell\edit" "" '&Edit'
+    WriteRegStr HKLM "Software\CLASSES\Basic4GL\shell\edit\command" "" '"$INSTDIR\Basic4GL.exe" -e "%1"'
+    WriteRegStr HKLM "Software\CLASSES\.gb" "" "Basic4GL"
+
+    SetOutPath $INSTDIR
+
+  ;Store install folder
+  WriteRegStr HKCU "Software\${MUI_PRODUCT}" "" $INSTDIR
+
+  !insertmacro MUI_STARTMENU_WRITE_BEGIN
+
+    ;Create shortcuts
+    CreateDirectory "$SMPROGRAMS\${MUI_STARTMENUPAGE_VARIABLE}"
+    CreateShortCut "$SMPROGRAMS\${MUI_STARTMENUPAGE_VARIABLE}\Basic4GL v2.lnk" "$INSTDIR\Basic4GL.exe"
+    CreateShortCut "$SMPROGRAMS\${MUI_STARTMENUPAGE_VARIABLE}\Getting Started.lnk" "$INSTDIR\Getting Started.htm"
+  CreateShortCut "$SMPROGRAMS\${MUI_STARTMENUPAGE_VARIABLE}\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
+
+  !insertmacro MUI_STARTMENU_WRITE_END
+
+  ; Write the uninstall keys for Windows
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Basic4GL" "DisplayName" "Basic4GL (remove only)"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Basic4GL" "UninstallString" '"$INSTDIR\uninstall.exe"'
+
+  ; Create uninstaller
+  WriteUninstaller "$INSTDIR\Uninstall.exe"
+
+SectionEnd
+
+;Display the Finish header
+;Insert this macro after the sections if you are not using a finish page
+!insertmacro MUI_SECTIONS_FINISHHEADER
+
+;--------------------------------
+;Descriptions
+
+!insertmacro MUI_FUNCTIONS_DESCRIPTION_BEGIN
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecCopyUI} $(DESC_SecCopyUI)
+!insertmacro MUI_FUNCTIONS_DESCRIPTION_END
+
+;--------------------------------
+;Uninstaller Section
+
+Section "Uninstall"
+
+;===============================================
+	Delete "$INSTDIR\Uninstall.exe"
+;===============================================

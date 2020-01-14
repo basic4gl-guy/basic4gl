@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Basic4GL - Symbolic Debugger</title>
+<link rel="stylesheet" href="b4gl.css" />
+<link rel="stylesheet" href="highlight/styles/default.css" />
+<script src="highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="jquery-1.12.3.min.js"></script>
+<script src="toc.js"></script>
+</head>
+
+<body>
+
+<p class="copyright">Basic4GL, Copyright (C) 2003-2016 Tom Mulgrew</p>
+
+<p class="title">Symbolic Debugger</p>
+
+<p class="stamp">1-May-2016<br>
+Tom Mulgrew</p>
+<div class="toc"></div>
+
+<h1>What is a symbolic debugger?</h1>
+
+<p>A debugger is a tool that helps you track down and eliminate
+errors (or &quot;bugs&quot;) in program code. Typically you use a
+debugger to pause the program at a point which you wish to
+investigate, then analyse the contents of variables at that
+point. You can also trace through the flow of the program to see
+exactly which code is executed and the effect it has on the data.</p>
+
+<h1>The Basic4GL debugger</h1>
+
+<p>The Basic4GL debugger is integrated directly into Basic4GL
+itself. It supports the following features:</p>
+
+<ul>
+    <li>Stepping</li>
+    <li>Breakpoints</li>
+    <li>Watches (including mouse-over hints)</li>
+    <li>Stack display</li>
+</ul>
+
+<h1>Activating the debugger</h1>
+
+<p>When Basic4GL starts the debugger displays and buttons are hidden.</p>
+
+<p>To switch between debug mode and normal mode, click the &quot;Basic4GL&quot; menu on the main menu bar then &quot;Debug
+Mode&quot;, OR press the corresponding button on the toolbar OR
+press Ctrl+D.</p>
+<p>Basic4GL will now display the &quot;watch&quot; and
+&quot;stack&quot; windows along the bottom, and add the
+&quot;stepping&quot; buttons to the toolbar.</p>
+
+<h2>Stopped, running and paused</h2>
+
+<p>Basic4GL has 3 main states</p>
+
+<h3>Stopped</h3>
+<p>This is when the program has stopped completely:</p>
+<ul>
+	<li>The editor is enabled.</li>
+    <li>The debugging tools show the state of the program when it finished/was stopped.</li>
+    <li>When the program is next run, it will be run from the start.</li>
+</ul>
+
+<h3>Running</h3>
+<p>This means the Basic4GL program is running.</p>
+<ul>
+	<li>You cannot edit the program code.</li>
+    <li>If Basic4GL is in fullscreen mode the screen will display the program's output.</li>
+</ul>
+
+<h3>Paused</h3>
+<p>The program enters this mode when it is paused partway through running.</p>
+<p>This happens if either:</p>
+<ul>
+	<li>You press the "Pause" button on the keyboard</li>
+	<li>You click the "Pause" button on the debug toolbar</li>
+	<li>The running program hits a breakpoint</li>
+</ul>
+
+<p>While the program is paused:</p>
+<ul>
+	<li>You cannot edit the program code.</li>
+	<li>The debugging tools show the current state of the program.</li>
+	<li>You can use the debug toolbar to continue executing from the point the program was paused, or single-step through lines.</li>
+</ul>
+
+<div class="extra-info">
+	<h3>Fullscreen debugging issue</h3>
+	<p>At time of writing there is an issue with pausing Basic4GL programs running in fullscreen.</p>
+	<p>Basic4GL does not correct switch back from fullscreen to the editor.</p>
+	<p>Holding down the "Alt" key and pressing "Tab" a couple of times will often bring the editor back up. Or you may find it easier to debug your program in windowed mode until the screen fixing issue is fixed.</p>
+</div>
+
+<h2>Go/Stop vs Play/Pause</h2>
+
+<p>The Go/Stop button (displays a &quot;Go&quot; or &quot;Stop&quot; sign depending on the mode) is used to run the
+program <em>from the start</em>, or stop it completely so that it
+can be edited.</p>
+
+<p>The Play/Pause debugging button (displays a play arrow or a
+pause sign) is used to pause the program or resume it <em>from
+the position it was paused</em>.</p>
+
+<h1>Stepping</h1>
+
+<p>Basic4GL supports these standard functions for stepping
+through code:</p>
+
+<ul>
+    <li>Step over</li>
+    <li>Step into (gosub)</li>
+    <li>Step out of (gosub)</li>
+</ul>
+
+<p>They behave like any other debugger, that is:</p>
+
+<h2>Step over</h2>
+
+<p>&quot;Step over&quot; runs the current line of code and pauses
+on the next line. If the current line contains a
+&quot;gosub&quot; call, it will <em>not</em> step into it.
+Instead it will run the entire gosub routine and return.</p>
+
+<p>For example, for the following program:</p>
+
+<PRE><CODE class="basic">dim a, b: a = 10: b = 20        ' 1
+gosub Two                       ' 2
+printr a                        ' 3
+end                             ' 4
+Two:                            ' 5
+    printr b                    ' 6
+    return                      ' 7</CODE></PRE>
+
+<p>Clicking &quot;Step over&quot; once will pause the program on
+line 2. Clicking it again will pause the program on line 3,
+despite the fact that lines 6 and 7 were also executed by the
+&quot;gosub&quot; call (and 20 was printed on the screen).</p>
+
+<h2>Step into</h2>
+
+<p>&quot;Step into&quot; behaves exactly like step over, except
+when the current line contains a &quot;gosub&quot; call.<br>
+In this case the program is paused on the first line of the
+&quot;gosub&quot; routine.</p>
+
+<p>For example, for the previous program, clicking &quot;Step
+Into&quot; once will pause the program on line 2. Clicking it
+again will pause the program on line 6. (Then line 7, then line
+3.)</p>
+
+<h2>Step out of</h2>
+
+<p>&quot;Step out of&quot; is only available if the program has
+been paused inside a gosub call. &quot;Step out of&quot; will run
+the rest of the &quot;gosub&quot; routine and pause the program
+on the instruction immediately after the actual &quot;gosub&quot;
+call.</p>
+
+<p>So on the above program, clicking &quot;Step into&quot; twice
+to get to line 6 will make the &quot;Step out of&quot; function
+available. Clicking &quot;Step out of&quot; will then pause the
+program on line 3, i.e. the instruction immediately after the
+&quot;gosub&quot; on line 2.</p>
+
+<h1>Breakpoints</h1>
+
+<p>A &quot;breakpoint&quot; is used to pause a program at a
+particular line of code. You place the breakpoint on the line (or
+lines) where you wish to pause the program, and then run it. The
+program will continue running until it reaches the line (or
+lines) of code. When it does so, it will pause at the start of
+the line, before executing any of the code on it.</p>
+
+<p>To place a breakpoint, click on the gray area on the left side
+of the editor, next to the line where you wish to pause the
+program. Basic4GL indicates breakpoints with a small red circle.
+To remove the breakpoint, simply click it again.</p>
+
+<p>You can add a breakpoint at any time, even if the program is
+running (except in fullscreen mode obviously). The breakpoint
+becomes active from the moment you click it in. <br>
+Breakpoints will only work on lines that correspond to executable
+code. If you place a breakpoint on a line with no corresponding
+code, it will be dithered out to indicate that it is inactive.</p>
+
+<h1>Watches</h1>
+
+<p>Watches display the value of a variable. Watches are only
+active when the program is stopped or paused, and are displayed
+in the wide window immediately under the editor (when debug mode
+is on).</p>
+
+<p>To add a watch, double click the blank line at the top of the
+watches list and type in the variable or expression you wish to
+watch. Alternatively you can right click a variable in the editor
+and choose &quot;Add watch&quot;.</p>
+<p>Basic4GL will now display the variable/expression, along with
+it's value, so you can track changes to it (e.g. as you step
+through lines of code).</p>
+
+<h2>Side effects</h2>
+
+<p>You can watch any valid Basic4GL
+expression, including arithmetic expressions and functions.</p>
+<p>Beware of functions that have side effects. For example, placing a watch on &quot;ReadInt (file)&quot; (read an integer from file
+with handle &quot;file&quot;) will advance the current position in the file each time the watch is evaluated, and most likely
+cause the code that you are debugging to fail.</p>
+
+<h2>Mouse-over hints</h2>
+
+<p>You can also quickly see the value of a variable by moving the
+mouse over it in the editor. To quickly see the result of an
+expression, highlight it first, then move the mouse over it.</p>
+<p>Mouse-over hints will <em>not</em> evaluate functions in case they have side effects. 
+To evaluate a function you must add a watch instead.</p>
+
+<h1>Stack display</h1>
+
+<p>The "stack display" is displayed at the bottom right, and lists all the active "gosub" and/or function and subroutine calls.</p>
+<p>Double clicking an entry causes the editor to jump to the calling line in your program.</p>
+<p>The top of the stack display always displays "IP", referring to the current <em>instruction pointer</em>. Double clicking this moves the editor back to where the program was paused.</p>
+
+<h1>Keyboard shortcuts</h1>
+
+<p>The following table lists the keyboard shortcuts.</p>
+
+<table>
+    <tr>
+        <td><strong><u>Function</u></strong></td>
+        <td><strong><u>Shortcut</u></strong></td>
+    </tr>
+    <tr>
+        <td>Step over</td>
+        <td>F10</td>
+    </tr>
+    <tr>
+        <td>Step into</td>
+        <td>F11</td>
+    </tr>
+    <tr>
+        <td>Step out of</td>
+        <td>Shift + F11</td>
+    </tr>
+	<tr>
+		<td>Set breakpoint</td>
+		<td>F9</td>
+	</tr>
+    <tr>
+        <td>Run/Pause</td>
+        <td>F5</td>
+    </tr>
+    <tr>
+        <td>Add watch</td>
+        <td>Ctrl + F5</td>
+    </tr>
+</table>
+
+</body>
+</html>

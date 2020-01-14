@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Basic4GL - Plugin Libraries</title>
+<link rel="stylesheet" href="b4gl.css" />
+<link rel="stylesheet" href="highlight/styles/default.css" />
+<script src="highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="jquery-1.12.3.min.js"></script>
+<script src="toc.js"></script>
+</head>
+
+<body>
+
+<p class="copyright">Basic4GL, Copyright (C) 2003-2016 Tom Mulgrew</p>
+
+<p class="title">Plugin Libraries</p>
+
+<p class="stamp">01-May-2016<br>
+Tom Mulgrew</p>
+
+<div class="toc"></div>
+
+<h1>What are plugin Libraries?</h1>
+
+<p>Plugin libraries extend Basic4GL adding new commands to enable Basic4GL to do new things.</p>
+<p>They are distributed as Windows DLL files, which you drop into the Basic4GL installation folder.</p>
+<p>Anyone with a reasonable grasp of C/C++ can create a Basic4GL plugin and distribute it to other Basic4GL users.</p>
+
+<h1>Where to find them</h1>
+
+<p>The <a href="http://basic4gl.net/index.php?page=Plugin" target="_blank">Basic4GL plugins section</a>
+contains plugin libraries created by Basic4GL users - most of them are in fact created by DJLinux.</p>
+
+<p>People often announce their plugin libraries in the <a href="http://basic4gl.proboards.com/" target="_blank">Basic4GL discussion forum</a> as well.</p>
+
+<h1>How to use them</h1>
+
+<p>To use a plugin library, first download the DLL file (and any other files it requires) and place
+it in the Basic4GL program folder (the one that contains Basic4GL.exe).<p>
+<p>Then run Basic4GL and click "Program|Plugin Libraries..." to bring up the plugin libraries dialog.</p>
+<img src="Images/PluginLibraries.png"></img>
+<p>Tick the plugin library or libraries that you wish to use with your program, then click "OK".</p>
+
+<p>The plugins will be loaded, and the new commands will be available to your Basic4GL program.</p>
+
+<h1>What commands does a plugin contain</h1>
+
+<p>The plugin libraries dialog also shows you the functions, constants and structures that the plugin 
+introduces.</p>
+<p>These are displayed in the tabs on the right hand side for the currently selected plugin on the left.
+Note that you must load the plugin first (by ticking it) before you can see what it contains.</p>
+<div class="extra-info">
+	<h3>Understanding a plugin library</h3>
+	<p>Although the plugin library dialog shows you the functions contained in the library, it does not tell you what they are for or how they are intended to be used.</p>
+	<p>For this you should look for documentation released along with the plugin, or contact the plugin author.</p>
+</div>
+
+<h1>Standalone executables</h1>
+
+<p>If you create a standalone exe of a Basic4GL program that uses plugin libraries, then you must distribute those DLLs (and any other DLLs or files that they use) along with your standalone executable.</p>
+<p>You are also responsible for determining and adhering to any licensing restrictions that apply to the plugin libraries.</p>
+
+<h1>Safety and security</h1>
+
+<p>Basic4GL plugin DLLs can be potentially unsafe.</p>
+
+<p>Basic4GL is designed to be a safe language, and every attempt is made to ensure it is stable, and that a malicious Basic4GL program (whether written deliberately or accidentally) will not damage your system (unless you turn off safe mode).</p>
+
+<p>However, plugin DLLs are written in C/C++ and can interact directly with your system. Basic4GL cannot restrict what a plugin DLL does. If a plugin allows overwriting files in your system
+directory, then someone could use it to write a Basic4GL program
+that does exactly that.</p>
+
+<h2>Risks</h2>
+
+<p>You should be aware of the following risks:</p>
+
+<h3>Malicious plugin</h3>
+
+<p>A plugin author could deliberately create a malicious plugin that deliberately damages your system (deletes important files etc).</p>
+
+<h3>Buggy plugin</h3>
+
+<p>A plugin author could accidentally introduce a bug that damages your system, or make Basic4GL unstable.</p>
+
+<h3>Incorrectly used plugins</h3>
+
+<p>Plugins can enable powerful commands, which if used incorrectly could damage your system, or make Basic4GL unstable.</p>
+
+<h2>Trust</h2>
+
+<p>Ultimately it is your responsibility to determine whether you trust the author's intentions and programming ability, and whether you are confident you understand how to use it correctly.</p>
+
+<p>As far as I'm aware, all plugins downloadable from the Basic4GL plugins section are non-malicious, and free of potentially destructive bugs. However some do introduce powerful Windows commands, and must be used correctly.</p>
+
+<h1>Creating plugin libraries</h1>
+
+<p>Plugin libraries are DLL files created in C++.</p>
+<p>You need to be reasonably confident at writing C/C++ code and building and linking DLLs.</p>
+<p>You also need a C++ compiler. The Basic4GL plugin DLL SDK contains a project for Visual C++ 2013 (which can be used with Visual Studio 2013 Community edition). Other C++ compilers can be used, but you will need to create and configure the project yourself.</p>
+<p>The Basic4GL plugin SDK is available from the Basic4GL <a href="http://basic4gl.net/index.php?page=Download" target="_blank">downloads page</a>.</p>
+<p>Further instructions are provided in the SDK source code.</p>
+</body>
+</html>

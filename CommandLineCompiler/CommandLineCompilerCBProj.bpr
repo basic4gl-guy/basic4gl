@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!-- C++Builder XML Project -->
+<PROJECT>
+  <MACROS>
+    <VERSION value="BCB.06.00"/>
+    <PROJECT value="CommandLineCompilerCBProj.exe"/>
+    <OBJFILES value="CommandLineCompilerCBProj.obj CommandLineCompilerCB.obj main.obj 
+      ..\VM\vmCode.obj ..\VM\vmCodeBlock.obj ..\VM\vmData.obj 
+      ..\VM\vmDebugger.obj ..\VM\vmFunction.obj ..\VM\vmStackFrame.obj 
+      ..\VM\vmTypes.obj ..\VM\vmVariables.obj ..\VM\HasErrorState.obj 
+      ..\VM\Misc.obj ..\VM\Streaming.obj ..\VM\TomVM.obj ..\Compiler\TomComp.obj 
+      ..\Compiler\compFunction.obj ..\Compiler\compParse.obj 
+      ..\Compiler\compPreprocessor.obj ..\Compiler\DiskFile.obj 
+      ..\Routines\FilenameRoutines.obj ..\Routines\glspriteengine.obj 
+      ..\Routines\glTextGrid.obj ..\Routines\glWindow.obj 
+      ..\Routines\LoadImage.obj ..\FunctionLibs\TomOpenGLBasicLib.obj 
+      ..\FunctionLibs\TomSoundBasicLib.obj ..\FunctionLibs\TomStdBasicLib.obj 
+      ..\FunctionLibs\TomTextBasicLib.obj ..\FunctionLibs\TomTrigBasicLib.obj 
+      ..\FunctionLibs\TomWindowsBasicLib.obj ..\FunctionLibs\GLBasicLib_gl.obj 
+      ..\FunctionLibs\GLBasicLib_glu.obj ..\FunctionLibs\TomCompilerBasicLib.obj 
+      ..\FunctionLibs\TomFileIOBasicLib.obj 
+      ..\FunctionLibs\TomJoystickBasicLib.obj ..\FunctionLibs\TomLibRoutines.obj 
+      ..\FunctionLibs\TomNetBasicLib.obj ..\NetLib4Games\NetUtils.obj 
+      ..\NetLib4Games\NetHasErrorState.obj ..\NetLib4Games\NetLayer1.obj 
+      ..\NetLib4Games\NetLayer2.obj ..\NetLib4Games\NetLog.obj 
+      ..\NetLib4Games\NetLowLevel.obj ..\NetLib4Games\NetMiscRoutines.obj 
+      ..\NetLib4Games\NetThreadUtils.obj ..\NetLib4Games\UDP\NetLowLevelUDP.obj 
+      ..\DLLInterface\TomVMDLLAdapter.obj 
+      ..\DLLInterface\PluginDataStructures.obj ..\DLLInterface\PluginDLL.obj 
+      ..\Routines\EmbeddedFiles.obj"/>
+    <RESFILES value="CommandLineCompilerCBProj.res"/>
+    <DEFFILE value=""/>
+    <RESDEPEN value="$(RESFILES) CommandLineCompilerCB.dfm"/>
+    <LIBFILES value="..\3rdparty\CoronaLibrary\CBuilder\Corona.lib"/>
+    <LIBRARIES value=""/>
+    <SPARELIBS value="vcl.lib rtl.lib"/>
+    <PACKAGES value="vcl.bpi rtl.bpi vclx.bpi bcbsmp.bpi dclocx.bpi MemoExCB5.bpi"/>
+    <PATHCPP value=".;..\VM;..\VM;..\VM;..\VM;..\VM;..\VM;..\VM;..\VM;..\VM;..\VM;..\VM;..\VM;..\Compiler;..\Compiler;..\Compiler;..\Compiler;..\Compiler;..\Routines;..\Routines;..\Routines;..\Routines;..\Routines;..\FunctionLibs;..\FunctionLibs;..\FunctionLibs;..\FunctionLibs;..\FunctionLibs;..\FunctionLibs;..\FunctionLibs;..\FunctionLibs;..\FunctionLibs;..\FunctionLibs;..\FunctionLibs;..\FunctionLibs;..\FunctionLibs;..\NetLib4Games;..\NetLib4Games;..\NetLib4Games;..\NetLib4Games;..\NetLib4Games;..\NetLib4Games;..\NetLib4Games;..\NetLib4Games;..\NetLib4Games\UDP;..\DLLInterface;..\DLLInterface;..\DLLInterface;..\Routines"/>
+    <PATHPAS value=".;"/>
+    <PATHRC value=".;"/>
+    <PATHASM value=".;"/>
+    <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
+    <RELEASELIBPATH value="$(BCB)\lib\release"/>
+    <LINKER value="ilink32"/>
+    <USERDEFINES value="_DEBUG;VM_STATE_STREAMING;STREAM_NAMES"/>
+    <SYSDEFINES value="_RTLDLL;NO_STRICT;USEPACKAGES"/>
+    <MAINSOURCE value="CommandLineCompilerCBProj.cpp"/>
+    <INCLUDEPATH value="&quot;E:\Program Files\Borland\CBuilder6\Projects&quot;;E:\Projects\Basic4GL\Development\CommandLineCompiler;$(BCB)\include;$(BCB)\include\vcl;..\DLLInterface;..\NetLib4Games\UDP;..\NetLib4Games;..\Standalone;..\FunctionLibs;..\Routines;..\Compiler;..\VM;..\3rdparty\coronalibrary;..\SoundEngine\B4GLSound;&quot;..\DLL SDK\Include&quot;"/>
+    <LIBPATH value="&quot;E:\Program Files\Borland\CBuilder6\Projects&quot;;E:\Projects\Basic4GL\Development\CommandLineCompiler;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;..\DLLInterface;..\NetLib4Games\UDP;..\NetLib4Games;..\Standalone;..\FunctionLibs;..\Routines;..\Compiler;..\VM;..\3rdparty\coronaLibrary\CBuilder;&quot;E:\Program Files\Borland\CBuilder6\Lib\Psdk&quot;"/>
+    <WARNINGS value="-w-par"/>
+    <OTHERFILES value=""/>
+  </MACROS>
+  <OPTIONS>
+    <CFLAG1 value="-Od -Vx -Ve -X- -r- -a8 -5 -b -k -y -v -vi- -c -tW -tWM"/>
+    <PFLAGS value="-$YD -$W -$O- -$A8 -v -JPHNE -M"/>
+    <RFLAGS value=""/>
+    <AFLAGS value="/mx /w2 /zd"/>
+    <LFLAGS value="-D&quot;&quot; -aa -Tpe -x -Gn -v"/>
+    <OTHERFILES value=""/>
+  </OPTIONS>
+  <LINKER>
+    <ALLOBJ value="c0w32.obj $(PACKAGES) Memmgr.Lib sysinit.obj $(OBJFILES)"/>
+    <ALLRES value="$(RESFILES)"/>
+    <ALLLIB value="$(LIBFILES) $(LIBRARIES) import32.lib cp32mti.lib"/>
+    <OTHERFILES value=""/>
+  </LINKER>
+  <FILELIST>
+      <FILE FILENAME="CommandLineCompilerCBProj.res" FORMNAME="" UNITNAME="CommandLineCompilerCBProj.res" CONTAINERID="ResTool" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="CommandLineCompilerCBProj.cpp" FORMNAME="" UNITNAME="CommandLineCompilerCBProj" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="CommandLineCompilerCB.cpp" FORMNAME="Form1" UNITNAME="CommandLineCompilerCB" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="main.cpp" FORMNAME="" UNITNAME="main" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\vmCode.cpp" FORMNAME="" UNITNAME="vmCode.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\vmCodeBlock.cpp" FORMNAME="" UNITNAME="vmCodeBlock.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\vmData.cpp" FORMNAME="" UNITNAME="vmData.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\vmDebugger.cpp" FORMNAME="" UNITNAME="vmDebugger.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\vmFunction.cpp" FORMNAME="" UNITNAME="vmFunction.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\vmStackFrame.cpp" FORMNAME="" UNITNAME="vmStackFrame.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\vmTypes.cpp" FORMNAME="" UNITNAME="vmTypes.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\vmVariables.cpp" FORMNAME="" UNITNAME="vmVariables.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\HasErrorState.cpp" FORMNAME="" UNITNAME="HasErrorState.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\Misc.cpp" FORMNAME="" UNITNAME="Misc.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\Streaming.cpp" FORMNAME="" UNITNAME="Streaming.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\TomVM.cpp" FORMNAME="" UNITNAME="TomVM.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\Compiler\TomComp.cpp" FORMNAME="" UNITNAME="TomComp.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\Compiler\compFunction.cpp" FORMNAME="" UNITNAME="compFunction.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\Compiler\compParse.cpp" FORMNAME="" UNITNAME="compParse.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\Compiler\compPreprocessor.cpp" FORMNAME="" UNITNAME="compPreprocessor.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\Compiler\DiskFile.cpp" FORMNAME="" UNITNAME="DiskFile.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\Routines\FilenameRoutines.cpp" FORMNAME="" UNITNAME="FilenameRoutines.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\Routines\glspriteengine.cpp" FORMNAME="" UNITNAME="glspriteengine.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\Routines\glTextGrid.cpp" FORMNAME="" UNITNAME="glTextGrid.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\Routines\glWindow.cpp" FORMNAME="" UNITNAME="glWindow.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\Routines\LoadImage.cpp" FORMNAME="" UNITNAME="LoadImage.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\FunctionLibs\TomOpenGLBasicLib.cpp" FORMNAME="" UNITNAME="TomOpenGLBasicLib.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\FunctionLibs\TomSoundBasicLib.cpp" FORMNAME="" UNITNAME="TomSoundBasicLib.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\FunctionLibs\TomStdBasicLib.cpp" FORMNAME="" UNITNAME="TomStdBasicLib.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\FunctionLibs\TomTextBasicLib.cpp" FORMNAME="" UNITNAME="TomTextBasicLib.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\FunctionLibs\TomTrigBasicLib.cpp" FORMNAME="" UNITNAME="TomTrigBasicLib.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\FunctionLibs\TomWindowsBasicLib.cpp" FORMNAME="" UNITNAME="TomWindowsBasicLib.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\FunctionLibs\GLBasicLib_gl.cpp" FORMNAME="" UNITNAME="GLBasicLib_gl.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\FunctionLibs\GLBasicLib_glu.cpp" FORMNAME="" UNITNAME="GLBasicLib_glu.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\FunctionLibs\TomCompilerBasicLib.cpp" FORMNAME="" UNITNAME="TomCompilerBasicLib.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\FunctionLibs\TomFileIOBasicLib.cpp" FORMNAME="" UNITNAME="TomFileIOBasicLib.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\FunctionLibs\TomJoystickBasicLib.cpp" FORMNAME="" UNITNAME="TomJoystickBasicLib.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\FunctionLibs\TomLibRoutines.cpp" FORMNAME="" UNITNAME="TomLibRoutines.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\FunctionLibs\TomNetBasicLib.cpp" FORMNAME="" UNITNAME="TomNetBasicLib.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\NetLib4Games\NetUtils.cpp" FORMNAME="" UNITNAME="NetUtils.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\NetLib4Games\NetHasErrorState.cpp" FORMNAME="" UNITNAME="NetHasErrorState.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\NetLib4Games\NetLayer1.cpp" FORMNAME="" UNITNAME="NetLayer1.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\NetLib4Games\NetLayer2.cpp" FORMNAME="" UNITNAME="NetLayer2.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\NetLib4Games\NetLog.cpp" FORMNAME="" UNITNAME="NetLog.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\NetLib4Games\NetLowLevel.cpp" FORMNAME="" UNITNAME="NetLowLevel.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\NetLib4Games\NetMiscRoutines.cpp" FORMNAME="" UNITNAME="NetMiscRoutines.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\NetLib4Games\NetThreadUtils.cpp" FORMNAME="" UNITNAME="NetThreadUtils.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\NetLib4Games\UDP\NetLowLevelUDP.cpp" FORMNAME="" UNITNAME="NetLowLevelUDP" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\DLLInterface\TomVMDLLAdapter.cpp" FORMNAME="" UNITNAME="TomVMDLLAdapter.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\DLLInterface\PluginDataStructures.cpp" FORMNAME="" UNITNAME="PluginDataStructures.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\DLLInterface\PluginDLL.cpp" FORMNAME="" UNITNAME="PluginDLL.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\3rdparty\CoronaLibrary\CBuilder\Corona.lib" FORMNAME="" UNITNAME="Corona.lib" CONTAINERID="LibTool" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\Routines\EmbeddedFiles.cpp" FORMNAME="" UNITNAME="EmbeddedFiles" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+  </FILELIST>
+  <BUILDTOOLS>
+  </BUILDTOOLS>
+
+  <IDEOPTIONS>
+[Version Info]
+IncludeVerInfo=0
+AutoIncBuild=0
+MajorVer=1
+MinorVer=0
+Release=0
+Build=0
+Debug=0
+PreRelease=0
+Special=0
+Private=0
+DLL=0
+Locale=5129
+CodePage=1252
+
+[Version Info Keys]
+CompanyName=
+FileDescription=
+FileVersion=1.0.0.0
+InternalName=
+LegalCopyright=
+LegalTrademarks=
+OriginalFilename=
+ProductName=
+ProductVersion=1.0.0.0
+Comments=
+
+[HistoryLists\hlIncludePath]
+Count=3
+Item0=E:\Program Files\Borland\CBuilder6\Projects;E:\Projects\Basic4GL\Development\CommandLineCompiler;$(BCB)\include;$(BCB)\include\vcl;..\DLLInterface;..\NetLib4Games\UDP;..\NetLib4Games;..\Standalone;..\FunctionLibs;..\Routines;..\Compiler;..\VM;..\3rdparty\coronalibrary;..\SoundEngine\B4GLSound;..\DLL SDK\Include
+Item1=E:\Program Files\Borland\CBuilder6\Projects;E:\Projects\Basic4GL\Development\CommandLineCompiler;$(BCB)\include;$(BCB)\include\vcl;..\DLLInterface;..\NetLib4Games\UDP;..\NetLib4Games;..\Standalone;..\FunctionLibs;..\Routines;..\Compiler;..\VM;..\3rdparty\coronalibrary;..\SoundEngine\B4GLSound;..\DLL SDK\Include;E:\Program Files\Borland\CBuilder6\Include
+Item2=E:\Program Files\Borland\CBuilder6\Projects;E:\Projects\Basic4GL\Development\CommandLineCompiler;$(BCB)\include;$(BCB)\include\vcl
+
+[HistoryLists\hlLibraryPath]
+Count=3
+Item0=E:\Program Files\Borland\CBuilder6\Projects;E:\Projects\Basic4GL\Development\CommandLineCompiler;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;..\DLLInterface;..\NetLib4Games\UDP;..\NetLib4Games;..\Standalone;..\FunctionLibs;..\Routines;..\Compiler;..\VM;..\3rdparty\coronaLibrary\CBuilder;E:\Program Files\Borland\CBuilder6\Lib\Psdk
+Item1=E:\Program Files\Borland\CBuilder6\Projects;E:\Projects\Basic4GL\Development\CommandLineCompiler;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;..\DLLInterface;..\NetLib4Games\UDP;..\NetLib4Games;..\Standalone;..\FunctionLibs;..\Routines;..\Compiler;..\VM;..\3rdparty\coronaLibrary\CBuilder;E:\Program Files\Borland\CBuilder6\Lib;E:\Program Files\Borland\CBuilder6\Lib\Psdk;E:\Program Files\Borland\CBuilder6\Lib\Obj
+Item2=E:\Program Files\Borland\CBuilder6\Projects;E:\Projects\Basic4GL\Development\CommandLineCompiler;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib
+
+[HistoryLists\hlDebugSourcePath]
+Count=1
+Item0=$(BCB)\source\vcl
+
+[HistoryLists\hlConditionals]
+Count=2
+Item0=_DEBUG;VM_STATE_STREAMING;STREAM_NAMES
+Item1=_DEBUG
+
+[Debugging]
+DebugSourceDirs=$(BCB)\source\vcl
+
+[Parameters]
+RunParams=-window -width 1024 -height 768 -e error.txt PluginExample.gb arg1 &quot;hello there&quot; arg3
+Launcher=
+UseLauncher=0
+DebugCWD=
+HostApplication=
+RemoteHost=
+RemotePath=
+RemoteLauncher=
+RemoteCWD=
+RemoteDebug=0
+
+[Compiler]
+ShowInfoMsgs=0
+LinkDebugVcl=0
+  </IDEOPTIONS>
+</PROJECT>

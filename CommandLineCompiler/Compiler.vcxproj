@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <SccProjectName />
+    <SccLocalPath />
+    <ProjectGuid>{D94D6B6A-DC8F-45DD-83C3-0D343041F465}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>Debug\</OutDir>
+    <IntDir>Debug\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>Release\</OutDir>
+    <IntDir>Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <Optimization>Disabled</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <MinimalRebuild>true</MinimalRebuild>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <AdditionalIncludeDirectories>../PlatformRuntime;../SoundEngine/B4GLSound;../NetLib4Games;../3rdparty;../DLL SDK/Include;../vm;../compiler;../DLLInterface;../Routines;../FunctionLibs;../Standalone;../3rdparty/CoronaLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>VM_STATE_STREAMING;STREAM_NAMES;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Debug\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\Debug\Compiler.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>.\Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug\</ProgramDataBaseFileName>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+    </ClCompile>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Debug\Compiler.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x1409</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Debug\Compiler.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>Debug/Compiler.exe</OutputFile>
+      <AdditionalLibraryDirectories>../3rdparty/corona/vc7/Debug_static;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;winmm.lib;corona_static.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <Optimization>MaxSpeed</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>../PlatformRuntime;../SoundEngine/B4GLSound;../NetLib4Games;../3rdparty;../DLL SDK/Include;../vm;../compiler;../DLLInterface;../Routines;../FunctionLibs;../Standalone;../3rdparty/CoronaLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>VM_STATE_STREAMING;STREAM_NAMES;WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Release\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\Release\Compiler.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>.\Release\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release\</ProgramDataBaseFileName>
+    </ClCompile>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Release\Compiler.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x1409</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Release\Compiler.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>Release/Compiler.exe</OutputFile>
+      <AdditionalLibraryDirectories>../3rdparty/corona/vc7/Release_static;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;winmm.lib;corona_static.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\PlatformRuntime\Common\vmStateTypes.cpp" />
+    <ClCompile Include="..\Compiler\compFunction.cpp" />
+    <ClCompile Include="..\Compiler\compParse.cpp" />
+    <ClCompile Include="..\Compiler\compPreprocessor.cpp" />
+    <ClCompile Include="..\Compiler\DiskFile.cpp" />
+    <ClCompile Include="..\Compiler\TomComp.cpp" />
+    <ClCompile Include="..\DLLInterface\PluginDataStructures.cpp" />
+    <ClCompile Include="..\DLLInterface\PluginDLL.cpp" />
+    <ClCompile Include="..\DLLInterface\PluginLibrary.cpp" />
+    <ClCompile Include="..\DLLInterface\TomVMDLLAdapter.cpp" />
+    <ClCompile Include="..\FunctionLibs\GLBasicLib_gl.cpp" />
+    <ClCompile Include="..\FunctionLibs\GLBasicLib_glu.cpp" />
+    <ClCompile Include="..\FunctionLibs\TomCompilerBasicLib.cpp" />
+    <ClCompile Include="..\FunctionLibs\TomFileIOBasicLib.cpp" />
+    <ClCompile Include="..\FunctionLibs\TomJoystickBasicLib.cpp" />
+    <ClCompile Include="..\FunctionLibs\TomLibRoutines.cpp" />
+    <ClCompile Include="..\FunctionLibs\TomNetBasicLib.cpp" />
+    <ClCompile Include="..\FunctionLibs\TomOpenGLBasicLib.cpp" />
+    <ClCompile Include="..\FunctionLibs\TomSoundBasicLib.cpp" />
+    <ClCompile Include="..\FunctionLibs\TomStdBasicLib.cpp" />
+    <ClCompile Include="..\FunctionLibs\TomTextBasicLib.cpp" />
+    <ClCompile Include="..\FunctionLibs\TomTrigBasicLib.cpp" />
+    <ClCompile Include="..\FunctionLibs\TomWindowsBasicLib.cpp" />
+    <ClCompile Include="..\NetLib4Games\NetHasErrorState.cpp" />
+    <ClCompile Include="..\NetLib4Games\NetLayer1.cpp" />
+    <ClCompile Include="..\NetLib4Games\NetLayer2.cpp" />
+    <ClCompile Include="..\NetLib4Games\NetLog.cpp" />
+    <ClCompile Include="..\NetLib4Games\NetLowLevel.cpp" />
+    <ClCompile Include="..\NetLib4Games\NetMiscRoutines.cpp" />
+    <ClCompile Include="..\NetLib4Games\NetThreadUtils.cpp" />
+    <ClCompile Include="..\NetLib4Games\NetUtils.cpp" />
+    <ClCompile Include="..\NetLib4Games\UDP\NetLowLevelUDP.cpp" />
+    <ClCompile Include="..\Routines\EmbeddedFiles.cpp" />
+    <ClCompile Include="..\Routines\FilenameRoutines.cpp" />
+    <ClCompile Include="..\Routines\glspriteengine.cpp" />
+    <ClCompile Include="..\Routines\glTextGrid.cpp" />
+    <ClCompile Include="..\Routines\glWindow.cpp" />
+    <ClCompile Include="..\Routines\LoadImage.cpp" />
+    <ClCompile Include="..\Standalone\Standalone.cpp" />
+    <ClCompile Include="..\Vm\HasErrorState.cpp" />
+    <ClCompile Include="..\Vm\Misc.cpp" />
+    <ClCompile Include="..\VM\Streaming.cpp" />
+    <ClCompile Include="..\Vm\TomVM.cpp" />
+    <ClCompile Include="..\Vm\vmCode.cpp" />
+    <ClCompile Include="..\VM\vmCodeBlock.cpp" />
+    <ClCompile Include="..\Vm\vmData.cpp" />
+    <ClCompile Include="..\Vm\vmDebugger.cpp" />
+    <ClCompile Include="..\Vm\vmFunction.cpp" />
+    <ClCompile Include="..\VM\vmStackFrame.cpp" />
+    <ClCompile Include="..\Vm\vmTypes.cpp" />
+    <ClCompile Include="..\Vm\vmVariables.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="vmStateExport.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Compiler\compFunction.h" />
+    <ClInclude Include="..\Compiler\compParse.h" />
+    <ClInclude Include="..\Compiler\TomComp.h" />
+    <ClInclude Include="..\DLLInterface\PluginDLL.h" />
+    <ClInclude Include="..\FunctionLibs\GLBasicLib_gl.h" />
+    <ClInclude Include="..\FunctionLibs\GLBasicLib_glu.h" />
+    <ClInclude Include="..\FunctionLibs\TomFileIOBasicLib.h" />
+    <ClInclude Include="..\FunctionLibs\TomJoystickBasicLib.h" />
+    <ClInclude Include="..\FunctionLibs\TomLibRoutines.h" />
+    <ClInclude Include="..\FunctionLibs\TomNetBasicLib.h" />
+    <ClInclude Include="..\FunctionLibs\TomOpenGLBasicLib.h" />
+    <ClInclude Include="..\FunctionLibs\TomStdBasicLib.h" />
+    <ClInclude Include="..\FunctionLibs\TomTextBasicLib.h" />
+    <ClInclude Include="..\FunctionLibs\TomTrigBasicLib.h" />
+    <ClInclude Include="..\FunctionLibs\TomWindowsBasicLib.h" />
+    <ClInclude Include="..\Routines\EmbeddedFiles.h" />
+    <ClInclude Include="..\Routines\glspriteengine.h" />
+    <ClInclude Include="..\Routines\glTextGrid.h" />
+    <ClInclude Include="..\Routines\glWindow.h" />
+    <ClInclude Include="..\Routines\LoadImage.h" />
+    <ClInclude Include="..\Standalone\Standalone.h" />
+    <ClInclude Include="..\Vm\HasErrorState.h" />
+    <ClInclude Include="..\Vm\Misc.h" />
+    <ClInclude Include="..\VM\streaming.h" />
+    <ClInclude Include="..\Vm\TomVM.h" />
+    <ClInclude Include="..\Vm\vmCode.h" />
+    <ClInclude Include="..\Vm\vmData.h" />
+    <ClInclude Include="..\Vm\vmDebugger.h" />
+    <ClInclude Include="..\Vm\vmFunction.h" />
+    <ClInclude Include="..\Vm\vmTypes.h" />
+    <ClInclude Include="..\Vm\vmVariables.h" />
+    <ClInclude Include="vmStateExport.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="charset.png" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

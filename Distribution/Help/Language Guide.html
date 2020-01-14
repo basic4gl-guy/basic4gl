@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<HTML><HEAD><TITLE>Basic4GL - Language Guide</TITLE>
+<link rel="stylesheet" href="b4gl.css" />
+<link rel="stylesheet" href="highlight/styles/default.css" />
+<script src="highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="jquery-1.12.3.min.js"></script>
+<script src="toc.js"></script>
+</HEAD>
+<BODY>
+<P class="copyright">Basic4GL, Copyright (C) 2003-2016 Tom Mulgrew</P>
+<P class="title">Language guide</P>
+<P class="stamp">25-Apr-2016<BR>Tom Mulgrew</P>
+<div class="toc"></div>
+<H1>This document</H1>
+<P>This document describes the basic 
+syntax of Basic4GL programs.<BR>This document focusses on the language itself, 
+and and as such does not go into the individual functions and constants, or how 
+they are intended to be used.</P>
+<H1><A></A>Basic4GL Overview</H1>
+<P>Basic4GL is designed to combine a simple, safe and easy to understand 
+programming language based on traditional BASIC.</P>
+<P>Basic4GL compiles programs to byte code, which it runs on a virtual machine. 
+This makes Basic4GL a safe language to experiment in as the virtual machine 
+protects the programs from writing to invalid addresses or jumping to 
+uninitialised code, and handles cleaning up resources such as OpenGL textures 
+automatically.<BR>In addition, the Basic4GL virtual machine automatically 
+handles certain setup tasks such as creating an OpenGL capable window (and 
+initialising OpenGL state), handling windows messages, buffering keyboard 
+input.</P>
+<P>Basic4GL programs do not need to initialise OpenGL windows, link to 
+libraries, include header files or declare function prototypes.<BR>This means 
+you can cut through all the paperwork and get straight to the code that does the 
+actual work.</P>
+<P>The following examples are complete Basic4GL programs.</P>
+<P>Example 1, A "Hello world" program:</P>
+<PRE><CODE class="basic">print "Hello world!"</CODE></PRE>
+<P>Example 2, drawing a square in OpenGL:</P>
+<PRE><CODE class="basic">glTranslatef(0, 0, -5)
+glBegin(GL_QUADS)
+    glVertex2f( 1, 1): glVertex2f(-1, 1): glVertex2f(-1,-1): glVertex2f( 1,-1)
+glEnd()
+SwapBuffers()</CODE></PRE>
+<H1>BASIC Language Syntax</H1>
+<p>As well as its own syntax, Basic4GL supports 3 other "traditional" BASIC syntaxes, which are intended to improve compatibility with other BASIC compilers.</p>
+<p>These syntaxes must be explicitly enabled, either:
+<ul>
+	<li>By clicking "Settings|BASIC runtime settings" and selecting the syntax from the "Default syntax" drop down menu, or</li>
+	<li>By adding a "language" directive to the top of your program (described below).</li>
+</ul>
+<i>Note: Most of the Basic4GL example programs are written for the regular "Basic4GL" syntax, and may break if the default syntax is changed in the "BASIC rungime settings" dialog. It is safer to add a "language" directive instead.</i></p>
+<p>The syntaxes are:
+<table>
+	<thead>
+		<tr>
+			<th>Option</th><th>Directive</th><th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Basic4GL</td>
+			<td><pre><code>language basic4gl</code></pre></td>
+			<td>
+				<p>This is the default Basic4GL language syntax, as described in this document.</p>
+			</td>
+		</tr>
+		<tr>
+			<td>Traditional PRINT only</td>
+			<td><pre><code>language traditional_print</code></pre></td>
+			<td>
+				<p>A more traditional 'print' command, but otherwise like the "Basic4GL" syntax.</p>
+			</td>
+		</tr>
+		<tr>
+			<td>Traditional</td>
+			<td><pre><code>language traditional</code></pre></td>
+			<td>
+				<p>A more traditional BASIC syntax, with respect to the 'print' command and omitting brackets from function parameters.</p>
+			</td>
+		</tr>
+		<tr>
+			<td>Traditional including variable suffixes</td>
+			<td><pre><code>language traditional_suffix</code></pre></td>
+			<td>
+				<p>Like "Traditional", but with more traditional rules for variable suffixes (and default variable type if suffix is omitted).</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</p>
+
+<h2>Syntax differences</h2>
+<p>The specific differences between the syntaxes are as follows</p>
+<h3>Division</h3>
+<p>For the "basic4gl" and "traditional_print" syntaxes, division follows the same conversion conventions as other mathematical operators. In particular dividing an integer by another integer will be executed as an integer division with an integer result (the remainder is discarded).
+<pre><code class="basic">printr 7/2         ' Will print 3 (integer division used)
+printr 7.0/2       ' Will print 3.5</code></pre>
+</p>
+<p>For the "traditional" and "traditional_suffix" syntaxes, division is always performed as floating point division, producing a floating point result (even if both operands are integers).
+<pre><code class="basic">printr 7/2         ' Will print 3.5 (floating point division used)
+printr 7.0/2       ' Will print 3.5</code></pre>
+</p>
+<h3>"if" statements implicit "endif"</h3>
+<p>For the "basic4gl" and "traditional_print" syntaxes, every "if" statement must have an "endif", even if the statement is all on one line.
+<pre><code class="basic">if 5 > 3 then
+    printr "Expected"
+endif
+if 6 < 2 then printr "Unexpected!" endif
+if rnd()%10 = 0 then printr "Possible" else printr "Probable" endif</code></pre>
+</p>
+<p>For the "traditional" and "traditional_suffix" syntaxes the "endif" command can be omitted if the "if" statement body is on the same line.</p>
+<pre><code class="basic">if 5 > 3 then
+    printr "Expected"
+endif                                  ' Multi-line => requires explicit endif
+if 6 < 2 then printr "Unexpected!"                            ' Implicit endif
+if rnd % 10 = 0 then printr "Possible" else printr "Probable" ' Implicit endif</code></pre>
+<h3>Brackets on function calls</h3>
+<p>The "basic4gl" and "traditional_print" syntaxes require brackets on all calls to functions (either user defined or builtin), except for these 4 commands: cls, print, printr and locate.</p>
+<pre><code class="basic">sub Mysub()
+    dim a = rnd()%5
+    sleep(1000)
+    locate 10, 12
+    print sqrt(a)
+endsub
+
+Mysub()</code></pre>
+</p>
+<p>For the "traditional" and "traditional_suffix" brackets are omitted when calling any function that:
+<ul><li>Has no parameters, or</li>
+<li>Doesn't return a value</li></ul>
+<pre><code class="basic">sub Mysub()
+    dim a = rnd % 5
+    sleep 1000
+    locate 10, 12
+    print sqrt(a)
+endsub
+
+Mysub</code></pre>
+</p>
+<h3>Print command</h3>
+<p>For the "basic4gl" syntax, the "print" command always leaves the cursor on the same line. To have the cursor move to a newline, you must instead use the "printr" command.
+<pre><code class="basic">printr "============"
+printr " Tom's game"
+printr "============"
+printr
+print "Please enter your name:"</code></pre>
+</p>
+<p>For the "traditional_print", "traditional" and "traditional_suffix" syntaxes, the "print" command leaves the cursor on the same line if it ends with a semicolon (;), otherwise it moves it to the next line.
+<pre><code class="basic">print "============"
+print " Tom's game"
+print "============"
+print
+print "Please enter your name:";</code></pre>
+</p>
+<h3>Default data type</h3>
+<p>For the "basic4gl", "traditional_print" and "traditional" syntaxes, the default data type of a regular variable declared without a suffix (or "as" type specifier) is integer.<br>
+To declare a floating point variable, you must suffix it with a hash (#) character (or declare it "as single").
+<pre><code class="basic">dim myInt
+dim myFloat#
+dim myOtherFloat as single</code></pre>
+</p>
+<p>For the "traditional_suffix" syntax, the default data type of a regular variable declared without a suffix (or "as" type specifier) is floating point.<br>
+To declare an integer variable, you must suffix it with a percentage (%) character (or declare it "as integer").
+<pre><code class="basic">dim myFloat
+dim myInt%
+dim myOtherInt as integer</code></pre>
+</p>
+
+<H1>"Include" files</H1>
+<P>Basic4GL supports a very simple "include" mechanism.<BR>You can include a 
+file in your main program with:</P><PRE><CODE class="basic">include filename.ext</CODE></PRE>
+<P>Where <EM>filename.ext</EM> is the filename and extension of the file you 
+wish to include.</P>
+<p><b>IMPORTANT: "include" <EM>must </EM>be on it's own 
+line, with <EM>no leading spaces</EM> before the "include" 
+keyword.</b></p>
+<p>When keyed in correctly the line will become highlighted, 
+and <EM>filename.ext</EM> will be displayed as an underlined hyperlink (which 
+you can click to open up the include file).</P>
+<P>Basic4GL will compile your file as if all the lines of <EM>filename.ext</EM> 
+had been cut and pasted in at the point of the include.</P>
+<P><b>IMPORTANT #2: "include" is not supported by the runtime compilation 
+functions ("Compile()" and "CompileFile()").</b></P>
+<H1>Basic language features</H1>
+<H2><A></A>Comments</H2>
+<P>Comments are designated with a single quote.<BR>All text from the quote to 
+the end of the line are ignored by the compiler.</P>
+<PRE><CODE class="basic">' Program starts here
+dim a 	'Declare a variable
+a = 5 	'Initialise to a value
+print a 'Print it to screen</CODE></PRE>
+<P>Is equivalent to:</P>
+<PRE><CODE class="basic">dim a
+a = 5
+print a</CODE></PRE>
+<H2><A></A>Case insensitivity</H2>
+<P>Basic4GL is a <EM>case </EM><EM><STRONG>in</STRONG></EM><EM>sensitive</EM> 
+language. This applies to all keywords and variable names, and infact anything 
+except the contents of string constants.</P>
+<P>The following lines are all equivalent:</P>
+<PRE><CODE class="basic">GLVERTEX2F(X, Y)
+glVertex2f(x, y)
+glvertex2f(X, Y)</CODE></PRE>
+<P>The following lines are <STRONG>not</STRONG> equivalent:</P>
+<PRE><CODE class="basic">print "HELLO WORLD"
+print "Hello World"
+print "hello world"</CODE></PRE>
+<P>(because the "Hello world"s are quoted strings).</P>
+<H2><A></A>Separating instructions</H2>
+<P>Instructions are separated by colons ":" or new-lines.</P>
+<P>The following code sample:</P>
+<PRE><CODE class="basic">dim a$: a$ = "Hello": print a$</CODE></PRE>
+<P>Is equivalent to:</P>
+<PRE><CODE class="basic">dim a$
+a$ = "Hello"
+print a$</CODE></PRE>
+<H1><A></A>Variables and data types</H1>
+<P>Basic4GL supports only 3 basic data types (although they can be combined into 
+structures which are described further on).</P>
+<UL>
+  <LI>"Integer". A 32 bit signed integer. 
+  <LI>"Real". A 32 bit floating point value. 
+  <LI>"String". A character string. </LI></UL>
+<P>Variables are declared and allocated explicitly with the "Dim" 
+instruction.<BR>Attempting to use a variable without declaring it with "Dim" 
+will result in a compiler error.</P>
+<P>A naming convention is used to designate the type of each variable, as 
+follows:</P>
+<UL>
+  <LI>
+		String variables are postfixed with a $ character, for example:
+		<pre><code class="basic">Dim a$
+a$ = "Hello world"</pre></code>
+  </li>
+  <LI>
+		Real variables are postfixed with a # character, for example:
+		<pre><code class="basic">Dim value#
+value = 1.2345</code></pre>
+  </li>
+  <LI>
+		Integer variables are not postfixed, for example:
+		<pre><code class="basic">Dim index
+index = 10</code></pre>
+  </li>
+</ul>
+<H2><A></A>Declaring variables (with Dim)</H2>
+<P>All variables must be declared with Dim before use.</P>
+<P>The format is:</P>
+<div class="format">
+  <P>Dim <EM>variable [, variable [, ...]]</EM></P></div>
+<P>For example:</P>
+<PRE><CODE class="basic">Dim a</CODE></PRE>
+<PRE><CODE class="basic">Dim name$</CODE></PRE>
+<PRE><CODE class="basic">Dim a, b, c</CODE></PRE>
+<PRE><CODE class="basic">Dim xOffset#, yOffset#</CODE></PRE>
+<PRE><CODE class="basic">Dim ages(20)</CODE></PRE>
+<PRE><CODE class="basic">Dim a, b, c, name$, xOffset#, yOffset#, ages(20)</CODE></PRE>
+<P>Dim is both a declaration to the compiler that the keyword is to be treated 
+as a variable, and an executed instruction. Therefore the Dim instruction must 
+appear before the variable is used.</p>
+<p>This program:</P>
+<PRE><CODE class="basic">a = 5
+Dim a</CODE></PRE>
+<P>Results in a compiler error, because the compiler encounters 'a' in an 
+expression before it is declared with "Dim".</p>
+<p>This program:</P>
+<PRE><CODE class="basic">goto Skip
+Dim a
+Skip:
+a = 5</CODE></PRE>
+<P>Compiles successfully but results in a run time error, as it attempts to 
+write to 'a' before the "Dim" instruction has executed, and therefore no storage 
+space has yet been allocated for it.</P>
+<P>The correct example is (of course):</P>
+<PRE><CODE class="basic">Dim a
+a = 5</CODE></PRE>
+<div class="extra-info">
+      <H3>Compatibility with other BASICs</H3>
+      <P>Basic4GL also supports the syntax:</P>
+      <div class="format">
+        <P>Dim <EM>variable</EM> as 
+      <EM>type</EM></P></div>
+      <P>Where <EM>type</EM> can be one of:</P>
+      <UL>
+        <LI>integer</LI>
+        <LI>string</LI>
+        <LI>single</LI>
+        <LI>double</LI>
+	  </UL>
+	  Or a structure type.
+      <P><i>Note: Basic4GL has only one floating point type which is a 
+      single precision float (ie a "single"). The "double" keyword is still 
+      accepted for compatibility, but Basic4GL still allocates a single 
+      precision floating pt number.</i></P>
+</div>
+<h3>Declare and assign</h3>
+<p>You can also assign a variable's initial value in the dim statement.</p>
+<p>The format is:
+<div class="format">
+<p>Dim <em>variable</em> = <em>value [, ...]</em></p>
+</div>
+</p>
+<p>For example:
+<pre><code class="basic">dim a = 5
+dim v#(2) = vec3(1, 2, 3)
+dim s$ = "Hello"
+dim sq2# = sqr(2)</code></pre>
+</p>
+<p>This is equivalent to declaring the variable then assigning its initial value, e.g.
+<pre><code class="basic">dim a: a = 5
+dim v#(2): v# = vec3(1, 2, 3)
+dim s$: s$ = "Hello"
+dim sq2#: sq2# = sqr(2)</code></pre>
+</p>
+
+<H3>Allocating variable storage</H3>
+<P>Storage space is allocated when the "Dim" instruction has been 
+executed.<BR>In addition Basic4GL automatically initialises the data as follows (unless an initial value has been specified):</P>
+<UL>
+  <LI>Integers and reals are initialised to 0. 
+  <LI>Strings are initialised to the empty string "". </LI></UL>
+<H3>Re-Dimming a variable</H3>
+<P>Attempting to Dim the same variable twice results in a runtime 
+error.<BR>There is currently no way to re-dim a variable. However, this may be 
+included in a future version of Basic4GL.</P>
+<H3>Array variables</H3>
+<P>Basic4GL supports single and multi-dimensional arrays. These are "Dim"med by 
+specifying the array variable name, followed by a number in round brackets. 
+Basic4GL will allocate elements from indices 0, through to and including the 
+value specified in the brackets.</P>
+<P>Examples:</P>
+<PRE><CODE class="basic">Dim a$(10)</CODE></PRE><PRE><CODE class="basic">Dim size#(12)</CODE></PRE><PRE><CODE class="basic">const MaxThings = 12
+Dim ThingHeight# (MaxThings), ThingWidth#(MaxThings)</CODE></PRE><PRE><CODE class="basic">dim count: count = 10
+Dim array(count), bigArray (count * 10)</CODE></PRE>
+<P>For arrays of more than one dimension, each dimension is specified in its own 
+pair of brackets.</P>
+<P>Examples:</P>
+<PRE><CODE class="basic">Dim matrix#(3)(3)
+matrix#(2)(3) = 1</CODE></PRE><PRE><CODE class="basic">const width = 20, height = 15
+Dim grid(width)(height)</CODE></PRE>
+<P>Is mentioned, Basic4GL allocates elements from indices 0, through to and 
+including the value specified in the brackets.<BR>For example:</P>
+<PRE><CODE class="basic">Dim a(3)</CODE></PRE>
+<P>Will allocate <EM>four</EM> integers, named a(0), a(1), a(2) and a(3), and 
+set their values to 0.</P>
+<P>Basic4GL arrays are sized at runtime. You can use any (expression that can be 
+cast to an integer) to specify the number of elements.<BR>However, keep in mind 
+that Basic4GL will stop with a runtime error if you attempt to allocate 
+array:</P>
+<UL>
+  <LI>With an array size of less than 0, OR 
+  <LI>That uses more memory than the Basic4GL memory limit. </LI></UL>
+<P>Basic4GL arrays can be copied by specifying the array name without any 
+brackets or indices. The target array must be the same size as the copied array, 
+otherwise a runtime error will result.<BR>Examples:</P>
+<PRE><CODE class="basic">Dim a$(4), b$(4)
+...
+b$ = a$ ' Copy entire array from a$ to b$</CODE></PRE>
+<P>Likewise some functions accept arrays as parameters, or return them as 
+results:</P>
+<PRE><CODE class="basic">Dim matrix#(3)(3)
+matrix# = MatrixTranslate(-.5, -.5, -2)
+glLoadMatrixf(matrix#)
+glBegin(GL_TRIANGLES)
+glVertex2f(0, 0): glVertex2f(1, 0): glVertex2f(0, 1)
+glEnd()
+SwapBuffers()</CODE></PRE>
+<P>If you specify just one dimension of a 2D array, the result is a 1D array, 
+which can be assigned to/from variables or passed to to/functions like any other 
+1D array of the same type.<BR>Example:</P>
+<PRE><CODE class="basic">dim vectors#(12)(3), temp#(3)
+temp# = vectors#(4)</CODE></PRE>
+<P>Likewise, specifying N dimensions of a M dimension array results in a (M - N) 
+dimension array.</P>
+<div class="extra-info">
+      <H3>Compatibility with other BASICs</H3>
+      <P>Basic4GL also supports the syntax:</P>
+      <div class="format">
+        <P>Dim <EM>variable</EM>(<EM>dimension</EM> [,<EM>dimension 
+        </EM>[...]])</P></div>
+      <P>For multidimension arrays.</P>
+      <P>E.g.</P>
+      <PRE><CODE class="basic">dim grid(20, 10)
+grid(3, 7) = 12</CODE></PRE>
+      <P>Is exactly equivalent to:</P>
+      <PRE><CODE class="basic">dim grid(20)(10)
+grid(3)(7) = 12</CODE></PRE>
+</div>
+<H3>Why not automatically allocate variables?</H3>
+<P>Early designs of Basic4GL were intended to allocate variables automatically 
+the first time they were encountered.<BR>However Basic4GL is case insensitive, 
+and OpenGL uses long constants for bitmasks and flags.</P>
+<P>Therefore, mistyping (or miss-spelling) a constant in an OpenGL function call 
+such as:</P>
+<div class="format">
+  <P>glClear(GL_DEPTH_BUFER_BIT) ' Missing an "F" in "BUFFER"</P></div>
+<P>Would have resulted in a code that still compiles, but instead of passing the 
+value of GL_DEPTH_BUFFER_BIT into the function, Basic4GL would have created a 
+new variable called GL_DEPTH_BUFER_BIT, initialised the value to 0, and then 
+passed 0 into the function.<BR>This type of error can be very confusing and 
+frustrating, especially when learning a library such as OpenGL.</P>
+<P>Therefore variables must be explicitly declared with Dim.</P>
+<H2><A></A>Converting between data 
+types</H2>
+<P>You can convert a variable, or an expression value to a different type, 
+simply by assigning it to a variable of that type, providing the conversion type 
+is one of the ones below:</P>
+<UL>
+  <LI>Integer -&gt; Real 
+  <LI>Real -&gt; Integer 
+  <LI>Integer -&gt; String 
+  <LI>Real -&gt; String </LI></UL>
+<P>Certain expression operators such as +, -, *, / can also result in an 
+automatic conversion of either the left or right operand to match the other, 
+using the following rules:</P>
+<UL>
+  <LI>If one operand is a string, the other operand is converted to a string 
+  before the operation is performed. 
+  <LI>If one operand is a real and the other is an integer, the integer is 
+  converted to a real before the operation is performed. </LI></UL>
+<H2><A></A>Literal constants</H2>
+<P>To use a literal integer in a Basic4GL program, simply specify the integer 
+value. Examples:</P>
+<PRE><CODE class="basic">Dim a: a = 5</CODE></PRE>
+<PRE><CODE class="basic">Dim a: a = -5</CODE></PRE>
+<P>Likewise to use a literal real:</P>
+<PRE><CODE class="basic">Dim a#: a# = 3.14159265</CODE></PRE>
+<P>Literal integers can also be specified in hexidecimal using the 0x prefix. 
+Examples:</P>
+<PRE><CODE class="basic">Dim a: a = 0xff</CODE></PRE><PRE><CODE class="basic">Dim a: a = -0xff</CODE></PRE>
+<P>To use a literal string, simply encase the string in double quotes. For 
+example:</P>
+<PRE><CODE class="basic">Dim helloString$: helloString$ = "Hello world!"</CODE></PRE>
+<P>Basic4GL does not support literal prefix notations, such as \n for newline in 
+C/C++.<BR>You can however use the Chr$() function to achieve the same effect, 
+for example:</P>
+<PRE><CODE class="basic">Dim a$: a$ = "Bob says " + Chr$(34) + "Hello!" + Chr$ (34)
+Print a$</CODE></PRE>
+<P>Will output:</P>
+<div class="format">
+  <P>Bob says "Hello"</P></div>
+<H2>Named constants</H2>
+<P>Basic4GL also has a number of named constants, such as M_PI and 
+GL_CULL_FACE.</P>
+<P>Note: Two commonly used constants are "true" and "false", which evaluate to 
+-1 and 0 respectively.</P>
+<P>You can add constants using the "Const" instruction.</P>
+<P>The format is:</P>
+<div class="format">
+  <P>Const <EM>name </EM>= <EM>value [, name </EM>= <EM>value [, 
+...]]</EM></P></div>
+<P>Where:</P>
+<UL>
+  <LI><EM>name</EM> is the name of the constant, and follows the same naming 
+  conventions as standard variables, (including # and $ suffixes for real and 
+  string constants respectively). 
+  <LI><EM>value</EM> is a literal constant, another named constant, or a 
+  <EM>constant expression</EM> (defined below) </LI></UL>
+<P>For example:</P>
+<PRE><CODE class="basic">const Things = 20</CODE></PRE><PRE><CODE class="basic">const Max = 100, Min = 1</CODE></PRE><PRE><CODE class="basic">const StepCount = 360, StepSize# = 2 * m_pi / StepCount</CODE></PRE><PRE><CODE class="basic">const major = 3, minor = 7, version$ = major + "." + minor</CODE></PRE>
+<H2>Constant expressions</H2>
+<P>Certain instructions require constant expressions, such as the "const" 
+instruction (described above), and the "step" part of the "for..next" 
+instruction.<BR>These expressions must always evaluate to the same value and 
+Basic4GL must be able to calculate this value at the time the program is 
+compiled.</P>
+<P>An expression must satisfy these criteria to be considered "constant" by 
+Basic4GL:</P>
+<UL>
+  <LI>The expression must contain only literal constants <EM>or</EM> named 
+  constants. 
+  <LI>These constants can only be combined with the standard operators:<BR>+, -, 
+  *, /, %, =, &lt;&gt;, &gt;, &gt;=, &lt;, &lt;=, or, and, not. </LI></UL>
+<P>Examples:</P>
+<PRE><CODE class="basic">-12</CODE></PRE><PRE><CODE class="basic">22.4</CODE></PRE><PRE><CODE class="basic">m_pi</CODE></PRE><PRE><CODE class="basic">m_pi / 180</CODE></PRE><PRE><CODE class="basic">true and not false</CODE></PRE><PRE><CODE class="basic">"banana"</CODE></PRE><PRE><CODE class="basic">"banana " + "split"</CODE></PRE><PRE><CODE class="basic">"Pi = " + m_pi</CODE></PRE>
+<P>Are all valid constant expressions</P>
+<P>Expressions are <EM>not</EM> considered constant if they contain variables or 
+functions. This holds even for expressions that (to a human) are obviously 
+constant.<BR>For example:</P>
+<PRE><CODE class="basic">sqrt (2)</CODE></PRE><PRE><CODE class="basic">length(vec3(1, 1, 1))</CODE></PRE>
+<P>Are not valid constant expressions in Basic4GL, even though it is clear to us 
+that they will always evaluate to the same value.</P>
+<H2>Structures</H2>
+<P>Structures are used to group related information together into a single "data 
+structure".<BR>The format is as follows:</P>
+<div class="format">
+  <P>Struc <EM>strucname</EM></P>
+  <div class="format">
+    <P><EM>[</EM>dim<EM>]</EM> <EM>field [, field [,...]]<BR>[[</EM>dim<EM>]</EM> <EM>field [,[field 
+    [,...]]]<BR>[...]</EM></P></div>
+  <P>EndStruc</P></div>
+<P>Example:</P>
+<PRE><CODE class="basic">struc SPlayer
+    pos#(1), vel#(1)
+    dir#, lives, score, deadCounter, inGame
+    leftKey, rightKey, thrustKey, shootKey
+    wasShooting
+endstruc</CODE></PRE>
+<P>This defines a data storage format. You can now allocate variables of the new 
+structure type by using a special format of the "Dim" instruction:</P>
+<div class="format">
+  <P>Dim <EM>strucname variablename</EM></P></div>
+<P>Examples:</P>
+<PRE><CODE class="basic">Dim SPlayer player
+const maxPlayers = 10
+Dim SPlayer players(maxPlayers)</CODE></PRE>
+<P>Each variable now stores all the information described in the structure. You 
+can access these individual fields using the "." operator as follows:</P>
+<div class="format">
+  <P><EM>structurename</EM>.<EM>fieldname</EM></P></div>
+<P>For example:</P>
+<PRE><CODE class="basic">player.pos#(0) = 12.3</CODE></PRE><PRE><CODE class="basic">players(4).score = players(4).score + 10</CODE></PRE><PRE><CODE class="basic">i = 3
+print players(i).lives</CODE></PRE>
+<P>You can also assign variables of the same structure type to one another. This 
+will copy all the fields from one variable to the other.<BR>Example:</P>
+<PRE><CODE class="basic">player(7) = player(6)</CODE></PRE>
+<div class="extra-info">
+      <H3>Compatibility with other BASICs</H3>
+      <P>Basic4GL also supports the syntax:</P>
+      <div class="format">
+        <P>Type <EM>typename</EM></P>
+        <div class="format">
+          <P><EM>variable </EM>as <EM>type</EM> [, <EM>variable 
+          </EM>as <EM>type</EM> [...]]<BR>[...]</P></div>
+        <P>End type</P></div>
+      <P>E.g.</P>
+      <PRE><CODE class="basic">struc SpaceMartian
+    name$
+    x#, y#
+    health(4)
+endstruc</CODE></PRE>
+      <P>Is equivalent to:</P>
+      <PRE><CODE class="basic">type SpaceMartian
+    name as string
+    x, y as single
+    health(4) as integer
+end type</CODE></PRE>
+      <P>(Except that in the first example the field names now have 
+      $ and # post-fixes.)</P>
+</div>
+<H3>Arrays inside structures</H3>
+<P>Structures can contain arrays. Unlike regular arrays, the size of an array in 
+a structure <EM>must be fixed at compile time</EM>. This means that the array 
+size must be either a numeric constant, or a named constant, or a constant 
+expression.</P>
+<P>For example:</P>
+<PRE><CODE class="basic">struc STest: dim a(10): endstruc</CODE></PRE><PRE><CODE class="basic">const size = 20
+struc STest2: dim array$(size): endstruc</CODE></PRE>
+<P>Will work.</P>
+<P>However this example:</P>
+<PRE><CODE class="basic">dim size: size = 20
+struc STest2: dim array$(size): endstruc</CODE></PRE>
+<P>Will cause a compile time error, because size is now a variable and is not 
+fixed at compile time. (Even though it's obvious to a human that it will always 
+be 20!)</P>
+<H2>Pointers</H2>
+<P>Basic4GL has a pointer syntax which is vaguely similar to C++'s 'reference' 
+type, but a lot more simplified. </P>
+<H3>Declaring pointers</H3>
+<P>Pointers are declared by prefixing a "&amp;" character before the variable 
+name in the "Dim" statement.<BR>The syntax is then the same as "Dim"ming a 
+regular variable, except that array dimensions must be specified with "()" (i.e 
+with no number in the brackets).</P>
+<P>So whereas:</P>
+<PRE><CODE class="basic">Dim i, r#, a$, array#(10), SomeStructure s, matrix#(3)(3)</CODE></PRE>
+<P>Declares and allocates:</P>
+<UL>
+  <LI>An integer named "i" 
+  <LI>A real named "r#" 
+  <LI>A string named "a$" 
+  <LI>An array of reals named "array#" 
+  <LI>A structure of type "SomeStructure" named "s" 
+  <LI>A 2D array of reals named "matrix#" </LI></UL>
+<PRE><CODE class="basic">Dim &amp;pi, &amp;pr#, &amp;pa$, &amp;parray#(), SomeStructure &amp;ps, &amp;pmatrix#()()</CODE></PRE>
+<P>Declares:</P>
+<UL>
+  <LI>An pointer to an integer named "pi" 
+  <LI>A pointer to a real named "pr#" 
+  <LI>A pointer to a string named "pa$" 
+  <LI>A pointer to an array named "parray#" 
+  <LI>A pointer to a structure of type "SomeStructure" named "ps" 
+  <LI>A pointer to a 2D array of reals named "pmatrix#" </LI></UL>
+<H3>Setting pointers</H3>
+<P>Pointer variables are initially unset. Attempting to read or write to the 
+data of an unset pointer results in a runtime error (although you can still compare them to other pointers or the special 'null' constant). To do anything useful you 
+need to point them to a variable, otherwise known as "set"ting them.</P>
+<P>Pointers are set using this syntax:</P>
+<div class="format">
+  <P>&amp;<EM>pointer</EM> = &amp;<EM>variable</EM></P></div>
+<P>Examples:</P>
+<PRE><CODE class="basic">Dim a$, &amp;ptr$
+a$ = "Hello world"
+&amp;ptr$ = &amp;a$
+print ptr$</CODE></PRE>
+<PRE><CODE class="basic">Dim array(10), &amp;element, i
+for i = 1 to 10: &amp;element = &amp;array(i): element = i: next</CODE></PRE><PRE><CODE class="basic">dim matrix#(3)(3), &amp;basisVector#(), axis, i
+matrix# = MatrixIdentity ()
+print "Axis? (0-3): ": axis = Val(input$()) ' Enter 4 to crash!
+&amp;basisVector# = &amp;matrix#(axis)
+for i = 0 to 3: print basisVector#(i) + " ": next</CODE></PRE>
+<H3>Accessing pointer data</H3>
+<P>Once a pointer is set, it can be accessed like any other variable, i.e read, 
+assigned to, passed to functions e.t.c. The actual data read from or written to 
+will be that of the variable that it is pointing to.</P>
+<PRE><CODE class="basic">Dim a, b, &amp;ptr
+&amp;ptr = &amp;a
+a = 5 ' a is 5, b is 0
+b = ptr ' a is 5, b is 5
+ptr = b + 1 ' a is 6, b is 5
+print "a = " + a + ", b = " + b</CODE></PRE>
+<H3>Un-setting pointers</H3>
+<P>You can "un-set" a pointer by assigning it the special constant 
+<EM>null</EM>, as follows:</P>
+<PRE><CODE class="basic">Dim val, &amp;ptr
+&amp;ptr = &amp;val ' Pointer now set
+&amp;ptr = null ' Pointer now un-set</CODE></PRE>
+<P>You can also compare a pointer to <EM>null</EM>.</P>
+<PRE><CODE class="basic">if &amp;ptr = null then
+
+    ...
+
+endif
+if &amp;ptr &lt;&gt; null then
+
+    ...
+
+endif</CODE></PRE>
+<h2>Function pointers</h2>
+<p>Basic4GL also has a pointer to function/subroutine variable type.</p>
+<p>These are discussed in more details in <a href="#function-pointers">the 
+  function/subroutine pointers section</a>.</p>
+
+<H2>Mixing structures, arrays and pointers</H2>
+<P>You can mix structures, arrays and pointers <EM>mostly</EM> in any way you 
+wish. <BR>There are a few limitations to keep in mind however:</P>
+<P>You cannot allocate an array of pointers, as:</P>
+<PRE><CODE class="basic">Dim &amp;ptrs()</CODE></PRE>
+<P>will allocate a pointer to an array.</P>
+<P>If you really need an array of pointers you can use the following 
+workaround:</P>
+<PRE><CODE class="basic">struc SPtr: dim &amp;ptr: endstruc
+dim SPtr array(100)</CODE></PRE>
+<P>Then you can set the pointers using:</P>
+<PRE><CODE class="basic">&amp;array(5).ptr = &amp;var</CODE></PRE>
+<P>(or similar.)</P>
+<H1>Allocating data</H1>
+<P>Basic4GL supports a very simple memory allocation scheme. Memory once 
+allocated is permanent (until the program finishes). There is no concept of 
+freeing a block of allocated memory.</p>
+<p>This has some obvious limitations, but it does avoid a large number of pointer related bugs.</p>
+<P>Data is allocated as follows:</P>
+<div class="format">
+  <P>alloc <EM>pointername</EM> [, <EM>arraysize</EM> [, <EM>arraysize</EM> 
+  [...]]]</P></div>
+<P>Where <EM>pointername</EM> is the name of a Basic4GL pointer variable DIMmed 
+earlier.</P>
+<P>Examples:</P>
+<PRE><CODE class="basic">dim &amp;ptri
+alloc ptri ' Allocate an integer</CODE></PRE><PRE><CODE class="basic">dim &amp;ptrr#
+alloc ptrr# ' Allocate a real numer</CODE></PRE><PRE><CODE class="basic">dim &amp;ptrs$
+alloc ptrs$ ' Allocate a string</CODE></PRE><PRE><CODE class="basic">struc SPlayer: dim x, y, z: endstruc
+dim SPlayer &amp;ptrplayer
+alloc ptrplayer ' Allocate a player structure</CODE></PRE>
+<P>Basic4GL allocates a variable of the type that <EM>pointername</EM> points 
+to, and then points <EM>pointername</EM> to the new variable.</P>
+<P>To allocate an array, add a comma, and list the dimension sizes separated by 
+commas.</P>
+<P>Examples:</P>
+<PRE><CODE class="basic">dim &amp;ptrarray()     ' Array size is not specified here!
+alloc ptrarray, 100 ' Specified here instead!</CODE></PRE><PRE><CODE class="basic">dim &amp;ptrMatrix#()()
+alloc ptrMatrix, 3, 3</CODE></PRE>
+<P>As with DIMming arrays, specifiying N as the array size will actually create 
+N+1 elements: 0 through to N inclusive.<BR>Also the array size is calculated at 
+runtime, and is subject to the same rules as DIMming an array (size must be at 
+least 0 e.t.c).</P>
+<H1><A></A>Expressions</H1>
+<H2>Operators</H2>
+<P>Basic4GL evaluates infix expressions with full operator precedence.</P>
+<P>In most loosely to most tightly bound order:</P>
+<TABLE>
+  <thead>
+	<tr>
+		<th>Operator</th>
+		<th>Description</th>
+		<th>Example</th>
+	</tr>
+  </thead>
+  <TBODY>
+  <TR>
+    <TD>or</TD>
+    <TD>Bitwise or</TD>
+    <TD>a# &lt; 0 <STRONG>or</STRONG> a# &gt; 1000</TD></TR>
+  <TR>
+    <TD>and</TD>
+    <TD>Bitwise and</TD>
+    <TD>a# &gt;= 0 <STRONG>and</STRONG> a# &lt;= 1000</TD></TR>
+  <TR>
+    <TD>xor</TD>
+    <TD>Bitwise exclusive or</TD>
+    <TD>a = a <STRONG>xor</STRONG> 255</TD></TR>
+  <TR>
+    <TD>lor</TD>
+    <TD>Bitwise <EM>lazy</EM> or</TD>
+    <TD>a# &lt; 0 <STRONG>lor</STRONG> a# &gt; 1000</TD></TR>
+  <TR>
+    <TD>land</TD>
+    <TD>Bitwise <EM>lazy</EM> and</TD>
+    <TD>a# &gt;= 0 <STRONG>and</STRONG> a# &lt;= 1000</TD></TR>
+  <TR>
+    <TD>not</TD>
+    <TD>Bitwise not</TD>
+    <TD><STRONG>not </STRONG>a# = 5</TD></TR>
+  <TR>
+    <TD>=</TD>
+    <TD>Test for equal<BR><EM>= can also be used to compare pointers of the 
+      same type, or to compare pointers to null.</EM></TD>
+    <TD>a# <STRONG>=</STRONG> 5</TD></TR>
+  <TR>
+    <TD>&lt;&gt;</TD>
+    <TD>Test for not equal<BR><EM>&lt;&gt; can also be used to compare 
+      pointers of the same type, or to compare pointers to null.</EM></TD>
+    <TD>a# <STRONG>&lt;&gt;</STRONG> 5</TD></TR>
+  <TR>
+    <TD>&gt;</TD>
+    <TD>Test for greater than</TD>
+    <TD>a <STRONG>&gt;</STRONG> 10</TD></TR>
+  <TR>
+    <TD>&gt;=</TD>
+    <TD>Test for greater or equal</TD>
+    <TD>a# <STRONG>&gt;=</STRONG> 0</TD></TR>
+  <TR>
+    <TD>&lt;</TD>
+    <TD>Test for less than</TD>
+    <TD>a# <STRONG>&lt;</STRONG> 9.5</TD></TR>
+  <TR>
+    <TD>&lt;=</TD>
+    <TD>Test for less or equal</TD>
+    <TD>a <STRONG>&lt;=</STRONG> 1000</TD></TR>
+  <TR>
+    <TD>+</TD>
+    <TD>Add numeric values, or concatenate strings</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR>
+    <TD>-</TD>
+    <TD>Subtract</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR>
+    <TD>*</TD>
+    <TD>Multiply</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR>
+    <TD>/</TD>
+    <TD>Divide</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR>
+    <TD>%</TD>
+    <TD>Remainder</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR>
+    <TD>- (with single operand)</TD>
+    <TD>Negate</TD>
+    <TD>a * <STRONG>-</STRONG>b</TD></TR></TBODY></TABLE>
+<P>Notes: </P>
+<OL>
+  <LI>+ and - have equal precedence (except when minus is used to negate a 
+  single value). 
+  <LI>The comparison operators: =, &lt;&gt;, &gt;, &gt;=, &lt;, &lt;= all have 
+  equal precedence. </LI></OL>
+<P>Operators with equal precedence are evaluated from left to right.</P>
+<P>You can force Basic4GL to evaluate expressions in a different order by 
+enclosing parts of them in round brackets. For example:</P>
+<div class="format">
+  <P>(5 + 10) / 5</P></div>
+<P>Will add 5 to 10, then divide the result by 5 (giving 3), whereas:</P>
+<div class="format">
+  <P>5 + 10 / 5</P></div>
+<P>Will divide first, then add, and the resulting value will be 7.</P>
+<P>Operators generally operate on standard <STRONG>integer</STRONG>, 
+<STRONG>real</STRONG> and to a lesser extent <STRONG>string</STRONG> types. 
+However certain operators have been extended to work with 1D and 2D arrays of 
+real numbers for vector and matrix functions. These are explained in the 
+Programmer's Guide. Also the = and &lt;&gt; operators can also be used to 
+compare pointers to each other, or to compare pointers to null.</P>
+
+<H2>Expression operands</H2>
+<P>An expression operand can be any of the following:</P>
+<UL>
+  <LI>A variable. E.g. a$ 
+  <LI>An array variable. E.g. x# (index) 
+  <LI>A literal constant. E.g. 3.14159265 
+  <LI>A named constant. E.g. M_PI 
+  <LI>A function result. E.g. Sqrt (2) </LI></UL>
+
+  <H2>Boolean values and 
+expressions</H2>
+<P>Basic4GL stores boolean values as integers, where 0 is false and anything non 
+0 is true.</P>
+<P>The comparison operators &lt;, &lt;=, =, &gt;=, &gt;, and &lt;&gt; all 
+evaluate to -1 if the comparison is true or 0 if it is false.</P>
+<P>The "and" and "or" operators perform a bitwise "and" or "or" of the 
+respective operands.</P>
+<P>Effectively this means that "and" and "or" can be used in both boolean 
+expressions and bit manipulation.</P>
+<P>Boolean example:</P>
+<PRE><CODE class="basic">If a &lt; 0 <STRONG>or</STRONG> a &gt; 10 Then Print "Out of range": Endif</CODE></PRE>
+<P>Bitwise example:</P>
+<PRE><CODE class="basic">glClear(GL_DEPTH_BUFFER_BIT <STRONG>or</STRONG> GL_COLOR_BUFFER_BIT)</CODE></PRE>
+<H2>Lazy evaluation</H2>
+<P>Basic4GL supports lazy evaluation through the "land" and "lor" 
+operators.<BR>Here "lazy" means that Basic4GL will stop evaluating a boolean 
+(true/false) expression as soon as it knows what the result will be.</P>
+<P>For example, the expression:</P>
+<PRE><CODE class="basic">age# &lt; 15 <STRONG>land</STRONG> not accompanied_by_adult</CODE></PRE>
+<P>will not even evaluate "not accompanied_by_adult" if age# were set to 42 (for 
+example), because Basic4GL already knows that "age# &lt; 15" evaluates to 
+<EM>false</EM> and therefore the whole expression will evaluate to 
+<EM>false</EM>.</P>
+<P>Besides the lazy behaviour, "land" is exactly equivalent to "and" and "lor" 
+is exactly equivalent to "or".</P>
+<P>Proper use of lazy evaluation can make your programs more efficient, and can 
+be useful in situations where evaluating all of the expression may produce 
+undesirable results. For example:</P>
+<PRE><CODE class="basic">if i &gt;= 0 and i &lt;= 10 and array(i) = searchValue then</CODE></PRE>
+<P>could halt your program with an "Array index out of range" error if "i" 
+happened to be 11 (assuming "array" is a 0..10 element array). Whereas:</P>
+<PRE><CODE class="basic">if i &gt;= 0 <STRONG>land</STRONG> i &lt;= 10 <STRONG>land</STRONG> array(i) = searchValue then</CODE></PRE>
+<P>will not halt your program, because "array(i)" is only ever evaluated if "i 
+&gt;= 0" and "i &lt;= 10" have already evaluated to <EM>true</EM>.</P>
+
+<H1>Flow control</H1>
+<H2>Goto</H2>
+<P>Jumps directly to a new position in the source code.</P>
+<P>Format:</P>
+<div class="format">
+  <P>Goto <EM>labelName</EM></P></div>
+<P>Where "labelName" is a Basic4GL label declared as the first identifier on a 
+line, followed by a colon.<BR>Basic4GL will jump straight to the offset of the 
+"labelName" label, and continue execution.<BR>For example:</P>
+<PRE><CODE class="basic">Loop:
+Print "Hello "
+Goto Loop</CODE></PRE>
+<P>Creates an infinite loop, where "Hello" is printed again and again.</P>
+<H2>Gosub</H2>
+<P>Calls a subroutine.</P>
+<P>Format:</P>
+<div class="format">
+  <P>Gosub <EM>labelName</EM></P></div>
+<P>Where "labelName" is a Basic4GL label, declared exactly the same way as with 
+the "Goto" instruction.</P>
+<P>The subroutine should directly follow the "labelName" label, and be 
+terminated with a "Return" instruction.<BR>When "Return" executes, Basic4GL will 
+jump to the instruction immediately <EM>after</EM> the "Gosub" instruction.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">Dim name$: name$ = "Bob"
+locate 10, 10: gosub Name
+locate 20, 4:  gosub Name
+locate 3, 15:  gosub Name
+locate 30, 20: gosub Name
+end
+
+Name:
+    print name$
+    return</CODE></PRE>
+<P>To encounter a "Return" instruction, without a corresponding "Gosub" is a 
+runtime error.<BR>A "Gosub" without a "Return" will not cause a runtime error, 
+but will waste stack space.<BR>If too many "Gosub"s are without "Return"s will 
+eventually cause a "stack overflow" runtime error.</P>
+<H2>If .. Then .. Elseif .. Else .. Endif</H2>
+<P>Executes a block of code conditionally.</P>
+<P>Format:</P>
+<div class="format">
+  <P>If <EM>expression</EM> Then<BR><EM>If block<BR></EM>Endif</P></div>
+<P>Or:</P>
+<div class="format">
+  <P>If <EM>expression </EM>Then<BR><EM>If block<BR></EM>Else<BR><EM>Else 
+  block<BR></EM>Endif</P></div>
+<P>Basic4GL evaluates "expression". It must evaluate to an integer (usually the 
+result of a boolean expression).<BR>If the expression evalutes to true (non 
+zero), then the "If block" instructions are executed.<BR>Otherwise the "Else 
+block" instructions are executed if present.</P>
+<P>Example 1:</P>
+<PRE><CODE class="basic">If lives &lt; 1 then
+Print "Game Over"
+End
+Endif</CODE></PRE>
+<P>Example 2:</P>
+<PRE><CODE class="basic">If score &gt; highscore Then
+Print "New high score!"
+highscore = score
+Else
+Print "Better luck next time."
+Endif</CODE></PRE>
+<P>Basic4GL also supports the "Elseif" keyword, which is equivalent to an "else" 
+followed by an "if", but removes the need for an extra "endif" at the end of the 
+"if" structure.<BR>Thus:</P>
+<div class="format">
+  <P>if <EM>expression1</EM> then<BR>...<BR><STRONG>elseif</STRONG> 
+  <EM>expression2 </EM>then<BR>...<BR>endif</P></div>
+<P>Is equivalent to:</P>
+<div class="format">
+  <P>if <EM>expression </EM>then<BR>...<BR>else<BR>if <EM>expression2</EM> 
+  then<BR>...<BR>endif<BR>endif</P></div>
+<P>Any number of "endif" sections can be placed after the initial "if". You 
+cannot place an "endif" after the "else" section however.</P>
+<P>Example 3:</P>
+<PRE><CODE class="basic">dim a
+for a = 0 to 10
+    if     a = 0  then printr "Zero"
+    elseif a = 1  then printr "One"
+    elseif a = 2  then printr "Two"
+    elseif a = 3  then printr "Three"
+    elseif a = 4  then printr "Four"
+    elseif a = 5  then printr "Five"
+    elseif a = 6  then printr "Six"
+    elseif a = 7  then printr "Seven"
+    elseif a = 8  then printr "Eight"
+    elseif a = 9  then printr "Nine"
+    elseif a = 10 then printr "Ten"
+    else               
+        printr "???"
+    endif
+next</CODE></PRE>
+<P>Example 4:</P>
+<PRE><CODE class="basic">dim score
+print "Enter score (0-100): "
+score = Val (Input$ ())
+print "Your grade is: "
+if     score &lt; 20 then printr "F"
+elseif score &lt; 30 then printr "E"
+elseif score &lt; 50 then printr "D"
+elseif score &lt; 70 then printr "C"
+elseif score &lt; 90 then printr "B"
+else                   printr "A"
+endif</CODE></PRE>
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD>
+      <H4>Compatibility with other BASICs</H4>
+      <P>Basic4GL also supports the syntax:</P>
+      <div class="format">
+        <P>If <EM>condition</EM> 
+        Then<BR><EM>ifblock<BR></EM>end if</P></div>
+      <P>The "if" must follow immediately after the "end", otherwise it will be 
+      interpreted as an "end" program instruction.</P></TD></TR></TBODY></TABLE>
+<H2>While .. Wend</H2>
+<P>Executes a code block repeatedly while an expression is true.</P>
+<P>Format:</P>
+<div class="format">
+  <P>While <EM>expression<BR>Code block<BR></EM>Wend</P></div>
+<P>This creates a conditional loop. Basic4GL evalutes "expression", which again 
+must evaluate to an integer (and is usually a boolean expression).<BR>If the 
+expression evaluates to false (zero), then Basic4GL will jump straight to the 
+instruction following the "Wend", and continue.<BR>If the expression evaluates 
+to true Basic4GL will execute the code block, then re-evaluate the 
+expression.<BR>Basic4GL will continue executing the code block until the 
+expression evaluates to false.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">while lives &gt; 0
+' Do gameplay
+...
+wend
+' Game over
+...</CODE></PRE>
+<H2>For .. next</H2>
+<P>Used to create loops with a loop counter variable.</P>
+<P>Format:</P>
+<div class="format">
+  <P>For <EM>variable</EM> = <EM>begin-value </EM>To <EM>end-value<BR>Code 
+  block<BR></EM>Next</P></div>
+<P>Or:</P>
+<div class="format">
+  <P>For <EM>variable</EM> = <EM>begin-value</EM> To <EM>end-value</EM> step 
+  <EM>step-constant<BR>Code block<BR></EM>Next</P></div>
+<P>This creates a loop, where "variable" counts from "begin-value" to 
+"end-value". <EM>Variable </EM>must be a numeric type (integer or real), and 
+cannot be an array element or structure field. <EM>Step-constant</EM> must be a 
+constant expression (integer or real). If no "step" is given the 
+<EM>step-constant</EM> defaults to 1.</P>
+<P>Basic4GL will count either upwards or downwards depending on whether the 
+<EM>step-constant</EM> is positive or negative.<BR>If <EM>step-constant</EM> is 
+positive, the for..next construct is exactly equivalent to:</P>
+<div class="format">
+  <P><EM>variable = begin-value<BR></EM>While <EM>variable</EM> &lt;= 
+  <EM>end-value<BR>Code block<BR>variable = </EM>variable<EM> + 
+  step-constant</EM><BR>Wend</P></div>
+<P>If <EM>step-constant</EM> is negative, it is equivalent to:</P>
+<div class="format">
+  <P><EM>variable = begin-value<BR></EM>While <EM>variable</EM> &gt;= 
+  <EM>end-value<BR>Code block<BR>variable = </EM>variable<EM> + 
+  step-constant</EM><BR>Wend</P></div>
+<P>And if <EM>step-constant</EM> is zero, it is equivalent to:</P>
+<div class="format">
+  <P><EM>variable = begin-value<BR></EM>While <EM>variable</EM> &lt;&gt; 
+  <EM>end-value<BR>Code block</EM><BR>Wend</P></div>
+<P>Example 1:</P>
+<PRE><CODE class="basic">dim index
+for index = 1 to 10
+    printr "Index = " + index
+next</CODE></PRE>
+<P>Example 2:</P>
+<PRE><CODE class="basic">dim count: count = 10
+dim squared(count), index
+for index = 0 to count
+    squared(index) = index * index
+next</CODE></PRE>
+<P>Example 3:</P>
+<PRE><CODE class="basic">dim angle#
+glTranslatef (0, 0, -3)
+glBegin (GL_LINE_LOOP)
+for angle# = 0 to 2 * m_pi step 2 * m_pi / 360
+    glVertex2f(sin(angle#), cos(angle#))
+next
+glEnd()
+SwapBuffers()</CODE></PRE>
+<P>Example 4:</P>
+<PRE><CODE class="basic">dim count
+for count = 10 to 1 step -1
+    cls: locate 20, 12: printr count
+    Sleep (1000)
+next
+cls: locate 15, 12: print "Blast off!!"</CODE></PRE>
+<H2>Do .. loop</H2>
+<P>Also used to execute a code block a number of times.</P>
+<P>Format:</P>
+<div class="format">
+  <P>do<BR><EM>Code block<BR></EM>loop</P></div>
+<P>Or:</P>
+<div class="format">
+  <P>do while <EM>condition</EM><BR><EM>Code block<BR></EM>loop</P></div>
+<P>Or:</P>
+<div class="format">
+  <P>do until <EM>condition<BR>Code block<BR></EM>loop</P></div>
+<P>Or:</P>
+<div class="format">
+  <P>do<BR><EM>Code block</EM><BR>loop while <EM>condition</EM></P></div>
+<P>Or:</P>
+<div class="format">
+  <P>do<BR><EM>Code block<BR></EM>loop until <EM>condition</EM></P></div>
+<p>If a 'while' or 'until' clause is attached to the 'do' command, it is applied immediately before the code block is executed and may prevent the loop from executing at all.</p>
+<p>If it is attached to the 'loop' command, the code block will be executed first, then the 'while' or 'until' clause will be evaluated to determine whether to continue looping. The code block will always be executed at least once.</p>
+<p>A 'do' .. 'loop' with no 'while' or 'until' clause creates an infinite loop.</p>
+  
+<H1>Functions and subroutines</H1>
+<P>User defined functions and subroutines are created with the "function" and 
+"sub" keywords respectively.<BR>They are blocks of code that are "called", much 
+like when you "gosub" to a label. At this point the computer executes the code 
+inside the function/subroutine and then resumes executing from the instruction 
+after the one that called the function/subroutine.</P>
+<P>You are strongly recommeneded to use functions/subroutines instead of 
+gosub/return, as it is generally considered to be better programming practice. 
+Functions/subroutines introduce a number of features not supported by 
+gosub/return:</P>
+<UL>
+  <LI>Local variables - Prevent two unrelated parts of code from interfering 
+  with each other by modifying each others' variables. 
+  <LI>Parameters - Provide a convenient and less error prone (than using global 
+  variables) way to pass data to a routine. 
+  <LI>Return values - Provide a convenient and less error prone (than using 
+  global varaibles) way to pass data back from a routine. 
+  <LI>Better encapsulation - A function/subroutine can only be executed by 
+  calling it explicitly. You do not have to setup gotos to "jump around" the 
+  routine to prevent it from executing when it shouldn't.</LI></UL>
+<H2>Sub/End Sub</H2>
+<P>To create a subroutine, use "Sub" and "End Sub"</P>
+<P>Format:</P>
+<div class="format">
+  <P>Sub <EM>name</EM>(<EM>[param[, param[,...]]]</EM>)</P>
+  <P>...</P>
+  <P>End Sub</P></div>
+<P>Where <EM>name</EM> is the name of the subroutine, and must not have 
+already been used for a variable, function, other subroutine 
+etc.<BR><EM>param</EM> are optional parameters that will be passed to the 
+subroutine, and can be used inside it like variables.</P>
+<P>Examples:</P>
+<PRE><CODE class="basic">sub MySubroutine()<BR>&nbsp;&nbsp;&nbsp; print "Hello"<BR>end sub</CODE></PRE><PRE><CODE class="basic">sub PrintAt(x, y, text$)<BR>&nbsp;&nbsp;&nbsp; locate x, y<BR>&nbsp;&nbsp;&nbsp; print text$<BR>end sub</CODE></PRE>
+<P>The format for parameters is the same as when DIMming a variable. You 
+can specify integer, real or string (%, # and $ suffixes), structures and 
+pointers.</P>
+<P>Array parameters are specified by suffixing the variable with empty 
+brackets "()". Note that you do <EM>not</EM> specify the array size. To specify 
+a 2D or 3D array, use () and ()() respectively (and so on). For example:</P>
+<PRE><CODE class="basic">sub PrintTextArray(array$())
+    dim i
+    for i = 0 to arraymax(array$)
+        printr array$(i)
+    next
+end sub
+
+dim a$(3)
+a$(0) = "This"
+a$(1) = "is"
+a$(2) = "a"
+a$(3) = "test"
+PrintTextArray(a$)
+</CODE></PRE>
+<H3>Return (from subroutine)</H3>
+<P>Program control returns from a subroutine as soon as its last 
+instruction has executed.<BR>Alternatively you can return immediately from a 
+subroutine with the "return" command.</P>
+<P>Format:</P>
+<div class="format">
+  <P>Return</P></div>
+<H3>Calling a subroutine</H3>
+<P>Subroutines are called the same way as Basic4GL built-in routines and 
+functions.<BR>Format:</P>
+<div class="format">
+  <P><EM>name</EM>(<EM>[value1[,value2[,...]]]</EM>)</P></div>
+<H3>Local variables</H3>
+<P>To declare a <EM>local variable</EM>, simply declare it with 
+<EM>dim</EM> inside the body of the subroutine.<BR>Example:</P>
+<PRE><CODE class="basic">sub DrawStars(count)
+    dim i               ' This is a local variable
+    for i = 1 to count
+        print "*"
+    next
+    printr
+end sub
+        
+dim i                   ' This is a global variable
+i = 3
+DrawStars(20)
+print i
+</CODE></PRE>
+<P>Local variables can only be accessed inside the subroutine that they 
+are DIMmed. Their memory is reclaimed as soon as the subroutine finishes.</P>
+<P>An important feature of local variables is that if a variable of the 
+same name is DIMmed in two different subroutines, (or if one is DIMmed outside 
+any subroutine), they are treated as <EM>two completely different 
+variables</EM>, each with its own separate storage. This is very useful for 
+temporary variables (like for..next loop counters), as the variable is 
+guaranteed not to be overwritten by another subroutine that your subroutine may 
+call.</P>
+<H2>Function/end function</H2>
+<P>To create a function, use "function" and "end function".</P>
+<P>Format:</P>
+<div class="format">
+  <P>Function <EM>name</EM>(<EM>[param[, param[, ...]]]</EM>)</P>
+  <P>...</P>
+  <P>End Function</P></div>
+<P>Where <EM>name</EM> is the name of the function, and must not have 
+already been used for a variable, function, other subroutine 
+etc.<BR><EM>param</EM> are optional parameters that will be passed to the 
+function, and can be used inside it like variables.</P>
+<P><EM>name</EM>&nbsp;also determines the "return type" of the function 
+(what kind of value it returns), and can be treated much like a variable in a 
+DIM, in that you can suffix it with (%, #, $) to return an integer, real or 
+string respectively, or precede it with a structure name to return a 
+structure.</P>
+<P>To declare a function that returns an array, suffix the declaration 
+with a pair of empty brackets.</P>
+<P>A function must explictly return a value with the "return" keyword. 
+</P>
+<H3>Return (from function)</H3>
+<P>A function must return a value to the caller with the "return" 
+keyword.</P>
+<P>Format:</P>
+<div class="format">
+  <P>Return <EM>expression</EM></P></div>
+<P>Where&nbsp;<EM>expression</EM> is the expression that will be 
+evaluated, and whose result will be sent back to the caller.</P>
+<P>Examples:</P>
+<PRE><CODE class="basic">function AddTwoNumbers(n1, n2)<BR>&nbsp;&nbsp;&nbsp; return n1 + n2<BR>end function</CODE></PRE><PRE><CODE class="basic">function SumArray(array())<BR>&nbsp;&nbsp;&nbsp; dim sum, i<BR>&nbsp;&nbsp;&nbsp; for i = 0 to arraymax(array)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sum = sum + array(i)<BR>&nbsp;&nbsp;&nbsp; next&nbsp;&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; return sum<BR>end function</CODE></PRE>
+<H3>Calling a function</H3>
+<P>A function can be called exactly the same way as a 
+subroutine.<BR>However, a function can also be called within an expression, and 
+its result used as part of the expression in the same way as a&nbsp;constant or 
+variable.</P>
+<P>Example 1:</P>
+<PRE><CODE class="basic">function Reverse$(s$)
+    dim result$, i
+    for i = 1 to len(s$)
+        result$ = result$ + mid$(s$, len(s$) - i + 1, 1)
+    next
+    return result$
+end function
+
+print Reverse$(")-: !ereh saw LG4cisaB")
+</CODE></PRE>
+<P>Example 2:</P>
+<PRE><CODE class="basic">function Random(min, max)
+    return rnd() % (max - min + 1) + min
+end function
+
+dim dice(5), i
+for i = 1 to 5: dice(i) = Random(1, 6): next
+for i = 1 to 5: print dice(i); " ";: next
+</CODE></PRE>
+<P>Example 3:</P>
+<PRE><CODE class="basic">function UpdateChar$(c$, delta)
+    dim a
+    a = asc(c$)
+    a = a + delta
+    if a > 255 then a = a - 256 endif
+    if a < 0 then a = a + 256 endif
+    return chr$(a)
+end function
+
+function UpdateWord$(w$, delta)
+    dim result$, i
+    for i = 1 to len(w$)
+        result$ = result$ + UpdateChar$(mid$(w$, i, 1), delta)
+    next
+    return result$
+end function
+
+dim word$, encoded$, decoded$
+input "Word"; word$
+encoded$ = UpdateWord$(word$, 1)
+printr "Encoded: "; encoded$
+decoded$ = UpdateWord$(encoded$, -1)
+printr "Decoded: "; decoded$
+</CODE></PRE>
+<H2>Declare</H2>
+<P>You can "forward declare" a function or subroutine with the "declare" 
+keyword.</P>
+<P>Format:</P>
+<div class="format">
+  <P>Declare sub <EM>name</EM>(<EM>[param[, param[, 
+...]]]</EM>)</P></div>
+<P>Or:</P>
+<div class="format">
+  <P>Declare function <EM>name</EM>(<EM>[param[, param[, 
+...]]]</EM>)</P></div>
+<P>"Forward declaring" a function/subroutine allows the compiler to 
+compile calls to the function/subroutine before it has compiled the function 
+body.</P>
+<H2>Function restrictions</H2>
+<P>Be aware that there are a couple of restrictions on what can be 
+placed inside a function or subroutine:</P>
+<UL>
+  <LI>You cannot define a label inside a function/subroutine. 
+  <LI>You cannot use the "goto" or "gosub" commands inside a 
+  function/subroutine.</LI></UL>
+
+<H1 id="function-pointers">Function/subroutine pointers</H1>
+<P>A function/subroutine pointer is a special type of data value that represents
+a callable function or subroutine.</P>
+<P>Function/subroutine pointers can be used for variables, function/sub parameters and 
+return values, and struc fields.</P>
+<H2>Declaring</H2>
+<P>To declare the pointer use the "as" keyword, then the "function"/"sub" keyword and
+the function/sub parameters and return type. The syntax is the same as when 
+declaring a function/sub except that there is not function/sub name.</P>
+<P>Examples:</P>
+<PRE><CODE class="basic">' Pointer to function taking an integer and returning an integer
+dim fn1 as function(x)</CODE></PRE>
+
+<PRE><CODE class="basic">' Subroutine taking 3 strings
+dim sub1 as sub(this$, that$, other$)</CODE></PRE>
+
+<PRE><CODE class="basic">' Pointer to function taking a vector and returning a vector (array of floating pt numbers)
+dim fn2 as function(v#())() as single</CODE></PRE>
+
+<PRE><CODE class="basic">' Function taking a function parameter
+function ConvertStr(s as string, fn as function(char$) as string) as string
+...</CODE></PRE>
+	
+<PRE><CODE class="basic">' Structure containing function pointer
+struc SMyStruc
+	fn as function(x#, y#) as single
+end struc</CODE></PRE>
+
+<H2>Assigning</H2>
+<P>Use the &amp; operator to take the address of a function/sub. This can be assigned to
+a function pointer variable, or used as a function pointer parameter.</P>
+<P>Format:</P>
+<div class="format">
+	<p>&amp;<em>function-name</em></p>
+	<p>&amp;<em>subroutine-name</em></p>
+</div>
+<P>For example:</P>
+<PRE><CODE class="basic">function Twice(x): return x * 2: end function
+dim fn as function(x)
+fn = &amp;Twice</CODE></PRE>
+<P>The function/sub signature (it's parameters and return value) must match the 
+pointer type's signature, otherwise your program will not compile.</P>
+<P>Note that you can only store pointers to user defined functions/subroutines -
+taking a pointer to a built in function/sub (e.g. "sqrt") is not currently supported.
+If you really need to do this you can create a "wrapper" function/subroutine and 
+store the pointer to the wrapper. For example:</P>
+<PRE><CODE class="basic">function doSqrt#(x#): return sqrt(x#):end function
+dim fn as function(x#) as single = &amp;doSqrt#
+printr fn(16)</CODE></PRE>
+
+<H2>Calling a function/subroutine pointer</H2>
+<P>Calling a function/subroutine via pointer has the same syntax as calling 
+it by name, except that instead of the function/subroutine name, you substitute in
+the pointer.</P>
+<P>Examples:</P>
+<PRE><CODE class="basic">sub Stars(n)
+	dim i
+	for i = 1 to n: print "*": next
+	printr
+end sub
+
+dim ptr as sub(x) = &Stars
+ptr(5)
+ptr(10)</CODE></PRE>
+<PRE><CODE class="basic">sub Find(max, pred as function(i))
+	dim i
+	for i = 1 to max
+		if pred(i) then
+			printr i
+		endif
+	next
+	printr 
+end sub
+
+function IsEven(n): return (n % 2) = 0: end function
+function IsSquare(n): return Int(sqrt(n)) = sqrt(n): end function
+
+printr "Even numbers"
+Find(10, &IsEven)
+
+printr "Squares"
+Find(10, &IsSquare)</CODE></PRE>
+
+<P>If you attempt to call a function/subroutine pointer that hasn't been assigned
+a value (or has explicitly been assigned the "null" value), you will get an 
+"Unset pointer" run time error.</P>
+
+<H2>Other function/subroutine pointer operations</H2>
+<P>There are a handful of other operations that can be done with a function/subroutine
+pointer.</P>
+<P>Function/subroutine pointers can be assigned to each other. For example:</P>
+<PRE><CODE class="basic">sub DoIt(): printr "Done!": end sub
+
+dim s1 as sub()
+dim s2 as sub()
+
+s1 = &DoIt
+s2 = s1				' Copy from one pointer variable to another
+
+s2()</CODE></PRE>
+<P>The function/sub pointer types must match. You will get a compile time error if the
+function/sub pointer has a different return type, or parameter types etc.</P>
+<P>You can also assign the special "null" value to a function pointer. This 
+reverts the pointer back to its uninitialised state. Attempting to call the pointer
+will then result in an "Unset pointer" run time error.</P>
+<PRE><CODE class="basic">sub DoIt(): printr "Done!": end sub
+dim s1 as sub() = &DoIt
+s1()				' This will work
+s1 = null
+s1()				' This will cause a run time error</CODE></PRE>
+<P>Finally - similar to pointers to data structures - you can compare two pointers 
+of the same type, or compare a pointer to the "null" value. As with pointers to 
+data structures, you are restricted to using the = and &lt;&gt; operators.</P>
+
+<P>Example:</P>
+<PRE><CODE class="basic">sub FilterAndProcess(array(), filter as function(n), process as sub(n))
+	dim i
+	for i = 0 to ArrayMax(array)
+		' Note: Only call filter if not set to null
+		if filter = null lor filter(array(i)) then
+			process(array(i))
+		endif
+	next
+end sub
+
+dim a(8)
+a(0) = 3
+a(1) = 1
+a(2) = 4
+a(3) = 1
+a(4) = 5
+a(5) = 9
+a(6) = 2
+a(7) = 6
+a(8) = 5
+
+function Above4(n): return n > 4: end function
+sub Output(n): printr ">"; n: end sub
+
+printr "All"
+FilterAndProcess(a, null, &Output)			' No filter function
+
+printr "5 and up"
+FilterAndProcess(a, &Above4, &Output)</CODE></PRE>
+
+<h2>Looking up function pointers by name</h2>
+<p>You can also lookup a function/subroutine pointer by name using the 
+  GetFunctionByName command.</p>
+<p>Format:</p>
+<div class="format">
+  GetFunctionByName(<em>name$</em>)<br>
+  GetFunctionByName(<em>name$</em>, <em>handle</em>)
+</div>
+<P>Where <em>name$</em> is the name of the function/subroutine to find
+and <EM>handle</EM> is an integer handle returned from a successful 
+call to "Comp" or "CompFile".</P>
+<p>Example:</p>
+<pre><code class="basic">sub testSub(): printr "Hello world": end sub
+dim ptr as sub() = GetFunctionByName("testSub")
+ptr()</code></pre>
+<p>For regular code it is usually better to use the & operator rather than
+  GetFunctionByName. The & operator gives you compile-time name and type checking,
+  whereas GetFunctionByName will return null at runtime if no matching 
+  function/subroutine is found and will stop with a runtime error if the
+  function/subroutine does not match the type of function pointer you assign it to.</p>
+<p>GetFunctionByName is more useful is for runtime script code compiled 
+  with "Comp" or "CompFile". For example:</p>
+<pre><code class="basic">dim script1 = Comp("sub test(): printr 1: end sub")
+dim script2 = Comp("sub test(): printr 2: end sub")
+dim ptr1 as sub() = GetFunctionByName("test", script1)
+dim ptr2 as sub() = GetFunctionByName("test", script2)
+ptr1()
+ptr2()</code></pre>
+<p>Passing a script <em>handle</em> to GetFunctionByName restricts Basic4GL to search
+ only inside the specified compiled script.</p>
+<p>Passing 0 as a script <em>handle</em> which instructs Basic4GL to ignore
+all compiled scripts and search inside the main program.</p>
+<p>If no <em>handle</em> is supplied at all, Basic4GL will return the first instance
+of the function/subroutine that was declared, searching the main code first, then 
+across all scripts in the order they were compiled.</p>
+
+<H1>Program data</H1>
+<P>Basic4GL provides the standard "Data", "Read" and "Reset" mechanism for 
+entering data directly into programs. This is basically a shorthand way of 
+hard-coding data into programs and is typically used to initialise arrays. </P>
+<P>The actual data stored is a list of values. Each value is either a string or 
+a number (int or real).</P>
+<H2>Data</H2>
+<P>To specify the data elements, use "Data".</P>
+<P>Format:</P>
+<div class="format">
+  <P>Data <EM>element [, element [, ...]]</EM></P></div>
+<P>Examples:</P>
+<PRE><CODE class="basic">data 12.4, -3.4, 12, 0, 44</CODE></PRE>
+<PRE><CODE class="basic">data My age, 20, My height, 156</CODE></PRE><PRE><CODE class="basic">data "A long time ago, in a galaxy far away, yada yada yada"</CODE></PRE>
+<P>If the data element can be parsed as a number, it will be stored as such. 
+Otherwise it will be stored as a string.</P>
+<P>Strings can either be quoted (enclosed in double quotes) or unquoted. Quoted 
+strings can contain commas (,), colons (:) and single quotes (').<BR>Unquoted 
+strings cannot contain these characters, because:</P>
+<UL>
+  <LI>A comma starts a new data element 
+  <LI>A colon starts a new instruction 
+  <LI>A single quote starts a program comment </LI></UL>
+<P>So it is best to quote strings if you are unsure.</P>
+<H2>Read</H2>
+<P>In order to do something with the data, you need to read it into variables, 
+using "Read".</P>
+<P>Format:</P>
+<div class="format">
+  <P>Read <EM>variable [, variable [, ...]]</EM></P></div>
+<P><EM>Variable</EM> must be a simple variable type, either a string, integer or 
+real. (In otherwords you can't read a structure or an array with a single read 
+statement, although you can write code to read each element individually).</P>
+<P>Read copies an element of data into the variable, and then moves the data 
+position along one.<BR>If there is no data, or the program has run out of data, 
+you will get an "Out of DATA" runtime error.<BR>Attempting to read a string 
+value into a number variable (integer or real) will also generate a runtime 
+error.</P>
+<P>Example 1:</P>
+<PRE><CODE class="basic">data age, 22, height, 175, shoesize, 12
+dim name$(3), value(3), i
+for i = 1 to 3
+    read name$(i), value(i)
+next
+for i = 1 to 3
+    printr name$(i) + "=" + value(i)
+next</CODE></PRE>
+<H2>Reset</H2>
+<P>"Reset" tells Basic4GL where to start loading data from.</P>
+<P>Format:</P>
+<div class="format">
+  <P>Reset <EM>labelname</EM></P></div>
+<P>Where <EM>labelname </EM>is a Basic4GL program label.<BR>The next "Read" will 
+begin reading data from the first "Data" statement after <EM>labelname</EM>.</P>
+<PRE><CODE class="basic">ThisData:
+    data 1, 2, 3, 4, 5
+    
+ThatData:
+    data cat, dog, fish, mouse, horse
+
+dim a$, i
+printr "1) This data"
+printr "2) That data"
+print "Please press 1 or 2"
+
+while a$ &lt;&gt; "1" and a$ &lt;&gt; "2" 
+    a$ = Inkey$ ()
+wend
+
+if a$ = "1" then 
+    reset ThisData
+else            
+    reset ThatData
+endif
+
+printr
+for i = 1 to 5
+    read a$
+    printr a$
+next</CODE></PRE>
+<H1>External functions</H1>
+<P>Basic4GL supports a number of external functions.</P>
+<P>The use of these functions is documented on other help files, like the Programmers' Guide and Sprite Library Guide.</P>
+<P>External functions are called with the following format:</P>
+<div class="format">
+  <P><EM>FunctionName</EM> ([<EM>param</EM> [, <EM>param</EM> [, 
+...]])</P></div>
+<P>Examples:</P>
+<PRE><CODE class="basic">Beep()</CODE></PRE>
+<PRE><CODE class="basic">glClear(GL_COLOR_BUFFER_BIT)</CODE></PRE>
+<PRE><CODE class="basic">glVertex3f(-2.5, 10, 0)</CODE></PRE>
+<P>A small number of functions do <STRONG>not</STRONG> require their arguments 
+to be enclosed in brackets (mainly for historical reasons.)<BR>These functions 
+are: Cls, Print, Printr and Locate.<BR>For example:</P>
+<PRE><CODE class="basic">Cls
+Locate 17, 12
+Print "Hello"</CODE></PRE>
+
+<H1 id="runtime-compilation">Runtime compilation</H1>
+<P>Basic4GL code can also be compiled and executed at runtime. The source can be 
+a file on disk, or a text string in memory.<BR>The runtime compile is the same 
+as the compile time compiler, and accepts all the same code. The only 
+restriction is that you cannot use "include" within runtime compiled code.</P>
+<P>The main commands are "Comp" and "Exec" to compile and execute 
+respectively.<BR>(Actually "Comp" is a function, but it's so closely associated 
+with the "Exec" command that I've included it here.)</P>
+<P>There is also support for calling functions in runtime-compiled code, using 
+the "Runtime" keyword.</P>
+<H2 id="comp">Comp</H2>
+<P>"Comp" compiles a text string and return a handle that can be used to execute 
+the compiled code at runtime.</P>
+<P>Format:</P>
+<div class="format">
+  <P>Comp(<EM>codetext</EM>)</P></div>
+<P>Where&nbsp;<EM>codetext</EM> is a text string, or an array of text 
+strings, containing code to be compiled at runtime.</P>
+<P>If the text compiled successfully, "Comp" returns&nbsp;a non-zero 
+integer handle to identify the compiled code.<BR>If the compiler encountered an 
+error, "Comp" returns zero, and the error description can be retrieved with 
+CompilerError(), CompilerErrorLine() and CompilerErrorCol().</P>
+<P>Example 1:</P>
+<PRE><CODE class="basic">dim code1, code2<BR>code1 = Comp("printr " + chr$(34) + "Ding" + chr$(34))<BR>code2 = Comp("printr " + chr$(34) + "Dong" + chr$(34))<BR>exec code1<BR>exec code2<BR>exec code1<BR>exec code2</CODE></PRE>
+<P>Example 2:</P>
+<PRE><CODE class="basic">dim prog$(10), code
+prog$(0) = "dim x, y"
+prog$(1) = "for y = 1 to 10"
+prog$(2) = "for x = 1 to y"
+prog$(3) = "print " + chr$(34) + "*" + chr$(34) + ";"
+prog$(4) = "next"
+prog$(5) = "printr"
+prog$(6) = "next" 
+comp(prog$)
+exec
+</CODE></PRE>
+<H2>CompFile</H2>
+<P>"CompFile" compiles a file on disk and return a handle that can be used to 
+execute the compiled code at runtime.</P>
+<P>Format:</P>
+<div class="format">
+  <P>CompFile(<EM>filename</EM>)</P></div>
+<P>Where <EM>filename</EM> is the filename as a text string.</P>
+<P>If the file was read and compiled successfully, "CompFile" 
+returns&nbsp;a non-zero integer handle to identify the compiled code.<BR>If the 
+compiler encountered an error, "CompFile" returns zero, and the error 
+description can be retrieved with CompilerError(), CompilerErrorLine() and 
+CompilerErrorCol().</P>
+<H2>Exec</H2>
+<P>"Exec" executes runtime-compiled code.</P>
+<P>Format:</P>
+<div class="format">
+  <P>Exec</P></div>
+<div class="format">
+  <P>Exec <EM>handle</EM></P></div>
+<P>Where <EM>handle</EM> is an integer handle returned from a successful 
+call to "Comp" or "CompFile".<BR>If no <EM>handle</EM> is supplied, Exec 
+executes the last code compiled (or bound if "BindCode" has been executed.)</P>
+<P>Be warned that any runtime errors will halt your program.</P>
+<H2>Functions/subs inside compiled code</H2>
+<P>Normally you cannot have two functions or subs with the same name. 
+However Basic4GL will allow this if the functions/subs are in different compiled 
+code blocks, or if one is in the main program and the other(s) in compiled code 
+blocks.</P>
+<P>Basic4GL applies "scoping" logic to determine which function/sub is 
+to be called as follows:</P>
+<UL>
+  <LI>If calling code is in the main program, the function/sub is assumed to be 
+  in the main program 
+  <LI>If calling code is runtime-compiled, the function/sub is first assumed to 
+  be in the runtime-compiled code then in the main program (if not found in the 
+  runtime code)</LI></UL>
+<P>The scoping logic <EM>only</EM> applies to functions and subs however. Other 
+things like global variables, labels etc are <EM>not</EM> scoped this way.</P>
+<P>Example:</P>
+<PRE><CODE class="basic">' Subroutines in main code 
+sub Sub1(): printr "Main 1": end sub
+sub Sub2(): printr "Main 2": end sub
+                           
+' Subroutines in compiled code
+Comp("sub Sub1(): printr " + chr$(34) + "Runtime 1" + chr$(34) + ": end sub: Sub1(): Sub2()")
+
+' Execute compiled code
+exec
+printr                 
+
+' Call main subroutines
+Sub1()
+Sub2()
+</CODE></PRE>
+<H1>Calling functions/subs in runtime code</H1>
+<P>Runtime compiled code can call&nbsp;functions/subs in the main 
+program easily. Calling runtime-compiled functions/subs <EM>from </EM>your main 
+program requires you declare the function with "runtime" first.</P>
+<H2>Runtime</H2>
+<P>The "Runtime" keyword is used to declare a function or sub that can 
+be implemented either:</P>
+<UL>
+  <LI>In the main program 
+  <LI>In one or more sections of runtime compiled code 
+  <LI>Or, all of the above</LI></UL>
+<P>The syntax is much the same as the "Declare" keyword:</P>
+<P>Format:</P>
+<div class="format">
+  <P>Runtime Sub <EM>prototype</EM></P>
+  <P>Runtime Function <EM>prototype</EM></P></div>
+<P>Where <EM>prototype</EM> defines the function/sub, its parameters and 
+return type (if applicable).</P>
+<P>Examples:</P>
+<PRE><CODE class="basic">runtime sub MySub()</CODE></PRE><PRE><CODE class="basic">runtime sub MoveBadGuy(SBadGuy&amp; badguy)</CODE></PRE><PRE><CODE class="basic">runtime function CalcY#(x#)</CODE></PRE>
+<P>Once declared with "runtime", the sub/function can be called from 
+your main program.<BR>Basic4GL will check <EM>at runtime</EM> to see if the 
+function/sub being called has been implemented, checking the current 
+runtime-compiled code <EM>first</EM>, then the main program. If the function/sub 
+is found, Basic4GL calls it. Otherwise a runtime error results, and your program 
+stops.</P>
+<P>As with "exec", the "current" runtime-compiled code is the last code 
+that was compiled with "Comp", or bound with "BindCode".</P>
+<P>Example:</P>
+<PRE><CODE class="basic">runtime sub MySub()
+
+sub MySub()
+    printr "Main program"
+end sub
+       
+' Will call MySub() in main program
+MySub()                                    
+
+dim code
+code = Comp("sub MySub(): printr " + chr$(34) + "Runtime compiled code" + chr$(34) + ": end sub")
+       
+' Will call MySub() in runtime code 
+MySub()            
+
+' Will call MySub() in main program
+bindcode 0
+MySub()                
+
+' Will call MySub() in runtime code
+bindcode code
+MySub()
+</CODE></PRE>
+<H2>BindCode</H2>
+<P>The "BindCode" command is used to make runtime-compiled code current. 
+<BR>This affects the "Exec" command (when called without a parameter), and where 
+Basic4GL looks for "Runtime" functions.</P>
+<P>Format:</P>
+<div class="format">
+  <P>BindCode 0</P>
+  <P>BindCode <EM>handle</EM></P></div>
+<P>Where <EM>handle</EM> is an integer handle returned from a successful 
+call to "Comp" or "CompFile".</P>
+<P>"BindCode 0"&nbsp;has special 
+meaning.&nbsp;<EM>No</EM>&nbsp;runtime-compiled code is considered 
+bound.&nbsp;Any "runtime" functions called must therefore be implemented in the 
+main program itself. "Exec" without a parameter will cause a runtime 
+exception.</P>
+<H1>Restart/end instructions</H1>
+<P>There are two more Basic4GL instructions that have yet to be discussed.</P>
+<h2>End</h2>
+<p>Ends the BASIC program.</p>
+<p>This is essentially the same as when the end of the program is reached. No more BASIC instructions are executed.<p>
+<p>Note: Some commands like "end if", "end struct", "end function" also contain the "end" keyword. However Basic4GL is able to determine from the context that this is not an "end" instruction, and will not end the program in this case.
+<pre><code class="basic">if 5 > 3 then 
+    printr "This will print"
+end if                          ' This is not an "end" instruction
+printr "So will this"			
+end                             ' This *is* an "end" instruction
+printr "But this bit wont"</code></pre>
+</p>
+<h2>Run</h2>
+<p>The "Run" command causes Basic4GL to reset the virtual machine and restart the program from the top.</p>
+<p>All variables are deallocated, the call stack is cleared, and resources (like textures) are automatically freed.</p>
+<p>The program will begin executing again as if you had just clicked "Run" in the Basic4GL editor.</p>

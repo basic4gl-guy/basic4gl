@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!-- C++Builder XML Project -->
+<PROJECT>
+  <MACROS>
+    <VERSION value="BCB.06.00"/>
+    <PROJECT value="SimpleCompiler.exe"/>
+    <OBJFILES value="Main.obj ..\VM\HasErrorState.obj ..\VM\Misc.obj ..\VM\TomVM.obj 
+      ..\VM\vmCode.obj ..\VM\vmData.obj ..\VM\vmDebugger.obj 
+      ..\VM\vmFunction.obj ..\VM\vmTypes.obj ..\VM\vmVariables.obj 
+      ..\Compiler\compFunction.obj ..\Compiler\compParse.obj 
+      ..\Compiler\TomComp.obj"/>
+    <RESFILES value="SimpleCompiler.res"/>
+    <DEFFILE value=""/>
+    <RESDEPEN value="$(RESFILES)"/>
+    <LIBFILES value=""/>
+    <LIBRARIES value=""/>
+    <SPARELIBS value=""/>
+    <PACKAGES value=""/>
+    <PATHCPP value=".;..\VM;..\VM;..\VM;..\VM;..\VM;..\VM;..\VM;..\VM;..\VM;..\Compiler;..\Compiler;..\Compiler"/>
+    <PATHPAS value=".;"/>
+    <PATHRC value=".;"/>
+    <PATHASM value=".;"/>
+    <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
+    <RELEASELIBPATH value="$(BCB)\lib\release"/>
+    <LINKER value="ilink32"/>
+    <USERDEFINES value="_DEBUG"/>
+    <SYSDEFINES value="NO_STRICT;_NO_VCL"/>
+    <MAINSOURCE value="SimpleCompiler.bpf"/>
+    <INCLUDEPATH value="C:\Projects\Basic4GL\v2\SimpleCompiler;$(BCB)\include;$(BCB)\include\vcl;C:\Projects\Basic4GL\v2\Compiler;C:\Projects\Basic4GL\v2\VM"/>
+    <LIBPATH value="C:\Projects\Basic4GL\v2\SimpleCompiler;$(BCB)\lib\obj;$(BCB)\lib;C:\Projects\Basic4GL\v2\Compiler;C:\Projects\Basic4GL\v2\VM"/>
+    <WARNINGS value="-w-par"/>
+    <OTHERFILES value=""/>
+  </MACROS>
+  <OPTIONS>
+    <CFLAG1 value="-Od -H=$(BCB)\lib\vcl60.csm -Hc -Vx -Ve -RT- -X- -r- -a8 -b- -k -y -v -vi- 
+      -tWC -tWM- -c"/>
+    <PFLAGS value="-$Y+ -$W -$O- -$I- -$C- -$A8 -v -JPHNE -M"/>
+    <RFLAGS value=""/>
+    <AFLAGS value="/mx /w2 /zd"/>
+    <LFLAGS value="-D&quot;&quot; -ap -Tpe -x -Gn -v"/>
+    <OTHERFILES value=""/>
+  </OPTIONS>
+  <LINKER>
+    <ALLOBJ value="c0x32.obj $(OBJFILES)"/>
+    <ALLRES value="$(RESFILES)"/>
+    <ALLLIB value="$(LIBFILES) $(LIBRARIES) import32.lib cw32.lib"/>
+    <OTHERFILES value=""/>
+  </LINKER>
+  <FILELIST>
+      <FILE FILENAME="SimpleCompiler.res" FORMNAME="" UNITNAME="SimpleCompiler.res" CONTAINERID="ResTool" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="SimpleCompiler.bpf" FORMNAME="" UNITNAME="SimpleCompiler" CONTAINERID="BPF" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="Main.cpp" FORMNAME="" UNITNAME="Main" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\HasErrorState.cpp" FORMNAME="" UNITNAME="HasErrorState.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\Misc.cpp" FORMNAME="" UNITNAME="Misc.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\TomVM.cpp" FORMNAME="" UNITNAME="TomVM.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\vmCode.cpp" FORMNAME="" UNITNAME="vmCode.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\vmData.cpp" FORMNAME="" UNITNAME="vmData.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\vmDebugger.cpp" FORMNAME="" UNITNAME="vmDebugger.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\vmFunction.cpp" FORMNAME="" UNITNAME="vmFunction.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\vmTypes.cpp" FORMNAME="" UNITNAME="vmTypes.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\VM\vmVariables.cpp" FORMNAME="" UNITNAME="vmVariables.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\Compiler\compFunction.cpp" FORMNAME="" UNITNAME="compFunction.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\Compiler\compParse.cpp" FORMNAME="" UNITNAME="compParse.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\Compiler\TomComp.cpp" FORMNAME="" UNITNAME="TomComp.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+  </FILELIST>
+  <BUILDTOOLS>
+  </BUILDTOOLS>
+
+  <IDEOPTIONS>
+[Version Info]
+IncludeVerInfo=0
+AutoIncBuild=0
+MajorVer=1
+MinorVer=0
+Release=0
+Build=0
+Debug=0
+PreRelease=0
+Special=0
+Private=0
+DLL=0
+Locale=5129
+CodePage=1252
+
+[Version Info Keys]
+CompanyName=
+FileDescription=
+FileVersion=1.0.0.0
+InternalName=
+LegalCopyright=
+LegalTrademarks=
+OriginalFilename=
+ProductName=
+ProductVersion=1.0.0.0
+Comments=
+
+[Excluded Packages]
+c:\program files\borland\cbuilder6\Bin\dclstd60.bpl=Borland Standard Components
+c:\program files\borland\cbuilder6\Bin\dcl31w60.bpl=Delphi 1.0 Compatibility Components
+c:\program files\borland\cbuilder6\Bin\dclbcbsmp60.bpl=Borland Sample Controls Design Time Package
+c:\program files\borland\cbuilder6\Bin\dclocx60.bpl=Borland Sample Imported ActiveX Controls
+c:\program files\borland\cbuilder6\Projects\Bpl\MemoExCB5.bpl=MemoExCB5
+
+[HistoryLists\hlIncludePath]
+Count=3
+Item0=C:\Projects\Basic4GL\v2\SimpleCompiler;$(BCB)\include;$(BCB)\include\vcl;C:\Projects\Basic4GL\v2\Compiler;C:\Projects\Basic4GL\v2\VM
+Item1=C:\Projects\Basic4GL\v2\SimpleCompiler;$(BCB)\include;$(BCB)\include\vcl
+Item2=$(BCB)\include;$(BCB)\include\vcl
+
+[HistoryLists\hlLibraryPath]
+Count=3
+Item0=C:\Projects\Basic4GL\v2\SimpleCompiler;$(BCB)\lib\obj;$(BCB)\lib;C:\Projects\Basic4GL\v2\Compiler;C:\Projects\Basic4GL\v2\VM
+Item1=C:\Projects\Basic4GL\v2\SimpleCompiler;$(BCB)\lib\obj;$(BCB)\lib
+Item2=$(BCB)\lib\obj;$(BCB)\lib
+
+[HistoryLists\hlDebugSourcePath]
+Count=1
+Item0=$(BCB)\source\vcl
+
+[HistoryLists\hlConditionals]
+Count=1
+Item0=_DEBUG
+
+[Debugging]
+DebugSourceDirs=$(BCB)\source\vcl
+
+[Parameters]
+RunParams=
+Launcher=
+UseLauncher=0
+DebugCWD=
+HostApplication=
+RemoteHost=
+RemotePath=
+RemoteLauncher=
+RemoteCWD=
+RemoteDebug=0
+
+[Compiler]
+ShowInfoMsgs=0
+LinkDebugVcl=0
+  </IDEOPTIONS>
+</PROJECT>

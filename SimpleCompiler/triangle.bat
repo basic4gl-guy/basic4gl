@@ -1,0 +1,1 @@
+type triangle.gb | simplecompiler

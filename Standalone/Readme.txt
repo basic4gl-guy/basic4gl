@@ -1,0 +1,2 @@
+Contains the files to build the Windows standalone stub (for creating Basic4GL standalone exe files.)
+The stub is an executable file containing the Basic4GL virtual machine, compiler and libraries. Basic4GL patches this file by inserting the BASIC code. (Same principle as "binding" in scripting languages.)

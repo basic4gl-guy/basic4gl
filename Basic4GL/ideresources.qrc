@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>Images/ImgNew.png</file>
+        <file>Images/ImgOpen.png</file>
+        <file>Images/ImgSave.png</file>
+        <file>Images/Stop.png</file>
+        <file>Images/Go.png</file>
+        <file>Images/BreakPt.png</file>
+        <file>Images/Hand.png</file>
+        <file>Images/Bug.png</file>
+        <file>Images/Pause.png</file>
+        <file>Images/Play.png</file>
+        <file>Images/ImgSaveAll.png</file>
+        <file>Images/StepOver2.png</file>
+        <file>Images/StepInto2.png</file>
+        <file>Images/StepOutOf2.png</file>
+        <file>Images/Logo.png</file>
+        <file>Images/Icon.png</file>
+    </qresource>
+</RCC>

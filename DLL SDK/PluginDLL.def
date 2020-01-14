@@ -1,0 +1,6 @@
+; Plugin DLL def file
+LIBRARY PluginDLL.dll
+
+EXPORTS
+	Basic4GL_Init	@1
+	Basic4GL_Query	@2

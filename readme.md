@@ -2,6 +2,8 @@ This is the source for the original Windows version of Basic4GL, warts and all.
 
 It's basically a raw dump from my HDD. I'm pretty sure there are absolute paths to where things are on my PC in various project files/makefiles so it needs a bit of work to get building.
 
+Released under the New BSD license (see license.txt)
+
 Compilers
 ---------
 
