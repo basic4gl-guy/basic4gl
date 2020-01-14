@@ -1,0 +1,15 @@
+.svn/*
+*.exe
+*.zip
+3rdparty/*
+Basic4GL/.vs/*
+Basic4GL/Debug/*
+Basic4GL/Release/*
+Basic4GL/Win32/*
+**/*.user
+**/*.bak
+ReleaseImage/*
+Standalone/Debug/*
+Standalone/Release/*
+FreeSound Plugin.htm
+Doxyfile
