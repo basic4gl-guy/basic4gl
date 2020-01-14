@@ -1,0 +1,40 @@
+Building Basic4GL 								   9/may/2016 Tom Mulgrew (tmulgrew@slingshot.co.nz)
+================= 
+
+You can build Basic4GL with Visual Studio.
+The solution file Basic4GL\Basic4GL.sln builds with Visual Studio 2013 Community Edition.
+
+You will first need to install Qt version 5.5 https://www.qt.io/download-open-source/
+And also the Visual Studio addin for Qt 5 from here http://www.qt.io/download-open-source/#section-7
+
+You will need to edit the Basic4GL\Basic4GL.vcxproj.user file, and change this line:
+    
+	<QTDIR>E:\Projects\clibraries\Qt\5.5\msvc2013</QTDIR>
+
+To point to your Qt install's msvc2013 subfolder (you'll need to change it twice, once for Debug 
+config and once for Release config).
+
+
+Projects
+--------
+
+"Basic4GL" builds the main IDE.
+"Standalone" builds the standalone.exe "Stub". This is basically an executable containing the 
+Basic4GL virtual machine and libraries, with startup code to find and run the compiled BASIC 
+program from a Win32 resource. To create the executable Basic4GL just needs to copy the stub, and 
+use the Windows API to write the the compiled BASIC program as a resource.
+
+There are also special builds of the corona and glfw libraries.
+This is because Basic4GL uses msvc in a shared library (so that it can link cleanly with Qt, which 
+does the same).
+However the standalone exe has msvc compiled into it (so that there's fewer files to distribute).
+So there are different builds of corona and glfw with shared and non shared msvc in order to link in
+cleanly.
+
+
+A note on the .pro file
+-----------------------
+
+The Qt .pro file doesn't build. However it's useful for editing the .ui files in Qt Creator, as 
+the form editor when invoked from Visual Studio doesn't handle slot mappings as well.
+So I tend to jump between Qt creator for form editing and Visual Studio for building/debugging.
